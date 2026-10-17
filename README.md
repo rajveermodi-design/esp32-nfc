@@ -177,9 +177,3 @@ esp32-nfc/
 - [ ] Embedded Web Dashboard interface on ESP32 (LittleFS-backed)
 - [ ] Wokwi simulation diagram for hardware-free development and automated tests
 - [ ] Documentation on mitigation strategies for access-control system administrators
-
----
-
-## License
-
-This project is licensed under the [MIT License](LICENSE). All code and documentation are intended solely for educational and research purposes.
