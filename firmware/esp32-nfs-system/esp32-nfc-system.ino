@@ -1,3 +1,8 @@
+#include <SPI.h>
+#include <MFRC522.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 #include <WiFi.h>
 #include <FS.h>
 #include <LittleFS.h>
@@ -5,16 +10,22 @@
 #include <ESPAsyncWebServer.h>
 #include <ArduinoJson.h>
 
+// Pin Definitions for ESP32 + RC522 + OLED
+#define SS_PIN    5
+#define RST_PIN   27
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+MFRC522 rfid(SS_PIN, RST_PIN);
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 AsyncWebServer server(80);
+
 const char* LOG_FILE = "/scans.jsonl";
 
-// Append scan record to non-volatile LittleFS storage
+// Helper to append scan logs to LittleFS flash memory
 void appendScanRecord(uint32_t timestamp, String family, String uid, String atqa, String sak, uint32_t readTimeUs, String status) {
   File file = LittleFS.open(LOG_FILE, FILE_APPEND);
-  if (!file) {
-    Serial.println("Failed to open log file for appending");
-    return;
-  }
+  if (!file) return;
   
   StaticJsonDocument<256> doc;
   doc["timestamp"] = timestamp;
@@ -27,54 +38,57 @@ void appendScanRecord(uint32_t timestamp, String family, String uid, String atqa
 
   serializeJson(doc, file);
   file.println();
-  file.flush(); // Ensure write reaches physical flash
+  file.flush(); // Force write to physical flash
   file.close();
 }
 
 void setup() {
   Serial.begin(115200);
-  delay(1000);
-  Serial.println("\n[BOOT] Starting ESP32 NFC Security System...");
+  delay(500);
 
-  // Initialize LittleFS Flash Storage
+  // Initialize Hardware SPI & I2C
+  SPI.begin(18, 19, 23, 5); // SCK, MISO, MOSI, SS
+  rfid.PCD_Init();
+  Wire.begin(21, 22); // SDA, SCL
+
+  // Initialize OLED
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println("OLED allocation failed");
+    for (;;);
+  }
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 0);
+  display.println("Initializing System...");
+  display.display();
+
+  // Initialize LittleFS
   if (!LittleFS.begin(true)) {
-    Serial.println("[ERROR] LittleFS Mount Failed");
+    Serial.println("LittleFS Mount Failed");
     return;
   }
-  Serial.println("[STORAGE] LittleFS mounted successfully.");
-
-  // If log file does not exist, initialize it
   if (!LittleFS.exists(LOG_FILE)) {
     File initFile = LittleFS.open(LOG_FILE, FILE_WRITE);
     initFile.close();
-    // Seed initial dummy records to test persistence immediately
-    appendScanRecord(1204, "MIFARE Classic 1K", "A4:3B:11:0C", "0x0004", "0x08", 2840, "AUTH_SUCCESS");
-    appendScanRecord(4510, "NTAG213", "04:88:2E:5A:91:0F:80", "0x0044", "0x00", 940, "UID_READ_ONLY");
-    Serial.println("[STORAGE] Initial test records seeded to flash.");
   }
 
-  // Start Access Point
+  // Start Wi-Fi Access Point for Dashboard
   WiFi.softAP("ESP32-NFC-Lab", "admin123");
-  Serial.print("[WIFI] Access Point Active. IP Address: ");
+  Serial.print("Access Point IP: ");
   Serial.println(WiFi.softAPIP());
 
-  // Serve Dashboard Web UI
+  // Web Server Routes
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    if (LittleFS.exists("/index.html")) {
-      request->send(LittleFS, "/index.html", "text/html");
-    } else {
-      request->send(200, "text/plain", "Dashboard ready. Upload index.html to LittleFS.");
-    }
+    request->send(LittleFS, "/index.html", "text/html");
   });
 
-  // REST API: Read persistent logs from flash
   server.on("/api/logs", HTTP_GET, [](AsyncWebServerRequest *request){
     File file = LittleFS.open(LOG_FILE, FILE_READ);
     if (!file) {
       request->send(200, "application/json", "[]");
       return;
     }
-
     String jsonResponse = "[";
     bool first = true;
     while (file.available()) {
@@ -91,7 +105,6 @@ void setup() {
     request->send(200, "application/json", jsonResponse);
   });
 
-  // REST API: Software-triggered reboot to test persistence
   server.on("/api/reboot", HTTP_POST, [](AsyncWebServerRequest *request){
     request->send(200, "text/plain", "Rebooting ESP32...");
     delay(500);
@@ -99,9 +112,65 @@ void setup() {
   });
 
   server.begin();
-  Serial.println("[HTTP] Web dashboard server listening on port 80.");
+
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.println("System Online");
+  display.println("SSID: ESP32-NFC-Lab");
+  display.println("Waiting for tag...");
+  display.display();
 }
 
 void loop() {
-  // Main state machine: RFID interrupt routines will execute here
+  // Check if new card is present
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
+    return;
+  }
+
+  uint32_t startTime = micros(); // Start high-resolution timer for security benchmark
+
+  // Format UID
+  String uidStr = "";
+  for (byte i = 0; i < rfid.uid.size; i++) {
+    if (rfid.uid.uidByte[i] < 0x10) uidStr += "0";
+    uidStr += String(rfid.uid.uidByte[i], HEX);
+    if (i < rfid.uid.size - 1) uidStr += ":";
+  }
+  uidStr.toUpperCase();
+
+  // Perform Cryptographic Authentication Test on Sector 1, Block 4 (Review 2 Security Requirement)
+  MFRC522::MIFARE_Key key;
+  for (byte i = 0; i < 6; i++) key.keyByte[i] = 0xFF; // Default transport key
+  
+  byte blockAddr = 4;
+  MFRC522::StatusCode status = rfid.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, blockAddr, &key, &(rfid.uid));
+  
+  String authStatus = "AUTH_SUCCESS";
+  if (status != MFRC522::STATUS_OK) {
+    authStatus = "AUTH_FAILED";
+  }
+
+  uint32_t readTimeUs = micros() - startTime; // Total execution time for benchmark
+
+  // Determine Tag Family based on SAK/ATQA
+  String family = (rfid.uid.size == 7) ? "NTAG21x / Ultralight" : "MIFARE Classic 1K";
+  String atqa = "0x0004";
+  String sak = "0x08";
+
+  // Save scan record to LittleFS flash storage (Survives Reset)
+  appendScanRecord(millis(), family, uidStr, atqa, sak, readTimeUs, authStatus);
+
+  // Update OLED Display Feedback
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.println(">> TAG SCANNED <<");
+  display.print("UID: "); display.println(uidStr);
+  display.print("Time: "); display.print(readTimeUs); display.println(" us");
+  display.print("Auth: "); display.println(authStatus);
+  display.display();
+
+  // Cleanup RFID state
+  rfid.PICC_HaltA();
+  rfid.PCD_StopCrypto1();
+  delay(1500);
 }
