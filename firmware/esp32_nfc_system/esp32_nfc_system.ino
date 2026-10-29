@@ -6,8 +6,7 @@
 #include <WiFi.h>
 #include <FS.h>
 #include <LittleFS.h>
-#include <AsyncTCP.h>
-#include <ESPAsyncWebServer.h>
+#include <WebServer.h>
 #include <ArduinoJson.h>
 
 // Pin Definitions for ESP32 + RC522 + OLED + Buzzer + LED
@@ -20,7 +19,7 @@
 
 MFRC522 rfid(SS_PIN, RST_PIN);
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
-AsyncWebServer server(80);
+WebServer server(80);
 
 const char* LOG_FILE = "/scans.jsonl";
 
@@ -111,21 +110,23 @@ void setup() {
   Serial.println(WiFi.softAPIP());
 
   // Web Server Routes
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/", HTTP_GET, [](){
     if (LittleFS.exists("/index.html")) {
-      request->send(LittleFS, "/index.html", "text/html");
+      File f = LittleFS.open("/index.html", "r");
+      server.streamFile(f, "text/html");
+      f.close();
     } else {
-      request->send(200, "text/html", "<html><body style='background:#0f172a;color:#f8fafc;font-family:sans-serif;padding:30px;'>"
-                                      "<h2>ESP32 NFC/RFID System Online</h2>"
-                                      "<p>LittleFS /index.html not found. View scans via JSON API: <a style='color:#38bdf8;' href='/api/logs'>/api/logs</a></p>"
-                                      "</body></html>");
+      server.send(200, "text/html", "<html><body style='background:#0f172a;color:#f8fafc;font-family:sans-serif;padding:30px;'>"
+                                    "<h2>ESP32 NFC/RFID System Online</h2>"
+                                    "<p>LittleFS /index.html not found. View scans via JSON API: <a style='color:#38bdf8;' href='/api/logs'>/api/logs</a></p>"
+                                    "</body></html>");
     }
   });
 
-  server.on("/api/logs", HTTP_GET, [](AsyncWebServerRequest *request){
-    File file = LittleFS.open(LOG_FILE, FILE_READ);
+  server.on("/api/logs", HTTP_GET, [](){
+    File file = LittleFS.open(LOG_FILE, "r");
     if (!file) {
-      request->send(200, "application/json", "[]");
+      server.send(200, "application/json", "[]");
       return;
     }
     String jsonResponse = "[";
@@ -141,11 +142,11 @@ void setup() {
     }
     file.close();
     jsonResponse += "]";
-    request->send(200, "application/json", jsonResponse);
+    server.send(200, "application/json", jsonResponse);
   });
 
-  server.on("/api/reboot", HTTP_POST, [](AsyncWebServerRequest *request){
-    request->send(200, "text/plain", "Rebooting ESP32...");
+  server.on("/api/reboot", HTTP_POST, [](){
+    server.send(200, "text/plain", "Rebooting ESP32...");
     delay(500);
     ESP.restart();
   });
@@ -161,8 +162,11 @@ void setup() {
 }
 
 void loop() {
+  server.handleClient(); // Handle HTTP requests
+
   // Check if new card is present
   if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
+    delay(20);
     return;
   }
 

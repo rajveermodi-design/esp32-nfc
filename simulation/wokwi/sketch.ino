@@ -6,8 +6,7 @@
 #include <WiFi.h>
 #include <FS.h>
 #include <LittleFS.h>
-#include <AsyncTCP.h>
-#include <ESPAsyncWebServer.h>
+#include <WebServer.h>
 #include <ArduinoJson.h>
 
 // Pin Definitions matching Wokwi diagram.json & System Block Diagram
@@ -20,7 +19,7 @@
 
 MFRC522 rfid(SS_PIN, RST_PIN);
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
-AsyncWebServer server(80);
+WebServer server(80);
 
 const char* LOG_FILE = "/scans.jsonl";
 
@@ -261,19 +260,21 @@ void setup() {
   WiFi.begin("Wokwi-GUEST", "");
   Serial.println("[*] Connecting to Wokwi-GUEST virtual Wi-Fi...");
 
-  // Web Server Routes
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+  // Web Server Routes (Using ESP32 Core Native WebServer — No mbedtls conflicts)
+  server.on("/", HTTP_GET, [](){
     if (LittleFS.exists("/index.html")) {
-      request->send(LittleFS, "/index.html", "text/html");
+      File f = LittleFS.open("/index.html", "r");
+      server.streamFile(f, "text/html");
+      f.close();
     } else {
-      request->send_P(200, "text/html", INDEX_HTML);
+      server.send_P(200, "text/html", INDEX_HTML);
     }
   });
 
-  server.on("/api/logs", HTTP_GET, [](AsyncWebServerRequest *request){
-    File file = LittleFS.open(LOG_FILE, FILE_READ);
+  server.on("/api/logs", HTTP_GET, [](){
+    File file = LittleFS.open(LOG_FILE, "r");
     if (!file) {
-      request->send(200, "application/json", "[]");
+      server.send(200, "application/json", "[]");
       return;
     }
     String jsonResponse = "[";
@@ -289,17 +290,17 @@ void setup() {
     }
     file.close();
     jsonResponse += "]";
-    request->send(200, "application/json", jsonResponse);
+    server.send(200, "application/json", jsonResponse);
   });
 
-  server.on("/api/reboot", HTTP_POST, [](AsyncWebServerRequest *request){
-    request->send(200, "text/plain", "Rebooting ESP32...");
+  server.on("/api/reboot", HTTP_POST, [](){
+    server.send(200, "text/plain", "Rebooting ESP32...");
     delay(500);
     ESP.restart();
   });
 
   server.begin();
-  Serial.println("[+] Async Web Server listening on port 80");
+  Serial.println("[+] Web Server listening on port 80");
 
   // OLED Ready Screen
   display.clearDisplay();
@@ -313,9 +314,11 @@ void setup() {
 }
 
 void loop() {
+  server.handleClient(); // Handle incoming HTTP requests
+
   // Check if new card is present
   if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
-    delay(50);
+    delay(20);
     return;
   }
 
@@ -389,5 +392,9 @@ void loop() {
   noTone(BUZZER_PIN);
   digitalWrite(LED_PIN, HIGH);
 
-  delay(1200);
+  // Allow web server to process requests during post-scan dwell
+  for (int i = 0; i < 20; i++) {
+    server.handleClient();
+    delay(50);
+  }
 }
