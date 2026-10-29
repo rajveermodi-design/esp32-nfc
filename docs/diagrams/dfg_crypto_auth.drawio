@@ -1,0 +1,142 @@
+<mxfile host="app.diagrams.net" modified="2026-10-20T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+  <diagram id="dfg-crypto-auth" name="1. DFG - Crypto Auth &amp; Block Read (Critical Path)">
+    <mxGraphModel dx="1422" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1560" pageHeight="920" background="#0f172a" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="stg_in" value="STAGE 0: INPUT OPERANDS &amp; HARDWARE REGISTERS" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="240" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="stg_1" value="STAGE 1: PCD ENCODING &amp; DEMODULATION" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="320" y="100" width="260" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="stg_2" value="STAGE 2: CRYPTO-1 CORE &amp; NONCE ENGINE" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="620" y="100" width="280" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="stg_3" value="STAGE 3: MUTUAL AUTH &amp; COMMAND ENCRYPTION" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="940" y="100" width="280" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="stg_4" value="STAGE 4: PAYLOAD STREAM DECRYPT &amp; FLUSH" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="100" width="260" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr" value="&lt;b&gt;DATA FLOW GRAPH (DFG) — Critical-Path Cryptographic Authentication &amp; Block Read&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Function: authenticate_and_read_block() | Critical Path Latency: 28,500 µs | Deadline: 35,000 µs&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="800" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_in" value="&lt;b&gt;Data Source / Input [Reg]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="980" y="30" width="160" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_op" value="&lt;b&gt;Computation Node [Op]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="30" width="160" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_out" value="&lt;b&gt;Data Sink [Memory/Bus]&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="30" width="160" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="in_key" value="&lt;b&gt;Key A Register [48-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0xFF 0xFF 0xFF 0xFF 0xFF 0xFF&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="150" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="in_block" value="&lt;b&gt;Block Address [8-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x04 (Sector 1, Block 0)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="280" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="in_uid" value="&lt;b&gt;Card UID Register [32-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;rfid.uid.uidByte[0..3]&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="410" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="in_cmd" value="&lt;b&gt;Auth Opcode [8-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x60 (PICC_CMD_MF_AUTH_KEY_A)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="540" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="in_rf" value="&lt;b&gt;RF Carrier Field [13.56 MHz]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;ISO/IEC 14443A Load Modulation&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="670" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="op_pack_auth" value="&lt;b&gt;OP1: PCD Auth Frame Pack&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;CMD || Block || CRC-A (16 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="350" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_rf_demod" value="&lt;b&gt;OP2: RF Demod &amp; Sync&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Capture 32-bit Nonce Nt (5,200 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="670" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_prng_reader" value="&lt;b&gt;OP3: Hardware PRNG&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Generate 32-bit Nr (4 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="650" y="170" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="op_lfsr_init" value="&lt;b&gt;OP4: Crypto-1 LFSR Init&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;State0 = f(KeyA, UID, Nt) (28 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="650" y="370" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_keystream" value="&lt;b&gt;OP5: Non-Linear Keystream&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;fk(State) -&gt; ki bits (62 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="650" y="570" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_enc_reader" value="&lt;b&gt;OP6: Reader Challenge Enc&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;ar = Nr ^ k1..32 + parity (14 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="970" y="220" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_tag_auth" value="&lt;b&gt;OP7: Tag Response Verifier&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;at = Ciph ^ k33..64 == succ(Nt) (6,800 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="970" y="420" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_enc_read_cmd" value="&lt;b&gt;OP8: Encrypt Read Block Cmd&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x30 || 0x04 || CRC-A ^ k65..96 (18 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="970" y="620" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_stream_dec" value="&lt;b&gt;OP9: 16-Byte Payload Decrypt&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Plain[0..15] = Ciph ^ k97..224 (42 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="320" width="220" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_crc_calc" value="&lt;b&gt;OP10: CRC-16 Engine&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Verify ISO 14443-3 CRC-A (22 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="470" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="out_plain_buf" value="&lt;b&gt;OUT1: Block Data Buffer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;16-Byte Plaintext Memory Block&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="600" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="out_status" value="&lt;b&gt;OUT2: Auth Status Register&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;STATUS_OK | AUTH_SUCCESS&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="720" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e101" value="8-bit Opcode" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_cmd" target="op_pack_auth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e102" value="8-bit Addr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_block" target="op_pack_auth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e103" value="13.56 MHz Subcarrier" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_rf" target="op_rf_demod">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e104" value="32-bit Nt Nonce" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_rf_demod" target="op_lfsr_init">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e105" value="48-bit Key A" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_key" target="op_lfsr_init">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e106" value="32-bit UID" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_uid" target="op_lfsr_init">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e107" value="48-bit LFSR State" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_lfsr_init" target="op_keystream">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e108" value="32-bit Nr Nonce" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_prng_reader" target="op_enc_reader">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e109" value="k1..32 Keystream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_keystream" target="op_enc_reader">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e110" value="k33..64 Keystream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_keystream" target="op_tag_auth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e111" value="64-bit Challenge ar" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_enc_reader" target="op_tag_auth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e112" value="8-bit Block Addr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_block" target="op_enc_read_cmd">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e113" value="k65..96 Keystream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_keystream" target="op_enc_read_cmd">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e114" value="Ciphertext Block" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_tag_auth" target="op_stream_dec">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e115" value="k97..224 Keystream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_keystream" target="op_stream_dec">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e116" value="16-Byte Plaintext" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_stream_dec" target="op_crc_calc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e117" value="16-Byte Buffer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_stream_dec" target="out_plain_buf">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e118" value="Checksum Valid" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_crc_calc" target="out_status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

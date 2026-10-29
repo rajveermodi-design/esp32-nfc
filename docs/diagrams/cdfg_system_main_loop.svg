@@ -1,0 +1,263 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1280" width="1600" height="1280" style="background-color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arrow-data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#10b981" /></marker>
+    <marker id="arrow-control" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#818cf8" /></marker>
+    <marker id="arrow-error" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#ef4444" /></marker>
+    <marker id="arrow-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" /></marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>
+  </defs>
+  <path d="M 690.0 135 L 690.0 165" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(690.0, 150.0)">
+    <rect x="-4" y="-10" width="34" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Boot</text>
+  </g>
+  <path d="M 690.0 225 L 690.0 265" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(690.0, 245.0)">
+    <rect x="-4" y="-10" width="82" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Enter loop()</text>
+  </g>
+  <path d="M 590 300.0 L 550 300.0 L 550 300.0 L 590 300.0" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-loop)" />
+  <g transform="translate(550, 300.0)">
+    <rect x="-4" y="-10" width="112" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#38bdf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#7dd3fc" font-size="9" font-family="monospace">No (Idle Polling)</text>
+  </g>
+  <path d="M 690.0 335 L 690.0 375" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(690.0, 355.0)">
+    <rect x="-4" y="-10" width="124" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Yes (Card in Field)</text>
+  </g>
+  <path d="M 590 410.0 L 550 410.0 L 550 300.0 L 590 300.0" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-loop)" />
+  <g transform="translate(550, 355.0)">
+    <rect x="-4" y="-10" width="124" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#38bdf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#7dd3fc" font-size="9" font-family="monospace">No (Collision/Drop)</text>
+  </g>
+  <path d="M 690.0 445 L 690.0 485" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(690.0, 465.0)">
+    <rect x="-4" y="-10" width="136" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Yes (Serial Acquired)</text>
+  </g>
+  <path d="M 690.0 535 L 690.0 570" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(690.0, 552.5)">
+    <rect x="-4" y="-10" width="88" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Timer Running</text>
+  </g>
+  <path d="M 690.0 625 L 690.0 665" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(690.0, 645.0)">
+    <rect x="-4" y="-10" width="70" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">UID Parsed</text>
+  </g>
+  <path d="M 590 702.5 L 180 702.5 L 180 800.0 L 220 800.0" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(180, 751.25)">
+    <rect x="-4" y="-10" width="112" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Level 1: Fast UID</text>
+  </g>
+  <path d="M 590 702.5 L 550 702.5 L 550 800.0 L 720 800.0" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(550, 751.25)">
+    <rect x="-4" y="-10" width="142" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Level 2: Cryptographic</text>
+  </g>
+  <path d="M 340.0 830 L 340.0 865" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(340.0, 847.5)">
+    <rect x="-4" y="-10" width="106" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Audit Evaluation</text>
+  </g>
+  <path d="M 460 890.0 C 510.0 890.0, 510.0 1082.5, 560 1082.5" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(510.0, 986.25)">
+    <rect x="-4" y="-10" width="88" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Record ~2.8ms</text>
+  </g>
+  <path d="M 850.0 830 L 850.0 865" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(850.0, 847.5)">
+    <rect x="-4" y="-10" width="118" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Handshake Returned</text>
+  </g>
+  <path d="M 750 900.0 L 560 900.0 L 560 995.0 L 600 995.0" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(560, 947.5)">
+    <rect x="-4" y="-10" width="112" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Yes (Key A Valid)</text>
+  </g>
+  <path d="M 750 900.0 L 710 900.0 L 710 995.0 L 880 995.0" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrow-error)" />
+  <g transform="translate(710, 947.5)">
+    <rect x="-4" y="-10" width="100" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#ef4444" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#fca5a5" font-size="9" font-family="monospace">No (Auth Error)</text>
+  </g>
+  <path d="M 710.0 1020 L 690.0 1055" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(710.0, 1037.5)">
+    <rect x="-4" y="-10" width="94" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Record ~30.2ms</text>
+  </g>
+  <path d="M 880 995.0 L 520 995.0 L 520 1082.5 L 560 1082.5" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(520, 1038.75)">
+    <rect x="-4" y="-10" width="94" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Record Failure</text>
+  </g>
+  <path d="M 820 1082.5 C 1010.0 1082.5, 1010.0 780.0, 1200 780.0" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(1010.0, 931.25)">
+    <rect x="-4" y="-10" width="100" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Dispatch Record</text>
+  </g>
+  <path d="M 1320.0 810 L 1320.0 850" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(1320.0, 830.0)">
+    <rect x="-4" y="-10" width="88" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Flash Written</text>
+  </g>
+  <path d="M 1320.0 910 L 1320.0 950" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(1320.0, 930.0)">
+    <rect x="-4" y="-10" width="82" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">UI Refreshed</text>
+  </g>
+  <path d="M 1200 980.0 L 520 980.0 L 520 1170.0 L 560 1170.0" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(520, 1075.0)">
+    <rect x="-4" y="-10" width="94" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">Events Flushed</text>
+  </g>
+  <path d="M 690.0 1195 L 690.0 1225" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-control)" />
+  <g transform="translate(690.0, 1210.0)">
+    <rect x="-4" y="-10" width="46" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#818cf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#c7d2fe" font-size="9" font-family="monospace">RF Off</text>
+  </g>
+  <path d="M 560 1247.5 L 520 1247.5 L 520 300.0 L 590 300.0" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-loop)" />
+  <g transform="translate(520, 773.75)">
+    <rect x="-4" y="-10" width="100" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#38bdf8" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#7dd3fc" font-size="9" font-family="monospace">Next Scan Cycle</text>
+  </g>
+  <path d="M 820 1082.5 C 1010.0 1082.5, 1010.0 780.0, 1200 780.0" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <g transform="translate(1010.0, 931.25)">
+    <rect x="-4" y="-10" width="106" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">Log JSON Payload</text>
+  </g>
+  <path d="M 1200 780.0 L 1160 780.0 L 1160 677.5 L 1220 677.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <g transform="translate(1160, 728.75)">
+    <rect x="-4" y="-10" width="124" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">Physical Page Write</text>
+  </g>
+  <path d="M 820 1082.5 C 1010.0 1082.5, 1010.0 880.0, 1200 880.0" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <g transform="translate(1010.0, 981.25)">
+    <rect x="-4" y="-10" width="124" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
+    <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">UID &amp; Latency Delta</text>
+  </g>
+  <g transform="translate(40, 25)">
+    <text x="0" y="20" fill="#f8fafc" font-size="16" font-weight="bold">CONTROL DATA FLOW GRAPH (CDFG) — System-Level Dual-Mode NFC Analysis Engine</text>
+    <text x="0" y="38" fill="#94a3b8" font-size="11">ESP32 Dual-Mode Engine: Level 1 UID Unauthenticated vs Level 2 Cryptographic Sector | LittleFS Flash Persistence &amp; OLED UI</text>
+  </g>
+  <g id="leg_ctrl" filter="url(#shadow)">
+    <polygon points="1045.0,25 1110,37.5 1045.0,50 980,37.5" fill="#312e81" stroke="#818cf8" stroke-width="2" />
+    <text x="1045.0" y="41.5" text-anchor="middle" fill="#e0e7ff" font-size="11" font-weight="bold">Control Flow Edge</text>
+  </g>
+  <g id="leg_data" filter="url(#shadow)">
+    <rect x="1120" y="25" width="130" height="25" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2" />
+    <text x="1185.0" y="41.5" text-anchor="middle" fill="#ecfdf5" font-size="11" font-weight="bold">Data Flow Edge</text>
+  </g>
+  <g id="leg_loop" filter="url(#shadow)">
+    <rect x="1260" y="25" width="140" height="25" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="1330.0" y="41.5" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="bold">Periodic Loopback</text>
+  </g>
+  <g id="sys_power" filter="url(#shadow)">
+    <ellipse cx="690.0" cy="112.5" rx="130.0" ry="22.5" fill="#0f766e" stroke="#2dd4bf" stroke-width="2" />
+    <text x="690.0" y="108.5" text-anchor="middle" fill="#f0fdfa" font-size="11" font-weight="bold">POWER ON / RESET</text>
+    <text x="690.0" y="124.5" text-anchor="middle" fill="#f0fdfa" font-size="9" fill-opacity="0.85">ESP32 Boot &amp; Dual-Core Start</text>
+  </g>
+  <g id="sys_init" filter="url(#shadow)">
+    <rect x="560" y="165" width="260" height="60" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="690.0" y="191.0" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="bold">INIT: Peripherals &amp; Stacks</text>
+    <text x="690.0" y="207.0" text-anchor="middle" fill="#f8fafc" font-size="9" fill-opacity="0.85">SPI.begin(18,19,23,5) | Wire.begin(21,22)
+LittleFS.begin() | WiFi.softAP()</text>
+  </g>
+  <g id="c_poll_card" filter="url(#shadow)">
+    <polygon points="690.0,265 790,300.0 690.0,335 590,300.0" fill="#312e81" stroke="#818cf8" stroke-width="2" />
+    <text x="690.0" y="296.0" text-anchor="middle" fill="#e0e7ff" font-size="11" font-weight="bold">C1: PICC_IsNewCardPresent()?</text>
+    <text x="690.0" y="312.0" text-anchor="middle" fill="#e0e7ff" font-size="9" fill-opacity="0.85">13.56 MHz RF Field Polling</text>
+  </g>
+  <g id="c_read_serial" filter="url(#shadow)">
+    <polygon points="690.0,375 790,410.0 690.0,445 590,410.0" fill="#312e81" stroke="#818cf8" stroke-width="2" />
+    <text x="690.0" y="406.0" text-anchor="middle" fill="#e0e7ff" font-size="11" font-weight="bold">C2: PICC_ReadCardSerial()?</text>
+    <text x="690.0" y="422.0" text-anchor="middle" fill="#e0e7ff" font-size="9" fill-opacity="0.85">Anti-Collision Cascade Loop</text>
+  </g>
+  <g id="d_t0_start" filter="url(#shadow)">
+    <rect x="560" y="485" width="260" height="50" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="690.0" y="506.0" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="bold">D1: Start Latency Timer</text>
+    <text x="690.0" y="522.0" text-anchor="middle" fill="#f8fafc" font-size="9" fill-opacity="0.85">startTime = micros() (ESP32 HW Timer)</text>
+  </g>
+  <g id="d_format_uid" filter="url(#shadow)">
+    <rect x="560" y="570" width="260" height="55" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="690.0" y="593.5" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="bold">D2: Extract &amp; Format UID String</text>
+    <text x="690.0" y="609.5" text-anchor="middle" fill="#f8fafc" font-size="9" fill-opacity="0.85">uidByte[0..size] -&gt; uidStr (HEX)</text>
+  </g>
+  <g id="c_mode_branch" filter="url(#shadow)">
+    <polygon points="690.0,665 790,702.5 690.0,740 590,702.5" fill="#312e81" stroke="#818cf8" stroke-width="2" />
+    <text x="690.0" y="698.5" text-anchor="middle" fill="#e0e7ff" font-size="11" font-weight="bold">C3: Verification Architecture?</text>
+    <text x="690.0" y="714.5" text-anchor="middle" fill="#e0e7ff" font-size="9" fill-opacity="0.85">Level 1 vs Level 2 Evaluation</text>
+  </g>
+  <g id="d_level1_audit" filter="url(#shadow)">
+    <rect x="220" y="770" width="240" height="60" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
+    <text x="340.0" y="796.0" text-anchor="middle" fill="#fef3c7" font-size="11" font-weight="bold">LEVEL 1: UID-Only Audit</text>
+    <text x="340.0" y="812.0" text-anchor="middle" fill="#fef3c7" font-size="9" fill-opacity="0.85">T_exec ~2.8 ms | Vulnerable to Clones
+Direct Database / Whitelist Check</text>
+  </g>
+  <g id="d_level1_warn" filter="url(#shadow)">
+    <ellipse cx="340.0" cy="890.0" rx="120.0" ry="25.0" fill="#7f1d1d" stroke="#f87171" stroke-width="2" />
+    <text x="340.0" y="886.0" text-anchor="middle" fill="#fef2f2" font-size="11" font-weight="bold">VULNERABILITY DETECTED</text>
+    <text x="340.0" y="902.0" text-anchor="middle" fill="#fef2f2" font-size="9" fill-opacity="0.85">Zero cryptographic challenge (Trivial Replay)</text>
+  </g>
+  <g id="d_level2_exec" filter="url(#shadow)">
+    <rect x="720" y="770" width="260" height="60" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
+    <text x="850.0" y="796.0" text-anchor="middle" fill="#fef3c7" font-size="11" font-weight="bold">LEVEL 2: Sector 1 Block 4 Auth</text>
+    <text x="850.0" y="812.0" text-anchor="middle" fill="#fef3c7" font-size="9" fill-opacity="0.85">authenticate_and_read_block()
+T_exec ~30.2 ms | 3-Pass Mutual Auth</text>
+  </g>
+  <g id="c_auth_ok" filter="url(#shadow)">
+    <polygon points="850.0,865 950,900.0 850.0,935 750,900.0" fill="#312e81" stroke="#818cf8" stroke-width="2" />
+    <text x="850.0" y="896.0" text-anchor="middle" fill="#e0e7ff" font-size="11" font-weight="bold">C4: PCD_Authenticate == OK?</text>
+    <text x="850.0" y="912.0" text-anchor="middle" fill="#e0e7ff" font-size="9" fill-opacity="0.85">Crypto-1 Key A Accepted?</text>
+  </g>
+  <g id="d_auth_pass" filter="url(#shadow)">
+    <ellipse cx="710.0" cy="995.0" rx="110.0" ry="25.0" fill="#0f766e" stroke="#2dd4bf" stroke-width="2" />
+    <text x="710.0" y="991.0" text-anchor="middle" fill="#f0fdfa" font-size="11" font-weight="bold">AUTH_SUCCESS (Access Granted)</text>
+    <text x="710.0" y="1007.0" text-anchor="middle" fill="#f0fdfa" font-size="9" fill-opacity="0.85">Secure Sector Validation</text>
+  </g>
+  <g id="d_auth_fail" filter="url(#shadow)">
+    <ellipse cx="990.0" cy="995.0" rx="110.0" ry="25.0" fill="#7f1d1d" stroke="#f87171" stroke-width="2" />
+    <text x="990.0" y="991.0" text-anchor="middle" fill="#fef2f2" font-size="11" font-weight="bold">AUTH_FAILED (Access Denied)</text>
+    <text x="990.0" y="1007.0" text-anchor="middle" fill="#fef2f2" font-size="9" fill-opacity="0.85">Key Rejection / Tamper Detected</text>
+  </g>
+  <g id="d_bench_calc" filter="url(#shadow)">
+    <rect x="560" y="1055" width="260" height="55" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="690.0" y="1078.5" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="bold">D3: Stop Benchmark Timer</text>
+    <text x="690.0" y="1094.5" text-anchor="middle" fill="#f8fafc" font-size="9" fill-opacity="0.85">readTimeUs = micros() - startTime
+Tag Family Classified (SAK/ATQA)</text>
+  </g>
+  <g id="d_flash_commit" filter="url(#shadow)">
+    <rect x="1200" y="750" width="240" height="60" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
+    <text x="1320.0" y="776.0" text-anchor="middle" fill="#fef3c7" font-size="11" font-weight="bold">D4: LittleFS Flash Append</text>
+    <text x="1320.0" y="792.0" text-anchor="middle" fill="#fef3c7" font-size="9" fill-opacity="0.85">appendScanRecord() -&gt; /scans.jsonl
+Persists across hardware reboot</text>
+  </g>
+  <g id="d_oled_update" filter="url(#shadow)">
+    <rect x="1200" y="850" width="240" height="60" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="1320.0" y="876.0" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="bold">D5: Refresh SSD1306 OLED</text>
+    <text x="1320.0" y="892.0" text-anchor="middle" fill="#f8fafc" font-size="9" fill-opacity="0.85">Render UID, readTimeUs, authStatus
+I2C Transfer (4,200 µs)</text>
+  </g>
+  <g id="d_web_serve" filter="url(#shadow)">
+    <rect x="1200" y="950" width="240" height="60" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="1320.0" y="976.0" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="bold">D6: Async Web Dashboard</text>
+    <text x="1320.0" y="992.0" text-anchor="middle" fill="#f8fafc" font-size="9" fill-opacity="0.85">Serve /api/logs &amp; index.html
+Non-blocking AsyncTCP Thread</text>
+  </g>
+  <g id="d_halt" filter="url(#shadow)">
+    <rect x="560" y="1145" width="260" height="50" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="690.0" y="1166.0" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="bold">D7: RF Transponder Teardown</text>
+    <text x="690.0" y="1182.0" text-anchor="middle" fill="#f8fafc" font-size="9" fill-opacity="0.85">rfid.PICC_HaltA(); rfid.PCD_StopCrypto1();</text>
+  </g>
+  <g id="d_delay" filter="url(#shadow)">
+    <rect x="560" y="1225" width="260" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="690.0" y="1243.5" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="bold">D8: Loop Interval Delay</text>
+    <text x="690.0" y="1259.5" text-anchor="middle" fill="#f8fafc" font-size="9" fill-opacity="0.85">delay(1500) | Low Power Quiescence</text>
+  </g>
+  <g id="store_flash_mem" filter="url(#shadow)">
+    <rect x="1220" y="656" width="200" height="49" rx="6" fill="#78350f" stroke="#f59e0b" stroke-width="2" />
+    <ellipse cx="1320.0" cy="656" rx="100.0" ry="6" fill="#78350f" stroke="#f59e0b" stroke-width="2" />
+    <text x="1320.0" y="673.5" text-anchor="middle" fill="#fef3c7" font-size="11" font-weight="bold">PHYSICAL SPI FLASH</text>
+    <text x="1320.0" y="689.5" text-anchor="middle" fill="#fef3c7" font-size="9" fill-opacity="0.85">/scans.jsonl Partition</text>
+  </g>
+</svg>

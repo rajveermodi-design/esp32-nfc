@@ -1,0 +1,155 @@
+<mxfile host="app.diagrams.net" modified="2026-10-20T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+  <diagram id="dfg-telemetry" name="2. DFG - System Telemetry &amp; Benchmark Pipeline">
+    <mxGraphModel dx="1422" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1560" pageHeight="920" background="#0f172a" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="stg_src" value="STAGE 0: SENSOR &amp; HARDWARE TELEMETRY SOURCES" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="250" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="stg_parse" value="STAGE 1: ARITHMETIC &amp; HEX SERIALIZATION" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="330" y="100" width="270" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="stg_struct" value="STAGE 2: DOM PACKING &amp; FRAMEBUFFER BLIT" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="640" y="100" width="280" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="stg_stream" value="STAGE 3: BUS PACKAGING &amp; FLASH BUFFERING" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="960" y="100" width="270" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="stg_sink" value="STAGE 4: HARDWARE SINKS &amp; WEB OUTPUT" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="100" width="250" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr" value="&lt;b&gt;DATA FLOW GRAPH (DFG) — System Telemetry, Latency Benchmark &amp; Flash Logging Pipeline&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Data Pipeline: Sensor Timers &amp; Registers -&gt; Hex/JSON Formatting -&gt; SSD1306 Framebuffer &amp; LittleFS Flash&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="850" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_in" value="&lt;b&gt;Telemetry Source [HW]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="980" y="30" width="160" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_op" value="&lt;b&gt;Formatting / Serializer&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="30" width="160" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_out" value="&lt;b&gt;Flash / Display Sink&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="30" width="160" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="src_t0" value="&lt;b&gt;Timer t0 Register [32-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;micros() at RF start&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="210" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="src_t1" value="&lt;b&gt;Timer t1 Register [32-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;micros() at RF finish&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="230" width="210" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="src_uid" value="&lt;b&gt;Raw UID Bytes [4..7 Bytes]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;rfid.uid.uidByte[]&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="330" width="210" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="src_sak" value="&lt;b&gt;SAK Byte [8-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x08 (MIFARE) / 0x00 (Ultralight)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="440" width="210" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="src_atqa" value="&lt;b&gt;ATQA Word [16-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x0004 (ISO 14443-3)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="540" width="210" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="src_auth" value="&lt;b&gt;Auth Status Flag&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;AUTH_SUCCESS / AUTH_FAILED&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="640" width="210" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="src_uptime" value="&lt;b&gt;System Uptime [32-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;millis() since boot&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="740" width="210" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="op_sub_time" value="&lt;b&gt;OP1: Delta-t Latency Subtractor&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Delta_t = t1 - t0 (1.2 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="350" y="180" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_hex_fmt" value="&lt;b&gt;OP2: UID Hex-ASCII Serializer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;uidByte[] -&gt; &quot;AA:BB:CC:DD&quot; (14.5 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="350" y="330" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_classify" value="&lt;b&gt;OP3: Tag Family Classifier&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;size==7 ? NTAG : MIFARE (0.8 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="350" y="490" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_oled_blit" value="&lt;b&gt;OP4: SSD1306 Glyph Rasterizer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Convert text to 128x64 bitmask (2.1 ms)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="660" y="230" width="240" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_json_doc" value="&lt;b&gt;OP5: ArduinoJson DOM Builder&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;StaticJsonDocument&lt;256&gt; (18.2 µs)
+timestamp, uid, read_time_us, status&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="660" y="520" width="240" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="op_i2c_bus" value="&lt;b&gt;OP6: I2C Fast-Mode Transmit&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;400 kHz Wire Buffer Tx (2,050 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="980" y="230" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_jsonl_ser" value="&lt;b&gt;OP7: JSONL Line Serializer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;serializeJson(doc, file) (32.4 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="980" y="480" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="op_flash_flush" value="&lt;b&gt;OP8: LittleFS Page Cache Flush&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;SPI Physical Flash Commit (3,800 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="980" y="640" width="230" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="sink_oled" value="&lt;b&gt;SINK 1: OLED Display Screen&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;128x64 Monochrome Pixel Grid&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="230" width="210" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="sink_flash" value="&lt;b&gt;SINK 2: LittleFS Physical Flash&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;/scans.jsonl Partition (Non-Volatile)&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="560" width="210" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="sink_web" value="&lt;b&gt;SINK 3: Async Web Client Buffer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;/api/logs REST API Stream (WiFi AP)&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="720" width="210" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="e101" value="t0 µs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_t0" target="op_sub_time">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e102" value="t1 µs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_t1" target="op_sub_time">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e103" value="Raw Bytes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_uid" target="op_hex_fmt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e104" value="UID Size" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_uid" target="op_classify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e105" value="SAK Byte" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_sak" target="op_classify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e106" value="Delta_t (µs)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_sub_time" target="op_oled_blit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e107" value="UID String" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_hex_fmt" target="op_oled_blit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e108" value="Auth Status" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_auth" target="op_oled_blit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e109" value="timestamp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_uptime" target="op_json_doc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e110" value="family string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_classify" target="op_json_doc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e111" value="uid string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_hex_fmt" target="op_json_doc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e112" value="atqa string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_atqa" target="op_json_doc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e113" value="sak string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_sak" target="op_json_doc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e114" value="read_time_us" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_sub_time" target="op_json_doc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e115" value="status string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_auth" target="op_json_doc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e116" value="1024-Byte Framebuffer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_oled_blit" target="op_i2c_bus">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e117" value="I2C SDA/SCL Wire" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_i2c_bus" target="sink_oled">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e118" value="JSON Object" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_json_doc" target="op_jsonl_ser">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e119" value="ASCII Line Buffer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_jsonl_ser" target="op_flash_flush">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e120" value="Flash Page Commit" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_flash_flush" target="sink_flash">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e121" value="Async HTTP Socket" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="sink_flash" target="sink_web">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
