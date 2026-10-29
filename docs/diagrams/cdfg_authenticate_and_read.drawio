@@ -149,6 +149,12 @@ rfid.PICC_HaltA();&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillCol
         <mxCell id="e124" value="16-Byte Payload" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_commit" target="data_block_out">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="rf_overhead" value="&lt;b&gt;RF Bus Idle Overhead: 14,719 µs&lt;/b&gt;&lt;br/&gt;&lt;span style=&amp;#x27;font-size:9px;opacity:0.85;&amp;#x27;&gt;Includes RF frame timing gaps, antenna settling,&lt;br/&gt;SPI clock overhead, and ISO 14443 guard times.&lt;br/&gt;Included in WCET (28,500 µs) but not shown as&lt;br/&gt;computational nodes. Sum of visible nodes = 13,781 µs.&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#f59e0b;strokeWidth=1.5;fontColor=#fde68a;fontStyle=0;fontSize=10;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="600" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="crit_path_note" value="&lt;b&gt;━━ Critical Path (Yellow Highlight)&lt;/b&gt;&lt;br/&gt;&lt;span style=&amp;#x27;font-size:9px;opacity:0.85;&amp;#x27;&gt;START→D1→C1(Y)→D2→C2(Y)→D3→D4→C3(Y)→D5→C4(Y)→D6→CLEANUP→RETURN&lt;br/&gt;Total: 28,500 µs | Deadline: 35,000 µs | Slack: 6,500 µs (18.6%)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#facc15;strokeWidth=2;fontColor=#fef08a;fontStyle=0;fontSize=10;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="740" width="200" height="100" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

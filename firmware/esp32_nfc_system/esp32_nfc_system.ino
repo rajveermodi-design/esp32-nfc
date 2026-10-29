@@ -10,9 +10,11 @@
 #include <ESPAsyncWebServer.h>
 #include <ArduinoJson.h>
 
-// Pin Definitions for ESP32 + RC522 + OLED
+// Pin Definitions for ESP32 + RC522 + OLED + Buzzer + LED
 #define SS_PIN    5
 #define RST_PIN   27
+#define BUZZER_PIN 26   // GPIO26 PWM output for piezo buzzer
+#define LED_PIN    2    // GPIO2 onboard blue LED
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 
@@ -42,9 +44,39 @@ void appendScanRecord(uint32_t timestamp, String family, String uid, String atqa
   file.close();
 }
 
+// Critical function: Authenticate and read a single block from MIFARE Classic tag
+// Modeled as CDFG critical path — WCET: 28,500 µs | Deadline: 35,000 µs | Slack: 6,500 µs
+MFRC522::StatusCode authenticate_and_read_block(byte blockAddr, MFRC522::MIFARE_Key *key, byte *buffer, byte *bufferSize) {
+  // D1: Load Key A & UID Operands (2 µs)
+  // C1: SPI Bus Ready? — implicit in PCD_Authenticate
+  // D2: Transmit MF_AUTH Command (16 µs) + C2: Tag Handshake Ack (1,480 µs)
+  // D3: LFSR Init & Reader Encrypt (42 µs) + D4: Challenge Response (5,200 µs)
+  // C3: Mutual Auth OK? (6,800 µs)
+  MFRC522::StatusCode status = rfid.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, blockAddr, key, &(rfid.uid));
+  if (status != MFRC522::STATUS_OK) {
+    return status;  // ERR: Auth Rejection / Timeout
+  }
+
+  // D5: Transmit Read Block Cmd (18 µs)
+  // C4: Payload CRC-A Valid? (22 µs) — ISO 14443-3 CRC-A checksum
+  status = rfid.MIFARE_Read(blockAddr, buffer, bufferSize);
+  if (status != MFRC522::STATUS_OK) {
+    return status;  // ERR: CRC-A Mismatch / Read Failure
+  }
+
+  // D6: Commit 16-Byte Block to Buffer (5 µs) — data already in buffer
+  return MFRC522::STATUS_OK;
+}
+
 void setup() {
   Serial.begin(115200);
   delay(500);
+
+  // Initialize GPIO for Buzzer & Status LED
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(BUZZER_PIN, LOW);  // Buzzer off (0V — safe state)
+  digitalWrite(LED_PIN, HIGH);    // LED on (system alive indicator)
 
   // Initialize Hardware SPI & I2C
   SPI.begin(18, 19, 23, 5); // SCK, MISO, MOSI, SS
@@ -143,11 +175,21 @@ void loop() {
   for (byte i = 0; i < 6; i++) key.keyByte[i] = 0xFF; // Default transport key
   
   byte blockAddr = 4;
-  MFRC522::StatusCode status = rfid.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, blockAddr, &key, &(rfid.uid));
+  byte blockData[18];     // 16 bytes data + 2 bytes CRC-A
+  byte bufferSize = sizeof(blockData);
+  MFRC522::StatusCode status = authenticate_and_read_block(blockAddr, &key, blockData, &bufferSize);
   
   String authStatus = "AUTH_SUCCESS";
   if (status != MFRC522::STATUS_OK) {
     authStatus = "AUTH_FAILED";
+    // S4_FAULT: Error feedback — buzzer 500 Hz for 200 ms, LED fast blink
+    tone(BUZZER_PIN, 500, 200);
+    digitalWrite(LED_PIN, LOW);
+    delay(100);
+    digitalWrite(LED_PIN, HIGH);
+  } else {
+    // S5_LOG: Success feedback — buzzer 1 kHz for 100 ms
+    tone(BUZZER_PIN, 1000, 100);
   }
 
   uint32_t readTimeUs = micros() - startTime; // Total execution time for benchmark
@@ -169,8 +211,10 @@ void loop() {
   display.print("Auth: "); display.println(authStatus);
   display.display();
 
-  // Cleanup RFID state
+  // CLEANUP: PCD & PICC Teardown (180 µs) — convergence point for all paths
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
+  noTone(BUZZER_PIN);            // Ensure buzzer returns to 0V (safe state)
+  digitalWrite(LED_PIN, HIGH);   // LED solid ON (S1_IDLE ready)
   delay(1500);
 }
