@@ -1,188 +1,99 @@
-<mxfile host="app.diagrams.net" modified="2026-10-29T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
-  <diagram id="task-schedule" name="Task Schedule &amp; Hyperperiod Timeline">
-    <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" background="#0f172a" math="0" shadow="0">
+<mxfile host="app.diagrams.net" modified="2026-10-30T00:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+  <diagram id="task-schedule-rms" name="4. RMS - Task Schedule Timeline">
+    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1440" pageHeight="600" background="#0f172a" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-
-        <!-- Title -->
-        <mxCell id="title" value="&lt;b&gt;FIGURE 4: TASK SCHEDULE, RMS SCHEDULABILITY PROOF &amp; HYPERPERIOD TIMELINE&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;opacity:0.85;'&gt;Rate-Monotonic Scheduling (RMS) — Fixed-Priority Preemptive | Hyperperiod = LCM(50, 200, 1000, 1000, 5000) = 5000 ms&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="40" y="15" width="1000" height="50" as="geometry" />
+        <mxCell id="hdr_rms" value="&lt;b&gt;FIGURE 4: RATE-MONOTONIC SCHEDULING (RMS) TIMELINE&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#94a3b8;&quot;&gt;Hyperperiod H = 1000 ms | Total Utilisation U = 0.440 (44.0%) &amp;lt;= U_bound = 0.757 | All Deadlines Met&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="30" y="15" width="820" height="52" as="geometry" />
         </mxCell>
-
-        <!-- ======== TASK TABLE ======== -->
-        <mxCell id="table_title" value="&lt;b&gt;TASK SET DEFINITION&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#38bdf8;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="75" width="300" height="25" as="geometry" />
+        <mxCell id="legend_rms" value="&lt;b&gt;TASK PRIORITY &amp;amp; STATUS LEGEND&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9.5px;color:#38bdf8;&quot;&gt;● τ1 (P1)&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#22c55e;&quot;&gt;● τ2 (P2)&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#eab308;&quot;&gt;● τ3 (P3)&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#a855f7;&quot;&gt;● τ4 (P4)&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#ef4444;&quot;&gt;● Preempted&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#64748b;&quot;&gt;● Idle&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#475569;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="865" y="15" width="545" height="52" as="geometry" />
         </mxCell>
-
-        <!-- Table Header -->
-        <mxCell id="th" value="&lt;table style='border-collapse:collapse;color:#f8fafc;font-size:10px;width:100%;'&gt;&lt;tr style='background:#1e293b;font-weight:bold;'&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Task ID&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Task Name&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Trigger&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Period T (ms)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;WCET C (ms)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Deadline D (ms)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Priority&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;U = C/T&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Measurement Source&lt;/td&gt;&lt;/tr&gt;&lt;tr style='background:#0f172a;'&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;color:#f87171;font-weight:bold;'&gt;τ₁&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;rf_poll_task&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Periodic&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;50&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;3.0&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;50&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;1 (Highest)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;0.0600&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;micros() delta on PICC_IsNewCardPresent()&lt;/td&gt;&lt;/tr&gt;&lt;tr style='background:#1e293b;'&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;color:#fb923c;font-weight:bold;'&gt;τ₂&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;authenticate_and_read_block&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Sporadic (tag)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;1000&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;28.5&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;35.0&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;2&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;0.0285&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Empirical benchmark (Review2 §2.3)&lt;/td&gt;&lt;/tr&gt;&lt;tr style='background:#0f172a;'&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;color:#818cf8;font-weight:bold;'&gt;τ₃&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;update_oled_ui&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Periodic&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;200&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;4.2&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;200&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;3&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;0.0210&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Candidate table (Review2 §2.1)&lt;/td&gt;&lt;/tr&gt;&lt;tr style='background:#1e293b;'&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;color:#10b981;font-weight:bold;'&gt;τ₄&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;littlefs_flush_task&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Sporadic (scan)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;1000&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;8.0&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;100&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;4&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;0.0080&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Est: serializeJson() + file.flush()&lt;/td&gt;&lt;/tr&gt;&lt;tr style='background:#0f172a;'&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;color:#06b6d4;font-weight:bold;'&gt;τ₅&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;async_http_handler&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;Sporadic (HTTP)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;5000&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;2.0&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;5000&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;5 (Lowest)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;0.0004&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 8px;'&gt;ESPAsyncWebServer response latency&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="text;html=1;strokeColor=#475569;fillColor=#0f172a;align=left;verticalAlign=top;rounded=1;fontColor=#f8fafc;overflow=auto;" vertex="1" parent="1">
-          <mxGeometry x="40" y="105" width="1400" height="195" as="geometry" />
+        <mxCell id="t1_bg_lbl" value="&lt;b&gt;τ1: RFID Polling &amp; Auth&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#38bdf8;font-family:monospace;&quot;&gt;T1=50ms, C1=15ms, P1&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="30" y="110" width="230" height="62" as="geometry" />
         </mxCell>
-
-        <!-- ======== RMS PROOF ======== -->
-        <mxCell id="rms_title" value="&lt;b&gt;RATE-MONOTONIC SCHEDULABILITY PROOF&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#38bdf8;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="320" width="400" height="25" as="geometry" />
+        <mxCell id="t1_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="270" y="110" width="1105" height="62" as="geometry" />
         </mxCell>
-        <mxCell id="rms_proof" value="&lt;div style='font-family:monospace;font-size:11px;color:#f8fafc;line-height:1.6;'&gt;&lt;b style='color:#38bdf8;'&gt;Liu &amp; Layland (1973) Sufficient Condition for n = 5 tasks:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;U_bound = n × (2^(1/n) − 1) = 5 × (2^(1/5) − 1) = 5 × (2^0.2 − 1) = 5 × 0.14870 = &lt;b style='color:#10b981;'&gt;0.74349&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;b style='color:#38bdf8;'&gt;Total System Utilization:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;U_total = U₁ + U₂ + U₃ + U₄ + U₅&lt;br/&gt;U_total = C₁/T₁ + C₂/T₂ + C₃/T₃ + C₄/T₄ + C₅/T₅&lt;br/&gt;U_total = 3.0/50 + 28.5/1000 + 4.2/200 + 8.0/1000 + 2.0/5000&lt;br/&gt;U_total = 0.0600 + 0.0285 + 0.0210 + 0.0080 + 0.0004&lt;br/&gt;U_total = &lt;b style='color:#f59e0b;'&gt;0.1179&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;b style='color:#10b981;'&gt;✓ U_total = 0.1179 ≤ 0.7435 = U_bound&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;b style='color:#10b981;'&gt;∴ The task set is GUARANTEED SCHEDULABLE under RMS.&lt;/b&gt;&lt;br/&gt;System operates at &lt;b&gt;15.9%&lt;/b&gt; of utilization ceiling → substantial headroom for future tasks.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#10b981;strokeWidth=2;fontColor=#f8fafc;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;spacingRight=15;" vertex="1" parent="1">
-          <mxGeometry x="40" y="350" width="680" height="310" as="geometry" />
+        <mxCell id="t2_bg_lbl" value="&lt;b&gt;τ2: OLED UI Refresh&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#22c55e;font-family:monospace;&quot;&gt;T2=200ms, C2=10ms, P2&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="30" y="185" width="230" height="62" as="geometry" />
         </mxCell>
-
-        <!-- ======== SHARED RESOURCES ======== -->
-        <mxCell id="sr_title" value="&lt;b&gt;SHARED RESOURCE PROTECTION&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#38bdf8;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="760" y="320" width="300" height="25" as="geometry" />
+        <mxCell id="t2_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="270" y="185" width="1105" height="62" as="geometry" />
         </mxCell>
-        <mxCell id="sr_table" value="&lt;table style='border-collapse:collapse;color:#f8fafc;font-size:10px;width:100%;'&gt;&lt;tr style='background:#1e293b;font-weight:bold;'&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;Resource&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;Contending Tasks&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;Protection&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;Max Block (ms)&lt;/td&gt;&lt;/tr&gt;&lt;tr style='background:#0f172a;'&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;color:#818cf8;'&gt;SPI Bus (HSPI)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;τ₁, τ₂&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;Binary Mutex (xSemaphoreTake)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;28.5&lt;/td&gt;&lt;/tr&gt;&lt;tr style='background:#1e293b;'&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;color:#10b981;'&gt;I2C Bus (Wire)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;τ₃ only&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;N/A (single consumer)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;0&lt;/td&gt;&lt;/tr&gt;&lt;tr style='background:#0f172a;'&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;color:#a78bfa;'&gt;LittleFS File&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;τ₂/τ₄ (write), τ₅ (read)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;Mutex / portENTER_CRITICAL()&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;8.0&lt;/td&gt;&lt;/tr&gt;&lt;tr style='background:#1e293b;'&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;color:#06b6d4;'&gt;HTTP Response Buffer&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;τ₅&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;FreeRTOS task isolation (Core 0)&lt;/td&gt;&lt;td style='border:1px solid #475569;padding:4px 6px;'&gt;2.0&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="text;html=1;strokeColor=#475569;fillColor=#0f172a;align=left;verticalAlign=top;rounded=1;fontColor=#f8fafc;overflow=auto;" vertex="1" parent="1">
-          <mxGeometry x="760" y="350" width="680" height="165" as="geometry" />
+        <mxCell id="t3_bg_lbl" value="&lt;b&gt;τ3: LittleFS Commit&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#eab308;font-family:monospace;&quot;&gt;T3=500ms, C3=25ms, P3&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="30" y="260" width="230" height="62" as="geometry" />
         </mxCell>
-
-        <!-- ======== HYPERPERIOD TIMELINE ======== -->
-        <mxCell id="tl_title" value="&lt;b&gt;HYPERPERIOD TIMELINE (0 — 5000 ms)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;Showing first 500 ms detail window — τ₁ executes every 50 ms (highest priority), τ₃ every 200 ms. Sporadic tasks τ₂, τ₄ triggered at t=100 ms (tag arrival). Idle time shown in gray.&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#38bdf8;fontSize=12;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="690" width="800" height="40" as="geometry" />
+        <mxCell id="t3_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="270" y="260" width="1105" height="62" as="geometry" />
         </mxCell>
-
-        <!-- Timeline Y-axis labels -->
-        <mxCell id="tl_y1" value="&lt;b&gt;τ₁ rf_poll (P=1)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;rounded=0;fontColor=#f87171;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="40" y="745" width="130" height="30" as="geometry" />
+        <mxCell id="t4_bg_lbl" value="&lt;b&gt;τ4: Async Web Server&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#a855f7;font-family:monospace;&quot;&gt;T4=1000ms, C4=40ms, P4&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="30" y="335" width="230" height="62" as="geometry" />
         </mxCell>
-        <mxCell id="tl_y2" value="&lt;b&gt;τ₂ auth_read (P=2)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;rounded=0;fontColor=#fb923c;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="40" y="790" width="130" height="30" as="geometry" />
+        <mxCell id="t4_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="270" y="335" width="1105" height="62" as="geometry" />
         </mxCell>
-        <mxCell id="tl_y3" value="&lt;b&gt;τ₃ oled_ui (P=3)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;rounded=0;fontColor=#818cf8;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="40" y="835" width="130" height="30" as="geometry" />
+        <mxCell id="tc_bg_lbl" value="&lt;b&gt;CPU Core Execution State&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#64748b;font-family:monospace;&quot;&gt;Core Pipeline Activity&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="30" y="410" width="230" height="72" as="geometry" />
         </mxCell>
-        <mxCell id="tl_y4" value="&lt;b&gt;τ₄ lfs_flush (P=4)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;rounded=0;fontColor=#10b981;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="40" y="880" width="130" height="30" as="geometry" />
+        <mxCell id="tc_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="270" y="410" width="1105" height="72" as="geometry" />
         </mxCell>
-        <mxCell id="tl_y5" value="&lt;b&gt;τ₅ http (P=5)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;rounded=0;fontColor=#06b6d4;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="40" y="925" width="130" height="30" as="geometry" />
+        <mxCell id="b_t1_1" value="τ1 [Burst 1]&lt;br/&gt;0-15ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="270" y="118" width="128" height="46" as="geometry" />
         </mxCell>
-
-        <!-- Timeline X-axis (0-500 ms) -->
-        <mxCell id="tl_axis" value="" style="shape=line;strokeColor=#475569;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="180" y="960" width="1400" height="1" as="geometry" />
+        <mxCell id="b_t1_2" value="τ1 [Burst 2]&lt;br/&gt;50-65ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="695" y="118" width="128" height="46" as="geometry" />
         </mxCell>
-        <!-- Time markers -->
-        <mxCell id="tm0" value="0" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="175" y="965" width="30" height="15" as="geometry" />
+        <mxCell id="b_t1_3" value="τ1 [Burst 3]&lt;br/&gt;100-115ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="118" width="128" height="46" as="geometry" />
         </mxCell>
-        <mxCell id="tm50" value="50" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="315" y="965" width="30" height="15" as="geometry" />
+        <mxCell id="b_t2_1" value="τ2 [Exec]&lt;br/&gt;15-25ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#16a34a;strokeColor=#4ade80;strokeWidth=1.3;fontColor=#052e16;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="398" y="193" width="85" height="46" as="geometry" />
         </mxCell>
-        <mxCell id="tm100" value="100" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="455" y="965" width="30" height="15" as="geometry" />
+        <mxCell id="b_t3_1" value="τ3 [Commit]&lt;br/&gt;25-50ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ca8a04;strokeColor=#facc15;strokeWidth=1.3;fontColor=#422006;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="482" y="268" width="212" height="46" as="geometry" />
         </mxCell>
-        <mxCell id="tm150" value="150" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="595" y="965" width="30" height="15" as="geometry" />
+        <mxCell id="b_t4_1" value="τ4 [Web Srv - Part 1]&lt;br/&gt;65-100ms (35ms)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9333ea;strokeColor=#c084fc;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="822" y="343" width="298" height="46" as="geometry" />
         </mxCell>
-        <mxCell id="tm200" value="200" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="735" y="965" width="30" height="15" as="geometry" />
+        <mxCell id="b_t4_pre" value="PREEMPTED&lt;br/&gt;5ms left" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2b0a10;strokeColor=#ef4444;strokeWidth=1.3;fontColor=#fca5a5;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="343" width="128" height="46" as="geometry" />
         </mxCell>
-        <mxCell id="tm250" value="250" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="875" y="965" width="30" height="15" as="geometry" />
+        <mxCell id="b_t4_2" value="τ4&lt;br/&gt;5ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9333ea;strokeColor=#c084fc;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="1248" y="343" width="42" height="46" as="geometry" />
         </mxCell>
-        <mxCell id="tm300" value="300" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="1015" y="965" width="30" height="15" as="geometry" />
+        <mxCell id="b_tc_1" value="Core: τ1&lt;br/&gt;15ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="270" y="420" width="128" height="52" as="geometry" />
         </mxCell>
-        <mxCell id="tm350" value="350" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="1155" y="965" width="30" height="15" as="geometry" />
+        <mxCell id="b_tc_2" value="Core: τ2&lt;br/&gt;10ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#16a34a;strokeColor=#4ade80;strokeWidth=1.3;fontColor=#052e16;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="398" y="420" width="85" height="52" as="geometry" />
         </mxCell>
-        <mxCell id="tm400" value="400" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="1295" y="965" width="30" height="15" as="geometry" />
+        <mxCell id="b_tc_3" value="Core: τ3&lt;br/&gt;25ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ca8a04;strokeColor=#facc15;strokeWidth=1.3;fontColor=#422006;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="482" y="420" width="212" height="52" as="geometry" />
         </mxCell>
-        <mxCell id="tm500" value="500 ms" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="1540" y="965" width="40" height="15" as="geometry" />
+        <mxCell id="b_tc_4" value="Core: τ1&lt;br/&gt;15ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="695" y="420" width="128" height="52" as="geometry" />
         </mxCell>
-
-        <!-- Execution blocks for τ₁ (rf_poll, every 50ms, 3ms each = ~8.4px per ms at scale 2.8px/ms) -->
-        <!-- Scale: 500ms maps to ~1400px → 2.8 px/ms. 3ms = ~8px, 50ms = 140px -->
-        <!-- τ₁ at t=0 -->
-        <mxCell id="t1_0" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#f87171;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="180" y="748" width="8" height="25" as="geometry" />
+        <mxCell id="b_tc_5" value="Core: τ4&lt;br/&gt;35ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9333ea;strokeColor=#c084fc;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="822" y="420" width="298" height="52" as="geometry" />
         </mxCell>
-        <!-- τ₁ at t=50 -->
-        <mxCell id="t1_50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#f87171;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="320" y="748" width="8" height="25" as="geometry" />
+        <mxCell id="b_tc_6" value="τ1 [Preempt]&lt;br/&gt;15ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="420" width="128" height="52" as="geometry" />
         </mxCell>
-        <!-- τ₁ at t=100 -->
-        <mxCell id="t1_100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#f87171;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="460" y="748" width="8" height="25" as="geometry" />
+        <mxCell id="b_tc_7" value="τ4&lt;br/&gt;5ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9333ea;strokeColor=#c084fc;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="1248" y="420" width="42" height="52" as="geometry" />
         </mxCell>
-        <!-- τ₁ at t=150 (preempts τ₂) -->
-        <mxCell id="t1_150" value="↑P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#fef2f2;strokeWidth=1;fontColor=#fef2f2;fontSize=7;" vertex="1" parent="1">
-          <mxGeometry x="600" y="748" width="8" height="25" as="geometry" />
+        <mxCell id="b_tc_idle" value="CPU IDLE / SLEEP&lt;br/&gt;120-130ms (Power-Save)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#64748b;strokeWidth=1.3;fontColor=#94a3b8;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="420" width="85" height="52" as="geometry" />
         </mxCell>
-        <!-- τ₁ at t=200 -->
-        <mxCell id="t1_200" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#f87171;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="740" y="748" width="8" height="25" as="geometry" />
+        <mxCell id="callout_p100" value="&lt;b&gt;Preemption: τ1 preempts τ4&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8px;&quot;&gt;τ4 suspended (5ms left) → τ1 runs 15ms&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2d0a10;strokeColor=#ef4444;strokeWidth=1.5;fontColor=#fef2f2;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="995" y="290" width="250" height="34" as="geometry" />
         </mxCell>
-        <!-- τ₁ at t=250 -->
-        <mxCell id="t1_250" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#f87171;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="880" y="748" width="8" height="25" as="geometry" />
+        <mxCell id="footer_rms" value="&lt;b&gt;Hyperperiod H = 1000 ms&lt;/b&gt; | Total Utilisation U = 0.440 (44.0%) &amp;lt;= U_bound = 0.757 | &lt;b style=&quot;color:#4ade80;&quot;&gt;All Deadlines Met&lt;/b&gt; | CPU Idle Slack = 56.0%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1;fontColor=#94a3b8;fontSize=9.5;align=center;" vertex="1" parent="1">
+          <mxGeometry x="30" y="550" width="1380" height="30" as="geometry" />
         </mxCell>
-        <!-- τ₁ at t=300 -->
-        <mxCell id="t1_300" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#f87171;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="1020" y="748" width="8" height="25" as="geometry" />
-        </mxCell>
-        <!-- τ₁ at t=350 -->
-        <mxCell id="t1_350" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#f87171;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="1160" y="748" width="8" height="25" as="geometry" />
-        </mxCell>
-        <!-- τ₁ at t=400 -->
-        <mxCell id="t1_400" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#f87171;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="1300" y="748" width="8" height="25" as="geometry" />
-        </mxCell>
-        <!-- τ₁ at t=450 -->
-        <mxCell id="t1_450" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f87171;strokeColor=#f87171;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="1440" y="748" width="8" height="25" as="geometry" />
-        </mxCell>
-
-        <!-- τ₂ at t=103 (after τ₁@100 finishes, tag detected). 28.5ms = ~80px. Preempted by τ₁@150 for 3ms. -->
-        <mxCell id="t2_100a" value="auth_and_read" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fb923c;strokeColor=#fb923c;strokeWidth=0;fontColor=#fef3c7;fontSize=8;" vertex="1" parent="1">
-          <mxGeometry x="468" y="793" width="132" height="25" as="geometry" />
-        </mxCell>
-        <!-- τ₂ preempted gap (τ₁ runs at t=150) -->
-        <mxCell id="t2_100b" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=1;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="600" y="793" width="8" height="25" as="geometry" />
-        </mxCell>
-        <!-- τ₂ resumes after τ₁@150 -->
-        <mxCell id="t2_100c" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fb923c;strokeColor=#fb923c;strokeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="608" y="793" width="20" height="25" as="geometry" />
-        </mxCell>
-
-        <!-- τ₃ at t=0 (after τ₁@0 finishes at t=3) -->
-        <mxCell id="t3_0" value="oled" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#818cf8;strokeColor=#818cf8;strokeWidth=0;fontColor=#e0e7ff;fontSize=8;" vertex="1" parent="1">
-          <mxGeometry x="188" y="838" width="12" height="25" as="geometry" />
-        </mxCell>
-        <!-- τ₃ at t=200 (after τ₁@200 finishes) -->
-        <mxCell id="t3_200" value="oled" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#818cf8;strokeColor=#818cf8;strokeWidth=0;fontColor=#e0e7ff;fontSize=8;" vertex="1" parent="1">
-          <mxGeometry x="748" y="838" width="12" height="25" as="geometry" />
-        </mxCell>
-        <!-- τ₃ at t=400 -->
-        <mxCell id="t3_400" value="oled" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#818cf8;strokeColor=#818cf8;strokeWidth=0;fontColor=#e0e7ff;fontSize=8;" vertex="1" parent="1">
-          <mxGeometry x="1308" y="838" width="12" height="25" as="geometry" />
-        </mxCell>
-
-        <!-- τ₄ at t≈135 (after τ₂ completes around t=131.5) -->
-        <mxCell id="t4_135" value="flash flush" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#10b981;strokeColor=#10b981;strokeWidth=0;fontColor=#ecfdf5;fontSize=8;" vertex="1" parent="1">
-          <mxGeometry x="628" y="883" width="22" height="25" as="geometry" />
-        </mxCell>
-
-        <!-- Idle periods (gray) -->
-        <mxCell id="idle_note" value="&lt;span style='font-size:9px;color:#64748b;'&gt;Gray = CPU Idle&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="180" y="945" width="100" height="15" as="geometry" />
-        </mxCell>
-
-        <!-- Preemption annotation -->
-        <mxCell id="preempt_note" value="&lt;span style='font-size:9px;color:#f87171;'&gt;↑P = Preemption point (τ₁ preempts τ₂ at t=150 ms)&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="600" y="730" width="300" height="15" as="geometry" />
-        </mxCell>
-
-        <!-- Summary metrics -->
-        <mxCell id="summary" value="&lt;b&gt;SUMMARY METRICS&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style='font-size:10px;'&gt;• U_total = &lt;b&gt;0.1179&lt;/b&gt; (11.79% CPU utilization)&lt;br/&gt;• U_bound (n=5) = &lt;b&gt;0.7435&lt;/b&gt; (74.35% theoretical ceiling)&lt;br/&gt;• Headroom = &lt;b&gt;84.1%&lt;/b&gt; of utilization budget remaining&lt;br/&gt;• Hyperperiod = &lt;b&gt;5,000 ms&lt;/b&gt;&lt;br/&gt;• Max SPI blocking = &lt;b&gt;28.5 ms&lt;/b&gt; (needs mutex if multi-tasked)&lt;br/&gt;• System is &lt;b style='color:#10b981;'&gt;GUARANTEED SCHEDULABLE&lt;/b&gt; under RMS&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2;fontColor=#f8fafc;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;spacingRight=12;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="760" y="535" width="380" height="180" as="geometry" />
-        </mxCell>
-
       </root>
     </mxGraphModel>
   </diagram>

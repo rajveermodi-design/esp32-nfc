@@ -1,0 +1,27 @@
+# ==============================================================================
+# Diagram Generation & Build Scripts (AI / Programmatic Generators)
+# ==============================================================================
+docs/diagrams/*.py
+docs/diagrams/__pycache__/
+__pycache__/
+*.pyc
+*.pyo
+
+# ==============================================================================
+# Wokwi Virtual Simulation Environment & Configurations
+# ==============================================================================
+simulation/
+/diagram.json
+/wokwi.toml
+/libraries.txt
+/partitions.csv
+
+# ==============================================================================
+# OS & Editor Artifacts
+# ==============================================================================
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+.vscode/
+.idea/

@@ -1,150 +1,37 @@
-<mxfile host="app.diagrams.net" modified="2026-10-29T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
-  <diagram id="fsm-behaviour" name="System-Behaviour FSM (Moore Machine)">
-    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1200" background="#0f172a" math="0" shadow="0">
+<mxfile host="app.diagrams.net" modified="2026-10-30T00:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+  <diagram id="fsm-moore-model" name="3. FSM - System Moore Model">
+    <mxGraphModel dx="1600" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1720" pageHeight="1280" background="#0f172a" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-
-        <!-- Title -->
-        <mxCell id="title" value="&lt;b&gt;FIGURE 3: SYSTEM-BEHAVIOUR FINITE STATE MACHINE (Moore Machine)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;opacity:0.85;'&gt;Classification: Moore — Outputs determined solely by current state, not input events. Justification: Each state has deterministic physical outputs (RF field, display content, buzzer voltage, LED state) regardless of entry path, simplifying formal verification and safety analysis.&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;fontSize=13;" vertex="1" parent="1">
-          <mxGeometry x="40" y="15" width="1200" height="55" as="geometry" />
+        <mxCell id="hdr_fsm" value="&lt;b&gt;FIGURE 3: SYSTEM-BEHAVIOUR FINITE STATE MACHINE (MOORE MODEL)&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#94a3b8;&quot;&gt;Access Control Terminal Lifecycle: S0_IDLE (Safe State) -&amp;gt; Verification -&amp;gt; Persistence -&amp;gt; Fault Recovery&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1150" height="84" as="geometry" />
         </mxCell>
-
-        <!-- Legend -->
-        <mxCell id="leg_safe" value="&lt;b&gt;★ Safe State (S1_IDLE)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="1300" y="15" width="170" height="25" as="geometry" />
+        <mxCell id="legend_fsm" value="&lt;b&gt;MOORE FSM NOTATION &amp;amp; SPECIFICATION LEGEND&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#38bdf8;&quot;&gt;● Operational State (Cyan Outline)&lt;/span&gt; | &lt;span style=&quot;font-size:10px;color:#ef4444;&quot;&gt;⚠ Fault State (Red Outline)&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#22c55e;font-weight:bold;&quot;&gt;┈ Safe State Return (Green Dashed)&lt;/span&gt; | &lt;span style=&quot;font-size:10px;color:#38bdf8;&quot;&gt;Event [Guard]&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#475569;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="30" width="470" height="84" as="geometry" />
         </mxCell>
-        <mxCell id="leg_fault" value="&lt;b&gt;⚠ Fault State (S4_FAULT)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#f87171;strokeWidth=2;fontColor=#fef2f2;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="1300" y="45" width="170" height="25" as="geometry" />
+        <mxCell id="s0" value="&lt;b&gt;S0: IDLE ★ (DESIGNATED SAFE STATE)&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #22c55e;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#a7f3d0;font-family:monospace;&quot;&gt;OLED: &#x27;Ready / Waiting&#x27;&lt;br/&gt;Buzzer: 0V | LittleFS: Idle&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#22c55e;strokeWidth=3;fontColor=#f0fdfa;arcSize=10;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="570" y="180" width="400" height="96" as="geometry" />
         </mxCell>
-
-        <!-- ======== STATES ======== -->
-
-        <!-- S0_INIT -->
-        <mxCell id="s0" value="&lt;b&gt;S0_INIT&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;System Boot &amp; Peripheral Init&lt;/span&gt;&lt;hr size='1'/&gt;&lt;span style='font-size:8px;opacity:0.75;'&gt;OLED: &amp;quot;Initializing...&amp;quot;&lt;br/&gt;RF: OFF | Buzzer: 0V&lt;br/&gt;Wi-Fi: AP Starting | LED: Blink&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2.5;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="640" y="100" width="220" height="110" as="geometry" />
+        <mxCell id="s1" value="&lt;b&gt;S1: DETECT_TAG&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #38bdf8;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#bae6fd;font-family:monospace;&quot;&gt;OLED: &#x27;Tag Detected&#x27;&lt;br/&gt;Buzzer: 30ms Pulse | Extract UID/SAK&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2.5;fontColor=#f8fafc;arcSize=10;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="570" y="390" width="400" height="96" as="geometry" />
         </mxCell>
-
-        <!-- S1_IDLE (Safe State) -->
-        <mxCell id="s1" value="&lt;b&gt;★ S1_IDLE (SAFE STATE)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;Waiting for Tag — RF Polling&lt;/span&gt;&lt;hr size='1'/&gt;&lt;span style='font-size:8px;opacity:0.75;'&gt;OLED: &amp;quot;Waiting for tag...&amp;quot;&lt;br/&gt;RF: Carrier ON (13.56 MHz polling)&lt;br/&gt;Buzzer: 0V | LED: Solid ON&lt;br/&gt;Crypto1: STOPPED | Files: CLOSED&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=3;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="620" y="340" width="260" height="140" as="geometry" />
+        <mxCell id="s2" value="&lt;b&gt;S2: AUTH_SECTOR&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #38bdf8;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#bae6fd;font-family:monospace;&quot;&gt;OLED: &#x27;Authenticating...&#x27;&lt;br/&gt;Buzzer: 0V | Run Crypto-1 Engine&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2.5;fontColor=#f8fafc;arcSize=10;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="570" y="600" width="400" height="96" as="geometry" />
         </mxCell>
-
-        <!-- S2_READ_UID -->
-        <mxCell id="s2" value="&lt;b&gt;S2_READ_UID&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;UID Extraction &amp; Classification&lt;/span&gt;&lt;hr size='1'/&gt;&lt;span style='font-size:8px;opacity:0.75;'&gt;OLED: Updating...&lt;br/&gt;RF: Anti-collision active&lt;br/&gt;Buzzer: 0V | LED: ON&lt;br/&gt;Timer: startTime = micros()&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2.5;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="200" y="560" width="230" height="130" as="geometry" />
+        <mxCell id="s3" value="&lt;b&gt;S3: LOG_PERSIST&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #38bdf8;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#bae6fd;font-family:monospace;&quot;&gt;OLED: &#x27;Access Granted&#x27;&lt;br/&gt;Buzzer: 100ms Chirp | Append LittleFS&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2.5;fontColor=#f8fafc;arcSize=10;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="570" y="810" width="400" height="96" as="geometry" />
         </mxCell>
-
-        <!-- S3_AUTH -->
-        <mxCell id="s3" value="&lt;b&gt;S3_AUTH&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;Cryptographic Sector Authentication&lt;/span&gt;&lt;hr size='1'/&gt;&lt;span style='font-size:8px;opacity:0.75;'&gt;OLED: &amp;quot;Authenticating...&amp;quot;&lt;br/&gt;RF: Crypto-1 session active&lt;br/&gt;Buzzer: 0V | LED: ON&lt;br/&gt;Deadline: 35,000 µs&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2.5;fontColor=#e0e7ff;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="200" y="800" width="230" height="130" as="geometry" />
+        <mxCell id="s4" value="&lt;b&gt;S4: FAULT ⚠ (FAULT CONTAINMENT)&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #ef4444;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#fca5a5;font-family:monospace;&quot;&gt;OLED: &#x27;Auth Failed / Error&#x27;&lt;br/&gt;Buzzer: 2x 300ms Buzz | StopCrypto1()&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3f1218;strokeColor=#ef4444;strokeWidth=2.5;fontColor=#fef2f2;arcSize=10;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="490" width="460" height="105" as="geometry" />
         </mxCell>
-
-        <!-- S4_FAULT -->
-        <mxCell id="s4" value="&lt;b&gt;⚠ S4_FAULT&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;Error / Rejection Trap&lt;/span&gt;&lt;hr size='1'/&gt;&lt;span style='font-size:8px;opacity:0.75;'&gt;OLED: Error message displayed&lt;br/&gt;RF: Carrier OFF (PICC_HaltA)&lt;br/&gt;Buzzer: 500 Hz × 200 ms&lt;br/&gt;LED: Fast Blink&lt;br/&gt;PCD_StopCrypto1() executed&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#f87171;strokeWidth=3;fontColor=#fef2f2;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1070" y="680" width="240" height="150" as="geometry" />
-        </mxCell>
-
-        <!-- S5_LOG -->
-        <mxCell id="s5" value="&lt;b&gt;S5_LOG&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;Persist &amp; Display Result&lt;/span&gt;&lt;hr size='1'/&gt;&lt;span style='font-size:8px;opacity:0.75;'&gt;OLED: Scan result (UID, time, auth)&lt;br/&gt;RF: PICC_HaltA issued&lt;br/&gt;Buzzer: 1 kHz × 100 ms (success)&lt;br/&gt;LED: Solid ON&lt;br/&gt;LittleFS: file.flush() committed&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="640" y="920" width="230" height="150" as="geometry" />
-        </mxCell>
-
-        <!-- ======== TRANSITIONS ======== -->
-
-        <!-- S0 → S1: boot_complete -->
-        <mxCell id="t01" value="&lt;b&gt;boot_complete&lt;/b&gt;&lt;br/&gt;[SPI ∧ Wire ∧ LittleFS ∧ WiFi == OK]&lt;br/&gt;/ display(&amp;quot;System Online&amp;quot;)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#7dd3fc;fontSize=9;labelBackgroundColor=#0f172a;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="s0" target="s1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- S0 → S4: init_fail -->
-        <mxCell id="t04" value="&lt;b&gt;init_fail&lt;/b&gt;&lt;br/&gt;[any peripheral returns false]&lt;br/&gt;/ Serial.println(&amp;quot;FATAL&amp;quot;)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2;fontColor=#fca5a5;fontSize=9;labelBackgroundColor=#0f172a;exitX=1;exitY=0.7;entryX=1;entryY=0;" edge="1" parent="1" source="s0" target="s4">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1400" y="177" />
-              <mxPoint x="1400" y="680" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-
-        <!-- S1 → S2: tag_detected -->
-        <mxCell id="t12" value="&lt;b&gt;tag_detected&lt;/b&gt;&lt;br/&gt;[PICC_IsNewCardPresent() == true]&lt;br/&gt;/ startTime = micros()" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#7dd3fc;fontSize=9;labelBackgroundColor=#0f172a;exitX=0;exitY=0.7;entryX=0.5;entryY=0;" edge="1" parent="1" source="s1" target="s2">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- S1 → S1: http_request (self-loop) -->
-        <mxCell id="t11" value="&lt;b&gt;http_request&lt;/b&gt;&lt;br/&gt;[AsyncWebServer callback]&lt;br/&gt;/ serve /api/logs JSON" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=1.5;fontColor=#67e8f9;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s1" target="s1">
-          <mxGeometry x="0.5" y="30" relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="880" y="380" />
-              <mxPoint x="940" y="380" />
-              <mxPoint x="940" y="440" />
-              <mxPoint x="880" y="440" />
-            </Array>
-            <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
-
-        <!-- S2 → S3: serial_read -->
-        <mxCell id="t23" value="&lt;b&gt;serial_read&lt;/b&gt;&lt;br/&gt;[PICC_ReadCardSerial() == true]&lt;br/&gt;/ Extract UID; classify family" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#7dd3fc;fontSize=9;labelBackgroundColor=#0f172a;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="s2" target="s3">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- S2 → S4: read_fail -->
-        <mxCell id="t24" value="&lt;b&gt;read_fail&lt;/b&gt;&lt;br/&gt;[PICC_ReadCardSerial() == false]&lt;br/&gt;/ —" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2;fontColor=#fca5a5;fontSize=9;labelBackgroundColor=#0f172a;exitX=1;exitY=0.5;entryX=0;entryY=0.3;" edge="1" parent="1" source="s2" target="s4">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- S3 → S5: auth_success -->
-        <mxCell id="t35" value="&lt;b&gt;auth_success&lt;/b&gt;&lt;br/&gt;[PCD_Authenticate() == STATUS_OK]&lt;br/&gt;/ Read block; compute Δt" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fde68a;fontSize=9;labelBackgroundColor=#0f172a;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" edge="1" parent="1" source="s3" target="s5">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- S3 → S4: auth_fail -->
-        <mxCell id="t34a" value="&lt;b&gt;auth_fail&lt;/b&gt;&lt;br/&gt;[PCD_Authenticate() != STATUS_OK]&lt;br/&gt;/ authStatus = &amp;quot;AUTH_FAILED&amp;quot;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2;fontColor=#fca5a5;fontSize=9;labelBackgroundColor=#0f172a;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="s3" target="s4">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- S3 → S4: timeout -->
-        <mxCell id="t34b" value="&lt;b&gt;timeout&lt;/b&gt;&lt;br/&gt;[RF response &amp;gt; 35,000 µs]&lt;br/&gt;/ Abort crypto session" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=1.5;fontColor=#fca5a5;fontSize=9;labelBackgroundColor=#0f172a;exitX=1;exitY=0.8;entryX=0;entryY=0.7;" edge="1" parent="1" source="s3" target="s4">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- S3 → S4: crc_error -->
-        <mxCell id="t34c" value="&lt;b&gt;crc_error&lt;/b&gt;&lt;br/&gt;[CRC-A mismatch on payload]&lt;br/&gt;/ —" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=1.5;fontColor=#fca5a5;fontSize=9;labelBackgroundColor=#0f172a;exitX=1;exitY=0.3;entryX=0;entryY=0.15;" edge="1" parent="1" source="s3" target="s4">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="700" y="840" />
-              <mxPoint x="700" y="703" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-
-        <!-- S4 → S1: fault_handled -->
-        <mxCell id="t41" value="&lt;b&gt;fault_handled&lt;/b&gt;&lt;br/&gt;[always]&lt;br/&gt;/ PICC_HaltA(); PCD_StopCrypto1();&lt;br/&gt;  appendScanRecord(..., &amp;quot;FAILED&amp;quot;)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.5;fontColor=#6ee7b7;fontSize=9;labelBackgroundColor=#0f172a;exitX=0.5;exitY=0;entryX=1;entryY=0.5;" edge="1" parent="1" source="s4" target="s1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1190" y="410" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-
-        <!-- S5 → S1: log_complete -->
-        <mxCell id="t51" value="&lt;b&gt;log_complete&lt;/b&gt;&lt;br/&gt;[file.flush() returns]&lt;br/&gt;/ PICC_HaltA(); PCD_StopCrypto1(); delay(1500)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.5;fontColor=#6ee7b7;fontSize=9;labelBackgroundColor=#0f172a;exitX=1;exitY=0;entryX=0.7;entryY=1;" edge="1" parent="1" source="s5" target="s1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="870" y="920" />
-              <mxPoint x="870" y="490" />
-              <mxPoint x="802" y="490" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-
-        <!-- State Transition Matrix Note -->
-        <mxCell id="stm_note" value="&lt;b&gt;State Transition Completeness:&lt;/b&gt; Every state has at least one outgoing transition. S4_FAULT always recovers to S1_IDLE (safe state). Self-loop on S1_IDLE handles async HTTP events without state change. No undefined or dangling transitions exist." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;rounded=0;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="40" y="1100" width="700" height="30" as="geometry" />
-        </mxCell>
-
+        <mxCell id="e1" value="E1: Tag_Detect [Carrier_Present]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2.8;fontColor=#38bdf8;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s0" target="s1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" value="E2: Parse_OK [Valid_ISO14443A]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2.8;fontColor=#38bdf8;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s1" target="s2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="E3: Parse_Fail [CRC_Framing_Error]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2.5;dashed=1;dashPattern=5 4;fontColor=#fca5a5;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s1" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="E4: Auth_OK [Key_A_Match]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2.8;fontColor=#38bdf8;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s2" target="s3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" value="E5: Auth_Fail [Key_Mismatch / Timeout]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2.5;dashed=1;dashPattern=5 4;fontColor=#fca5a5;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s2" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" value="E6: Commit_Done [Flash_Flushed]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#22c55e;strokeWidth=3;dashed=1;dashPattern=7 4;fontColor=#4ade80;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s3" target="s0"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="460" y="858"/><mxPoint x="460" y="228"/></Array></mxGeometry></mxCell>
+        <mxCell id="e7" value="E7: Timeout_Expire [Elapsed &gt;= 1500ms]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#22c55e;strokeWidth=3;dashed=1;dashPattern=7 4;fontColor=#4ade80;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s4" target="s0"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1450" y="140"/><mxPoint x="770" y="140"/></Array></mxGeometry></mxCell>
       </root>
     </mxGraphModel>
   </diagram>

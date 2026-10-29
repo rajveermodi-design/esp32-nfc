@@ -136,39 +136,70 @@ Captures the multi-bus telemetry pipeline: hardware microsecond timers $\rightar
 ## 5. Model 3: CDFG — Critical Function (`authenticate_and_read_block`)
 
 ### Control Decisions & Branch Semantics
-- **`C1: SPI Bus Ready?`**: Verifies MISO/MOSI bus availability. Aborts to `ERR_SPI` if peripheral bus is locked.
-- **`C2: Tag Handshake Ack?`**: Enforces a 1.5 ms timeout window for transponder response. Aborts to `ERR_TIMEOUT` on dropped carrier.
-- **`C3: Mutual Auth OK?`**: Evaluates received $a_T == \text{succ}(N_T)$. Failure triggers `ERR_AUTH` (indicative of counterfeit tag or incorrect sector key).
-- **`C4: Payload CRC-16 Valid?`**: Computes polynomial error-check on decrypted block. Failure triggers `ERR_CRC`.
-- **`CLEANUP`**: Unconditional convergence point executing `rfid.PCD_StopCrypto1()` and `rfid.PICC_HaltA()` before function return.
+- **`D1: FIFO Ready?`**: Verifies MISO/MOSI bus and FIFO availability (10 µs, 2.4k cycles). On timeout/busy (`No`), branches to `BB_FAULT` / `F1`. On `Yes`, enters `BB2` (`N3`).
+- **`D2: Crypto-1 Match?`**: Evaluates mutual challenge-response verification (300 µs, 72k cycles). Failure (`No`) triggers `BB_FAULT` / `F1` (indicative of counterfeit tag or key mismatch). On `Yes`, enters `BB3` (`N4`).
+- **`D3: Payload CRC-16 Valid?`**: Evaluates ISO 14443-3 CRC-A checksum on decrypted 16-byte payload (100 µs, 24k cycles). Failure (`No`) triggers `BB_FAULT` / `F1`. On `Yes`, enters `BB4` (`N6`).
+- **`F1: StopCrypto1 & Flag Error`**: Error recovery block executing `rfid.PCD_StopCrypto1()` and `rfid.PICC_HaltA()` before error return (200 µs, 48k cycles).
 
 ```mermaid
 flowchart TD
-    Start([START: authenticate_and_read_block]) --> D1[D1: Load Key A & UID Operands]
-    D1 --> C1{C1: SPI Ready?}
-    C1 -- Yes --> D2[D2: Transmit MF_AUTH Cmd]
-    C1 -- No --> E1([ERR: SPI Bus Timeout])
-    D2 --> C2{C2: Tag Acked?}
-    C2 -- Yes --> D3[D3: LFSR Init & Reader Encrypt]
-    C2 -- No --> E2([ERR: RF Timeout])
-    D3 --> D4[D4: Transmit 64-bit Challenge Response]
-    D4 --> C3{C3: Mutual Auth OK?}
-    C3 -- Yes --> D5[D5: Transmit Read Block 4 Cmd]
-    C3 -- No --> E3([ERR: Auth Rejection / Cloned UID])
-    D5 --> C4{C4: CRC-16 Valid?}
-    C4 -- Yes --> D6[D6: Commit 16-Byte Block]
-    C4 -- No --> E4([ERR: CRC Checksum Corrupt])
-    
-    E1 & E2 & E3 & E4 --> Clean[CLEANUP: PCD_StopCrypto1 & PICC_HaltA]
-    D6 --> Clean
-    Clean --> Ret([RETURN: Status & Delta_t])
+    Start([START: authenticate_and_read_block]) ==> N1((N1: Load Key A & Target Block\n1 µs | 240 cyc))
 
-    classDef err fill:#7f1d1d,stroke:#f87171,stroke-width:2px,color:#fef2f2;
-    classDef ok fill:#1e293b,stroke:#38bdf8,stroke-width:2px,color:#f8fafc;
+    subgraph BB0["BB0: Initialisation & Param Load"]
+        N1
+    end
+
+    subgraph BB1["BB1: Authentication Request"]
+        N2((N2: Send MF_AUTH 0x60\n500 µs | 120k cyc))
+        D1{D1: FIFO Ready?\n10 µs | 2.4k cyc}
+        N2 ==> D1
+    end
+
+    subgraph BB2["BB2: Cryptographic Handshake"]
+        N3((N3: Transmit 6-Byte Key A\n6,000 µs | 1.44M cyc))
+        D2{D2: Crypto-1 Match?\n300 µs | 72k cyc}
+        N3 ==> D2
+    end
+
+    subgraph BB3["BB3: Encrypted Block Extraction"]
+        N4((N4: Send READ Cmd 0x30\n1,000 µs | 240k cyc))
+        N5((N5: Read 16B Block via FIFO\n12,000 µs | 2.88M cyc))
+        D3{D3: Payload CRC-16 Valid?\n100 µs | 24k cyc}
+        N4 ==> N5
+        N5 ==> D3
+    end
+
+    subgraph BB4["BB4: Non-Volatile Persistence"]
+        N6((N6: JSON Format & LittleFS Commit\n8,589 µs | 2.06M cyc))
+    end
+
+    subgraph BB_FAULT["BB_FAULT: Error Recovery Block"]
+        F1((F1: StopCrypto1 & Flag Error\n200 µs | 48k cyc))
+        FaultRet([FAULT EXIT: Halt PICC & Return Error])
+        F1 -. Error .-> FaultRet
+    end
+
+    N1 ==>|Data: KeyA & Block 0x04| N2
+    D1 == Yes: FIFO Ready ==> N3
+    D2 == Yes: Crypto-1 OK ==> N4
+    D3 == Yes: CRC-16 OK ==> N6
+    N6 ==> Succ([SUCCESS: Block Extracted & Committed\n28,500 µs | Slack: +6,500 µs])
+
+    D1 -. No: FIFO Busy .-> F1
+    D2 -. No: Auth Reject .-> F1
+    D3 -. No: CRC Mismatch .-> F1
+
+    classDef crit fill:#1e293b,stroke:#06b6d4,stroke-width:2.5px,color:#f8fafc;
     classDef dec fill:#312e81,stroke:#818cf8,stroke-width:2px,color:#e0e7ff;
-    class E1,E2,E3,E4 err;
-    class D1,D2,D3,D4,D5,D6,Clean ok;
-    class C1,C2,C3,C4 dec;
+    classDef err fill:#3f1218,stroke:#ef4444,stroke-width:2px,color:#fef2f2;
+    classDef term fill:#0f766e,stroke:#2dd4bf,stroke-width:2px,color:#f0fdfa;
+    classDef errTerm fill:#7f1d1d,stroke:#f87171,stroke-width:2px,color:#fef2f2;
+
+    class N1,N2,N3,N4,N5,N6 crit;
+    class D1,D2,D3 dec;
+    class F1 err;
+    class Start,Succ term;
+    class FaultRet errTerm;
 ```
 
 ---
@@ -202,7 +233,7 @@ Demonstrates the comparison at the heart of the research:
    - `3. CDFG - Critical Function (authenticate_and_read_block)`
    - `4. CDFG - System Level (Dual-Mode NFC Engine)`
 
-### Method 2: In VS Code / Antigravity IDE
+### Method 2: In VS Code
 1. Install the **Draw.io Integration** extension (`hediet.vscode-drawio`).
 2. Click directly on any `.drawio` file in the `docs/diagrams/` folder.
 3. The interactive graphical editor opens natively inside the IDE!
