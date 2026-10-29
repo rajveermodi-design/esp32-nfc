@@ -33,8 +33,9 @@ This directory contains the complete virtual simulation model for the **ESP32 NF
 1. Navigate to [wokwi.com/new/esp32](https://wokwi.com/projects/new/esp32).
 2. Click on the **`diagram.json`** tab and paste the contents of [`diagram.json`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/diagram.json).
 3. Click on the **`sketch.ino`** tab and paste the contents of [`sketch.ino`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/simulation/wokwi/sketch.ino).
-4. Click on the **`libraries.txt`** tab and paste the contents of [`libraries.txt`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/simulation/wokwi/libraries.txt).
-5. Click the green **Play (Start Simulation)** button.
+4. Click the small **`+`** (New File) tab and create **`libraries.txt`**, pasting [`libraries.txt`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/simulation/wokwi/libraries.txt).
+5. (Optional for Flash Persistence): Click **`+`** to create **`partitions.csv`**, pasting [`partitions.csv`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/simulation/wokwi/partitions.csv) to allocate 1.5MB LittleFS storage.
+6. Click the green **Play (Start Simulation)** button.
 
 ### Option B: Visual Studio Code (Wokwi Extension)
 1. Install the official **Wokwi for VS Code** extension from the Extension Marketplace.

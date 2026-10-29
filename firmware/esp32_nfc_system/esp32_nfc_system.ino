@@ -22,25 +22,57 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 WebServer server(80);
 
 const char* LOG_FILE = "/scans.jsonl";
+bool littlefsMounted = false;
 
-// Helper to append scan logs to LittleFS flash memory
+// High-speed RAM fallback buffer in case LittleFS partition is unformatted/missing
+struct ScanRecord {
+  uint32_t timestamp;
+  char family[24];
+  char uid[24];
+  char atqa[8];
+  char sak[8];
+  uint32_t readTimeUs;
+  char status[16];
+};
+
+const int MAX_RAM_LOGS = 30;
+ScanRecord ramLogs[MAX_RAM_LOGS];
+int ramLogCount = 0;
+
+// Helper to append scan logs to LittleFS flash memory with RAM fallback
 void appendScanRecord(uint32_t timestamp, String family, String uid, String atqa, String sak, uint32_t readTimeUs, String status) {
-  File file = LittleFS.open(LOG_FILE, FILE_APPEND);
-  if (!file) return;
-  
-  StaticJsonDocument<256> doc;
-  doc["timestamp"] = timestamp;
-  doc["family"] = family;
-  doc["uid"] = uid;
-  doc["atqa"] = atqa;
-  doc["sak"] = sak;
-  doc["read_time_us"] = readTimeUs;
-  doc["status"] = status;
+  int idx = (ramLogCount < MAX_RAM_LOGS) ? ramLogCount++ : (MAX_RAM_LOGS - 1);
+  if (ramLogCount >= MAX_RAM_LOGS && idx == MAX_RAM_LOGS - 1) {
+    for (int i = 0; i < MAX_RAM_LOGS - 1; i++) {
+      ramLogs[i] = ramLogs[i + 1];
+    }
+  }
+  ramLogs[idx].timestamp = timestamp;
+  strncpy(ramLogs[idx].family, family.c_str(), sizeof(ramLogs[idx].family) - 1);
+  strncpy(ramLogs[idx].uid, uid.c_str(), sizeof(ramLogs[idx].uid) - 1);
+  strncpy(ramLogs[idx].atqa, atqa.c_str(), sizeof(ramLogs[idx].atqa) - 1);
+  strncpy(ramLogs[idx].sak, sak.c_str(), sizeof(ramLogs[idx].sak) - 1);
+  ramLogs[idx].readTimeUs = readTimeUs;
+  strncpy(ramLogs[idx].status, status.c_str(), sizeof(ramLogs[idx].status) - 1);
 
-  serializeJson(doc, file);
-  file.println();
-  file.flush(); // Force write to physical flash
-  file.close();
+  if (littlefsMounted) {
+    File file = LittleFS.open(LOG_FILE, FILE_APPEND);
+    if (file) {
+      StaticJsonDocument<256> doc;
+      doc["timestamp"] = timestamp;
+      doc["family"] = family;
+      doc["uid"] = uid;
+      doc["atqa"] = atqa;
+      doc["sak"] = sak;
+      doc["read_time_us"] = readTimeUs;
+      doc["status"] = status;
+
+      serializeJson(doc, file);
+      file.println();
+      file.flush();
+      file.close();
+    }
+  }
 }
 
 // Critical function: Authenticate and read a single block from MIFARE Classic tag
@@ -94,14 +126,19 @@ void setup() {
   display.println("Initializing System...");
   display.display();
 
-  // Initialize LittleFS
+  // Initialize LittleFS (with auto-fallback to RAM buffer)
   if (!LittleFS.begin(true)) {
-    Serial.println("LittleFS Mount Failed");
-    return;
-  }
-  if (!LittleFS.exists(LOG_FILE)) {
-    File initFile = LittleFS.open(LOG_FILE, FILE_WRITE);
-    initFile.close();
+    Serial.println("[-] LittleFS Mount Notice: Partition 'spiffs' not found.");
+    Serial.println("    (Add 'partitions.csv' tab in Wokwi to enable persistent flash storage)");
+    Serial.println("[+] Virtual RAM log buffer ACTIVE (logs & dashboard fully operational)");
+    littlefsMounted = false;
+  } else {
+    Serial.println("[+] LittleFS mounted successfully (Flash Partition Active)");
+    littlefsMounted = true;
+    if (!LittleFS.exists(LOG_FILE)) {
+      File initFile = LittleFS.open(LOG_FILE, FILE_WRITE);
+      initFile.close();
+    }
   }
 
   // Start Wi-Fi Access Point for Dashboard
@@ -111,36 +148,61 @@ void setup() {
 
   // Web Server Routes
   server.on("/", HTTP_GET, [](){
-    if (LittleFS.exists("/index.html")) {
+    if (littlefsMounted && LittleFS.exists("/index.html")) {
       File f = LittleFS.open("/index.html", "r");
       server.streamFile(f, "text/html");
       f.close();
     } else {
       server.send(200, "text/html", "<html><body style='background:#0f172a;color:#f8fafc;font-family:sans-serif;padding:30px;'>"
                                     "<h2>ESP32 NFC/RFID System Online</h2>"
-                                    "<p>LittleFS /index.html not found. View scans via JSON API: <a style='color:#38bdf8;' href='/api/logs'>/api/logs</a></p>"
+                                    "<p>View real-time scans via JSON API: <a style='color:#38bdf8;' href='/api/logs'>/api/logs</a></p>"
                                     "</body></html>");
     }
   });
 
   server.on("/api/logs", HTTP_GET, [](){
-    File file = LittleFS.open(LOG_FILE, "r");
-    if (!file) {
-      server.send(200, "application/json", "[]");
-      return;
-    }
-    String jsonResponse = "[";
-    bool first = true;
-    while (file.available()) {
-      String line = file.readStringUntil('\n');
-      line.trim();
-      if (line.length() > 0) {
-        if (!first) jsonResponse += ",";
-        jsonResponse += line;
-        first = false;
+    if (littlefsMounted) {
+      File file = LittleFS.open(LOG_FILE, "r");
+      if (file && file.available()) {
+        String jsonResponse = "[";
+        bool first = true;
+        while (file.available()) {
+          String line = file.readStringUntil('\n');
+          line.trim();
+          if (line.length() > 0) {
+            if (!first) jsonResponse += ",";
+            jsonResponse += line;
+            first = false;
+          }
+        }
+        file.close();
+        jsonResponse += "]";
+        server.send(200, "application/json", jsonResponse);
+        return;
       }
+      if (file) file.close();
     }
-    file.close();
+
+    // Fallback to RAM logs
+    String jsonResponse = "[";
+    for (int i = 0; i < ramLogCount; i++) {
+      if (i > 0) jsonResponse += ",";
+      jsonResponse += "{\"timestamp\":";
+      jsonResponse += ramLogs[i].timestamp;
+      jsonResponse += ",\"family\":\"";
+      jsonResponse += ramLogs[i].family;
+      jsonResponse += "\",\"uid\":\"";
+      jsonResponse += ramLogs[i].uid;
+      jsonResponse += "\",\"atqa\":\"";
+      jsonResponse += ramLogs[i].atqa;
+      jsonResponse += "\",\"sak\":\"";
+      jsonResponse += ramLogs[i].sak;
+      jsonResponse += "\",\"read_time_us\":";
+      jsonResponse += ramLogs[i].readTimeUs;
+      jsonResponse += ",\"status\":\"";
+      jsonResponse += ramLogs[i].status;
+      jsonResponse += "\"}";
+    }
     jsonResponse += "]";
     server.send(200, "application/json", jsonResponse);
   });

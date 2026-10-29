@@ -22,6 +22,22 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 WebServer server(80);
 
 const char* LOG_FILE = "/scans.jsonl";
+bool littlefsMounted = false;
+
+// High-speed RAM fallback buffer in case LittleFS partition is unformatted/missing
+struct ScanRecord {
+  uint32_t timestamp;
+  char family[24];
+  char uid[24];
+  char atqa[8];
+  char sak[8];
+  uint32_t readTimeUs;
+  char status[16];
+};
+
+const int MAX_RAM_LOGS = 30;
+ScanRecord ramLogs[MAX_RAM_LOGS];
+int ramLogCount = 0;
 
 // Built-in HTML Dashboard fallback for LittleFS in Wokwi simulator
 const char INDEX_HTML[] PROGMEM = R"rawliteral(
@@ -81,7 +97,7 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
 
     <div class="grid">
       <div class="card">
-        <div class="card-label">Total Persistent Scans</div>
+        <div class="card-label">Total Scans Recorded</div>
         <div class="card-value" id="scan-count">0</div>
       </div>
       <div class="card">
@@ -111,7 +127,7 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
         </tr>
       </thead>
       <tbody id="log-table-body">
-        <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No scan records in flash storage. Approximate a card to the reader in Wokwi!</td></tr>
+        <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No scan records in storage. Click the blue MFRC522 reader in Wokwi to tap a virtual card!</td></tr>
       </tbody>
     </table>
   </div>
@@ -124,7 +140,7 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
         const tbody = document.getElementById('log-table-body');
         
         if (!data || data.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No scan records in flash storage</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No scan records in storage. Click the blue MFRC522 reader to tap a card!</td></tr>';
           document.getElementById('scan-count').innerText = '0';
           return;
         }
@@ -133,7 +149,7 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
         document.getElementById('last-family').innerText = data[data.length - 1].family || '--';
         document.getElementById('avg-latency').innerHTML = (data[data.length - 1].read_time_us || '--') + ' &micro;s';
 
-        tbody.innerHTML = data.reverse().map(item => `
+        tbody.innerHTML = data.slice().reverse().map(item => `
           <tr>
             <td>${item.timestamp}</td>
             <td><span class="badge ${item.family.includes('NTAG') ? 'badge-ntag' : 'badge-mifare'}">${item.family}</span></td>
@@ -149,7 +165,7 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
     }
 
     async function triggerReboot() {
-      if (confirm('Reboot ESP32? All logs will persist in LittleFS virtual flash storage.')) {
+      if (confirm('Reboot ESP32? All persistent records will be reloaded upon restart.')) {
         await fetch('/api/reboot', { method: 'POST' });
         alert('Reboot command dispatched. Refreshing page...');
         setTimeout(fetchLogs, 3000);
@@ -163,24 +179,42 @@ const char INDEX_HTML[] PROGMEM = R"rawliteral(
 </html>
 )rawliteral";
 
-// Helper to append scan logs to LittleFS flash memory
+// Helper to append scan logs to LittleFS flash memory with RAM fallback
 void appendScanRecord(uint32_t timestamp, String family, String uid, String atqa, String sak, uint32_t readTimeUs, String status) {
-  File file = LittleFS.open(LOG_FILE, FILE_APPEND);
-  if (!file) return;
-  
-  StaticJsonDocument<256> doc;
-  doc["timestamp"] = timestamp;
-  doc["family"] = family;
-  doc["uid"] = uid;
-  doc["atqa"] = atqa;
-  doc["sak"] = sak;
-  doc["read_time_us"] = readTimeUs;
-  doc["status"] = status;
+  // 1. Store in RAM buffer
+  int idx = (ramLogCount < MAX_RAM_LOGS) ? ramLogCount++ : (MAX_RAM_LOGS - 1);
+  if (ramLogCount >= MAX_RAM_LOGS && idx == MAX_RAM_LOGS - 1) {
+    for (int i = 0; i < MAX_RAM_LOGS - 1; i++) {
+      ramLogs[i] = ramLogs[i + 1];
+    }
+  }
+  ramLogs[idx].timestamp = timestamp;
+  strncpy(ramLogs[idx].family, family.c_str(), sizeof(ramLogs[idx].family) - 1);
+  strncpy(ramLogs[idx].uid, uid.c_str(), sizeof(ramLogs[idx].uid) - 1);
+  strncpy(ramLogs[idx].atqa, atqa.c_str(), sizeof(ramLogs[idx].atqa) - 1);
+  strncpy(ramLogs[idx].sak, sak.c_str(), sizeof(ramLogs[idx].sak) - 1);
+  ramLogs[idx].readTimeUs = readTimeUs;
+  strncpy(ramLogs[idx].status, status.c_str(), sizeof(ramLogs[idx].status) - 1);
 
-  serializeJson(doc, file);
-  file.println();
-  file.flush();
-  file.close();
+  // 2. Persist to LittleFS if mounted
+  if (littlefsMounted) {
+    File file = LittleFS.open(LOG_FILE, FILE_APPEND);
+    if (file) {
+      StaticJsonDocument<256> doc;
+      doc["timestamp"] = timestamp;
+      doc["family"] = family;
+      doc["uid"] = uid;
+      doc["atqa"] = atqa;
+      doc["sak"] = sak;
+      doc["read_time_us"] = readTimeUs;
+      doc["status"] = status;
+
+      serializeJson(doc, file);
+      file.println();
+      file.flush();
+      file.close();
+    }
+  }
 }
 
 // Critical function: Authenticate and read a single block from MIFARE Classic tag
@@ -241,11 +275,15 @@ void setup() {
     Serial.println("[+] OLED display initialized at 0x3C");
   }
 
-  // Initialize LittleFS flash storage
+  // Initialize LittleFS flash storage (with auto-fallback to RAM buffer)
   if (!LittleFS.begin(true)) {
-    Serial.println("[-] LittleFS Mount Failed");
+    Serial.println("[-] LittleFS Mount Notice: Partition 'spiffs' not found.");
+    Serial.println("    (Add 'partitions.csv' tab in Wokwi to enable persistent flash storage)");
+    Serial.println("[+] Virtual RAM log buffer ACTIVE (logs & dashboard fully operational)");
+    littlefsMounted = false;
   } else {
-    Serial.println("[+] LittleFS mounted successfully (4MB Partition)");
+    Serial.println("[+] LittleFS mounted successfully (Flash Partition Active)");
+    littlefsMounted = true;
     if (!LittleFS.exists(LOG_FILE)) {
       File initFile = LittleFS.open(LOG_FILE, FILE_WRITE);
       initFile.close();
@@ -260,9 +298,9 @@ void setup() {
   WiFi.begin("Wokwi-GUEST", "");
   Serial.println("[*] Connecting to Wokwi-GUEST virtual Wi-Fi...");
 
-  // Web Server Routes (Using ESP32 Core Native WebServer — No mbedtls conflicts)
+  // Web Server Routes (Using ESP32 Core Native WebServer)
   server.on("/", HTTP_GET, [](){
-    if (LittleFS.exists("/index.html")) {
+    if (littlefsMounted && LittleFS.exists("/index.html")) {
       File f = LittleFS.open("/index.html", "r");
       server.streamFile(f, "text/html");
       f.close();
@@ -272,23 +310,49 @@ void setup() {
   });
 
   server.on("/api/logs", HTTP_GET, [](){
-    File file = LittleFS.open(LOG_FILE, "r");
-    if (!file) {
-      server.send(200, "application/json", "[]");
-      return;
-    }
-    String jsonResponse = "[";
-    bool first = true;
-    while (file.available()) {
-      String line = file.readStringUntil('\n');
-      line.trim();
-      if (line.length() > 0) {
-        if (!first) jsonResponse += ",";
-        jsonResponse += line;
-        first = false;
+    // Prefer LittleFS file if mounted and non-empty
+    if (littlefsMounted) {
+      File file = LittleFS.open(LOG_FILE, "r");
+      if (file && file.available()) {
+        String jsonResponse = "[";
+        bool first = true;
+        while (file.available()) {
+          String line = file.readStringUntil('\n');
+          line.trim();
+          if (line.length() > 0) {
+            if (!first) jsonResponse += ",";
+            jsonResponse += line;
+            first = false;
+          }
+        }
+        file.close();
+        jsonResponse += "]";
+        server.send(200, "application/json", jsonResponse);
+        return;
       }
+      if (file) file.close();
     }
-    file.close();
+
+    // Fallback: Stream from RAM logs
+    String jsonResponse = "[";
+    for (int i = 0; i < ramLogCount; i++) {
+      if (i > 0) jsonResponse += ",";
+      jsonResponse += "{\"timestamp\":";
+      jsonResponse += ramLogs[i].timestamp;
+      jsonResponse += ",\"family\":\"";
+      jsonResponse += ramLogs[i].family;
+      jsonResponse += "\",\"uid\":\"";
+      jsonResponse += ramLogs[i].uid;
+      jsonResponse += "\",\"atqa\":\"";
+      jsonResponse += ramLogs[i].atqa;
+      jsonResponse += "\",\"sak\":\"";
+      jsonResponse += ramLogs[i].sak;
+      jsonResponse += "\",\"read_time_us\":";
+      jsonResponse += ramLogs[i].readTimeUs;
+      jsonResponse += ",\"status\":\"";
+      jsonResponse += ramLogs[i].status;
+      jsonResponse += "\"}";
+    }
     jsonResponse += "]";
     server.send(200, "application/json", jsonResponse);
   });
@@ -373,7 +437,7 @@ void loop() {
   String atqa = "0x0004";
   String sak = "0x08";
 
-  // Append scan record to LittleFS flash
+  // Append scan record to storage
   appendScanRecord(millis(), family, uidStr, atqa, sak, readTimeUs, authStatus);
 
   // Update OLED Display
