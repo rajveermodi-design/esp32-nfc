@@ -112,7 +112,14 @@ void setup() {
 
   // Web Server Routes
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(LittleFS, "/index.html", "text/html");
+    if (LittleFS.exists("/index.html")) {
+      request->send(LittleFS, "/index.html", "text/html");
+    } else {
+      request->send(200, "text/html", "<html><body style='background:#0f172a;color:#f8fafc;font-family:sans-serif;padding:30px;'>"
+                                      "<h2>ESP32 NFC/RFID System Online</h2>"
+                                      "<p>LittleFS /index.html not found. View scans via JSON API: <a style='color:#38bdf8;' href='/api/logs'>/api/logs</a></p>"
+                                      "</body></html>");
+    }
   });
 
   server.on("/api/logs", HTTP_GET, [](AsyncWebServerRequest *request){

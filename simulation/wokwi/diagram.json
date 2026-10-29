@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "author": "Rajveer Modi",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {
+        "flashSize": "4"
+      }
+    },
+    {
+      "type": "board-mfrc522",
+      "id": "rfid1",
+      "top": -45,
+      "left": -260,
+      "attrs": {}
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled1",
+      "top": -80,
+      "left": 250,
+      "attrs": {
+        "i2cAddress": "0x3c"
+      }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": 80,
+      "left": 250,
+      "attrs": {
+        "volume": "0.5"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 230,
+      "left": 200,
+      "rotate": 90,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 210,
+      "left": 270,
+      "attrs": {
+        "color": "blue",
+        "label": "STATUS"
+      }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+
+    [ "rfid1:3.3V", "esp:3V3", "red", [ "v-30", "h120" ] ],
+    [ "rfid1:GND", "esp:GND.1", "black", [ "v-20", "h100" ] ],
+    [ "rfid1:RST", "esp:27", "gray", [ "v20", "h80" ] ],
+    [ "rfid1:SCK", "esp:18", "blue", [ "v50", "h110" ] ],
+    [ "rfid1:MISO", "esp:19", "cyan", [ "v60", "h120" ] ],
+    [ "rfid1:MOSI", "esp:23", "purple", [ "v70", "h130" ] ],
+    [ "rfid1:SDA", "esp:5", "orange", [ "v80", "h140" ] ],
+
+    [ "oled1:VCC", "esp:3V3", "red", [ "v-30", "h-140" ] ],
+    [ "oled1:GND", "esp:GND.2", "black", [ "v-20", "h-130" ] ],
+    [ "oled1:SDA", "esp:21", "green", [ "v20", "h-110" ] ],
+    [ "oled1:SCL", "esp:22", "teal", [ "v30", "h-100" ] ],
+
+    [ "bz1:2", "esp:26", "gold", [ "v0" ] ],
+    [ "bz1:1", "esp:GND.1", "black", [ "v20", "h-90" ] ],
+
+    [ "esp:2", "r1:1", "blue", [ "h20" ] ],
+    [ "r1:2", "led1:A", "blue", [ "h10" ] ],
+    [ "led1:C", "esp:GND.2", "black", [ "v20", "h-120" ] ]
+  ],
+  "dependencies": {}
+}

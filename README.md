@@ -169,11 +169,29 @@ esp32-nfc/
 
 ---
 
+## Virtual Simulation in Wokwi
+
+For hardware-free development, CI automated testing, and virtual academic demonstration, a complete Wokwi simulation setup is included:
+
+- **Root Circuit Definition**: [`diagram.json`](diagram.json)
+- **Extension Config**: [`wokwi.toml`](wokwi.toml)
+- **Standalone Simulation Bundle**: [`simulation/wokwi/`](simulation/wokwi/) ([`sketch.ino`](simulation/wokwi/sketch.ino), [`libraries.txt`](simulation/wokwi/libraries.txt), [`README.md`](simulation/wokwi/README.md))
+- **Block Diagram**: [`docs/diagrams/wokwi_system_block_diagram.svg`](docs/diagrams/wokwi_system_block_diagram.svg)
+
+### Quickstart (1-Click in Browser)
+1. Open [wokwi.com/new/esp32](https://wokwi.com/projects/new/esp32).
+2. Copy & paste [`diagram.json`](diagram.json) into the `diagram.json` tab.
+3. Copy & paste [`simulation/wokwi/sketch.ino`](simulation/wokwi/sketch.ino) into the `sketch.ino` tab.
+4. Copy & paste [`simulation/wokwi/libraries.txt`](simulation/wokwi/libraries.txt) into `libraries.txt`.
+5. Press **Play** to start the simulation, then click the blue **MFRC522** module to swipe virtual RFID tags!
+
+---
+
 ## Roadmap
 
 - [x] Scope definition and ethical framework establishment
-- [ ] Core ISO 14443A card reader module with ATQA/SAK parsing
-- [ ] UID cloning vs. Cryptographic Sector Authentication test suite
-- [ ] Embedded Web Dashboard interface on ESP32 (LittleFS-backed)
-- [ ] Wokwi simulation diagram for hardware-free development and automated tests
+- [x] Core ISO 14443A card reader module with ATQA/SAK parsing
+- [x] UID cloning vs. Cryptographic Sector Authentication test suite
+- [x] Embedded Web Dashboard interface on ESP32 (LittleFS-backed)
+- [x] Wokwi simulation circuit and diagram for hardware-free development and automated tests
 - [ ] Documentation on mitigation strategies for access-control system administrators

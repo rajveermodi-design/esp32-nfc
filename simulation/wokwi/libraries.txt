@@ -1,0 +1,7 @@
+# Wokwi Libraries Configuration for ESP32 NFC/RFID System
+MFRC522
+Adafruit SSD1306
+Adafruit GFX Library
+ArduinoJson
+AsyncTCP
+ESPAsyncWebServer
