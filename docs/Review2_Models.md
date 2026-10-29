@@ -36,7 +36,8 @@ All formal design diagrams have been generated in native **Draw.io multi-page XM
 
 | Deliverable | Figure Name | Draw.io Source | Standalone Vector Graphic |
 | :---: | :--- | :--- | :--- |
-| **Fig. 1** | System Block Diagram | [`system_block_diagram.drawio`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/system_block_diagram.drawio) | [`system_block_diagram.svg`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/system_block_diagram.svg) |
+| **Fig. 1** | System Block Diagram (Hardware) | [`system_block_diagram.drawio`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/system_block_diagram.drawio) | [`system_block_diagram.svg`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/system_block_diagram.svg) |
+| **Fig. 1b** | Virtual Setup (Wokwi Simulation) | [`wokwi_system_block_diagram.drawio`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/wokwi_system_block_diagram.drawio) | [`wokwi_system_block_diagram.svg`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/wokwi_system_block_diagram.svg) |
 | **Fig. 2** | Critical Function CDFG | [`cdfg_authenticate_and_read.drawio`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/cdfg_authenticate_and_read.drawio) | [`cdfg_authenticate_and_read.svg`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/cdfg_authenticate_and_read.svg) |
 | — | Critical Path DFG (Pure Data) | [`dfg_crypto_auth.drawio`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/dfg_crypto_auth.drawio) | [`dfg_crypto_auth.svg`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/dfg_crypto_auth.svg) |
 | — | System Telemetry DFG | [`dfg_system_telemetry.drawio`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/dfg_system_telemetry.drawio) | [`dfg_system_telemetry.svg`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/dfg_system_telemetry.svg) |
@@ -132,6 +133,66 @@ flowchart TD
 - **LittleFS Flash Storage:** A dedicated 1.5 MB LittleFS partition on the 4 MB NOR flash stores scan events as JSON Lines (`/scans.jsonl`) and the HTML5/JS dashboard (`/index.html`). Each scan record is flushed physically to flash using `file.flush()` to guarantee durability across power cycles.
 
 *(Refer to [`docs/diagrams/system_block_diagram.drawio`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/system_block_diagram.drawio) and [`system_block_diagram.svg`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/system_block_diagram.svg)).*
+
+### 3.4 Virtual Wokwi Simulation Environment Block Diagram
+For academic virtual prototyping and interactive testbench verification in Wokwi, the physical hardware layout is streamlined into an integrated virtual environment:
+
+```mermaid
+flowchart LR
+    subgraph WokwiEnv["WOKWI SIMULATION ENVIRONMENT (VIRTUAL SYSTEM)"]
+        subgraph Inputs["Virtual Inputs & RF Field"]
+            Tag["13.56 MHz RFID/NFC Tag\n(Virtual Tag Interactive)"] -->|13.56 MHz RF Field| MFRC522["MFRC522 RFID Transceiver\n(wokwi-mfrc522)"]
+            Client["Web Browser Client\n(Virtual Host)"]
+        end
+
+        subgraph ESP32["ESP32-WROOM-32 (Virtual Target)"]
+            FW["System Firmware Execution\n• ISO 14443A Tag Parser\n• Crypto-1 Auth & Sector 1 Read\n• GPIO & OLED Controller"]
+            Web["Async Web Server & TCP Stack\n• Port 80 /api/logs Endpoint"]
+            WiFi["Wi-Fi Radio (SoftAP Mode)\n• SSID: ESP32-NFC-Lab\n• IP: 192.168.4.1"]
+            Flash["Internal Flash (4 MB) — LittleFS\n• /scans.jsonl Persistent Logs\n• /index.html Dashboard UI"]
+        end
+
+        subgraph Outputs["Virtual Output Peripherals"]
+            OLED["SSD1306 OLED Display\n(wokwi-ssd1306)"]
+            Buzzer["Piezo Buzzer\n(wokwi-buzzer)"]
+            LED["Status Indicator LED\n(wokwi-led)"]
+        end
+
+        MFRC522 <==>|SPI Bus 4 MHz\nSCK:18 MISO:19 MOSI:23 CS:5 RST:27| ESP32
+        Client <==>|Virtual 802.11 Wi-Fi\nHTTP Port 80| WiFi
+        ESP32 ==>|I2C Bus 400 kHz\nSDA:21 SCL:22| OLED
+        ESP32 ==>|PWM GPIO 26\ntone 500Hz/1kHz| Buzzer
+        ESP32 ==>|Digital Out GPIO 2\nStatus Indicator| LED
+    end
+
+    classDef env fill:#080f21,stroke:#334155,stroke-width:2px,stroke-dasharray: 8 6,color:#94a3b8;
+    classDef mcu fill:#1e293b,stroke:#38bdf8,stroke-width:3px,color:#f8fafc;
+    classDef periph fill:#1e293b,stroke:#10b981,stroke-width:2.5px,color:#ecfdf5;
+    classDef amber fill:#1e293b,stroke:#f59e0b,stroke-width:2.5px,color:#fef3c7;
+    classDef blue fill:#1e293b,stroke:#818cf8,stroke-width:2.5px,color:#e0e7ff;
+    classDef cyan fill:#1e293b,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+    classDef tag fill:#1e293b,stroke:#94a3b8,stroke-width:2px,stroke-dasharray: 6 4,color:#f8fafc;
+
+    class WokwiEnv env;
+    class ESP32,FW,Web,WiFi,Flash mcu;
+    class OLED periph;
+    class Buzzer,LED amber;
+    class MFRC522 blue;
+    class Client cyan;
+    class Tag tag;
+```
+
+**Key Architectural Changes from Physical to Virtual Setup:**
+1. **Simulation Envelope:** The entire model is bounded within the `WOKWI SIMULATION ENVIRONMENT (VIRTUAL SYSTEM)` perimeter.
+2. **Abstracted Power Architecture:** Physical voltage regulators (AMS1117-3.3 LDO), 5V USB rails, and 3.3V logic rails are omitted as the Wokwi virtual simulator automatically manages logic level power distribution.
+3. **MFRC522 Emulation:** Replaced the physical dual-reader block with `MFRC522 RFID Transceiver (wokwi-mfrc522)` using standard hardware SPI (SCK=18, MISO=19, MOSI=23, CS=5, RST=27).
+4. **Unified MCU Block:** The ESP32 is consolidated into a single non-partitioned block clearly showing its 4 core firmware functional layers: System Firmware, Async Web Server, SoftAP Wi-Fi (`ESP32-NFC-Lab` @ 192.168.4.1), and LittleFS Flash Storage (`/scans.jsonl`).
+5. **Parallel, Non-Overlapping Bus Routing:** The 3 right-hand output peripherals connect via straight, parallel, non-crossing signal routes:
+   - `SSD1306 OLED Display (wokwi-ssd1306)` ← **I2C Bus** (SDA=21, SCL=22) in **Green**.
+   - `Piezo Buzzer (wokwi-buzzer)` ← **PWM GPIO26** in **Yellow/Amber**.
+   - `Status Indicator LED (wokwi-led)` ← **Digital GPIO2** in **Yellow/Amber**.
+
+*(Refer to [`docs/diagrams/wokwi_system_block_diagram.drawio`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/wokwi_system_block_diagram.drawio) and [`wokwi_system_block_diagram.svg`](file:///Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams/wokwi_system_block_diagram.svg)).*
 
 ---
 

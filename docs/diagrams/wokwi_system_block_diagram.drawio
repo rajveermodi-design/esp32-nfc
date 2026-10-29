@@ -1,0 +1,132 @@
+<mxfile host="app.diagrams.net" modified="2026-10-29T18:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+  <diagram id="wokwi-sys-block" name="Wokwi Virtual System Block Diagram">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="850" background="#0f172a" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ======== WOKWI SIMULATION ENVIRONMENT (OUTER CONTAINER) ======== -->
+        <mxCell id="wokwi_env" value="WOKWI SIMULATION ENVIRONMENT (VIRTUAL SYSTEM)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#080f21;strokeColor=#334155;strokeWidth=2;dashed=1;dashPattern=8 6;fontColor=#94a3b8;startSize=36;fontSize=13;fontStyle=1;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="30" width="1440" height="780" as="geometry" />
+        </mxCell>
+
+        <!-- Diagram Header Title -->
+        <mxCell id="title" value="&lt;b&gt;SIMPLIFIED SYSTEM BLOCK DIAGRAM (WOKWI ENVIRONMENT)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#94a3b8;'&gt;Virtual Prototyping Setup: ESP32 + MFRC522 + SSD1306 + Buzzer + LED + SoftAP Web Dashboard&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="75" width="680" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Legend / Bus Color Guide -->
+        <mxCell id="leg_spi" value="&lt;b&gt;SPI Bus (4 MHz)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="800" y="80" width="140" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_i2c" value="&lt;b&gt;I2C Bus (400 kHz)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="960" y="80" width="140" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_gpio" value="&lt;b&gt;GPIO (PWM / Digital)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="80" width="150" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_rf" value="&lt;b&gt;Virtual RF / Wi-Fi&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0e3a47;strokeColor=#06b6d4;strokeWidth=2;fontColor=#cffafe;fontSize=10;dashed=1;dashPattern=4 3;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="80" width="150" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ======== LEFT COLUMN: INPUTS & EXTERNAL ENTITIES ======== -->
+
+        <!-- 13.56 MHz NFC Tag -->
+        <mxCell id="nfc_tag" value="&lt;b&gt;13.56 MHz RFID/NFC Tag&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#cbd5e1;'&gt;MIFARE Classic 1K / NTAG21x&lt;br/&gt;Virtual Card Interactive In Wokwi&lt;br/&gt;(Passive RF Powered)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#94a3b8;strokeWidth=2;fontColor=#f8fafc;fontSize=12;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
+          <mxGeometry x="70" y="180" width="240" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- MFRC522 RFID Transceiver -->
+        <mxCell id="mfrc522" value="&lt;b&gt;MFRC522 RFID Transceiver&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#a5b4fc;font-weight:bold;'&gt;wokwi-mfrc522&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;13.56 MHz Carrier Demodulation&lt;br/&gt;FIFO Buffer &amp; ISO 14443A Framing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#818cf8;strokeWidth=2.5;fontColor=#f8fafc;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="70" y="360" width="240" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Web Browser Client -->
+        <mxCell id="web_client" value="&lt;b&gt;Web Browser Client&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#67e8f9;font-weight:bold;'&gt;Virtual Host Browser&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;Telemetry Dashboard (index.html)&lt;br/&gt;REST Endpoint: GET /api/logs&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#06b6d4;strokeWidth=2;fontColor=#f8fafc;fontSize=12;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
+          <mxGeometry x="70" y="570" width="240" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ======== CENTER COLUMN: ESP32 MCU (SINGLE NON-PARTITIONED BLOCK) ======== -->
+
+        <mxCell id="esp32_mcu" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=3;fontColor=#f8fafc;" vertex="1" parent="1">
+          <mxGeometry x="440" y="160" width="500" height="550" as="geometry" />
+        </mxCell>
+
+        <!-- MCU Header -->
+        <mxCell id="esp32_title" value="&lt;b&gt;ESP32-WROOM-32 Microcontroller&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#38bdf8;'&gt;Virtual Simulation Target (Wokwi Engine)&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#f8fafc;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="460" y="175" width="460" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Core Block 1: System Firmware -->
+        <mxCell id="mcu_fw" value="&lt;b&gt;System Firmware Execution&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#93c5fd;'&gt;• ISO 14443A Tag Parser &amp; Anti-Collision Cascade&lt;br/&gt;• Crypto-1 Authentication &amp; Sector 1 Memory Read&lt;br/&gt;• GPIO Peripheral Controller &amp; SSD1306 Display Engine&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#38bdf8;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=14;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="470" y="235" width="440" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Core Block 2: Async Web Server & TCP Stack -->
+        <mxCell id="mcu_web" value="&lt;b&gt;Asynchronous Web Server &amp; TCP Stack&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#67e8f9;'&gt;• ESPAsyncWebServer on Port 80 (AsyncTCP Core)&lt;br/&gt;• Static Assets Server &amp; Live REST API (/api/logs)&lt;br/&gt;• Non-Blocking HTTP Request Dispatching&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#06b6d4;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=14;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="470" y="355" width="440" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Core Block 3: Wi-Fi Radio Subsystem -->
+        <mxCell id="mcu_wifi" value="&lt;b&gt;Wi-Fi Subsystem (SoftAP Mode)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#67e8f9;'&gt;• Network SSID: &amp;quot;ESP32-NFC-Lab&amp;quot; (Password: admin123)&lt;br/&gt;• Gateway IP: 192.168.4.1 (Simulated Access Point)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#06b6d4;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=14;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="470" y="475" width="440" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Core Block 4: Internal Flash Memory (LittleFS) -->
+        <mxCell id="mcu_flash" value="&lt;b&gt;Internal Flash Memory (4 MB) — LittleFS&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#6ee7b7;'&gt;• Non-Volatile Persistence: /scans.jsonl (Scan Audit Logs)&lt;br/&gt;• Web Assets: /index.html (Stored in Virtual NOR Flash)&lt;br/&gt;• Immediate file.flush() on Every Successful RFID Read&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#10b981;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=14;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="470" y="585" width="440" height="95" as="geometry" />
+        </mxCell>
+
+        <!-- ======== RIGHT COLUMN: OUTPUT PERIPHERALS ======== -->
+
+        <!-- SSD1306 OLED Display -->
+        <mxCell id="oled" value="&lt;b&gt;SSD1306 OLED Display&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#34d399;font-weight:bold;'&gt;wokwi-ssd1306&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;128×64 Pixel Monochrome Display&lt;br/&gt;Real-Time UID &amp; Latency Visualizer&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#10b981;strokeWidth=2.5;fontColor=#ecfdf5;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="230" width="270" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Piezo Buzzer -->
+        <mxCell id="buzzer" value="&lt;b&gt;Piezo Buzzer&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#fbbf24;font-weight:bold;'&gt;wokwi-buzzer&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;Acoustic Frequency Feedback&lt;br/&gt;1 kHz Success Beep / 500 Hz Fault Tone&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="400" width="270" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Status LED -->
+        <mxCell id="led" value="&lt;b&gt;Status Indicator LED&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#fbbf24;font-weight:bold;'&gt;wokwi-led&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;Digital Onboard Indicator (Blue)&lt;br/&gt;Solid = System Ready | Fast Blink = Fault&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="570" width="270" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ======== BUS & SIGNAL CONNECTIONS (CLEAN, STRAIGHT, PARALLEL) ======== -->
+
+        <!-- 1. RF Field: Tag ↔ MFRC522 (Straight Vertical) -->
+        <mxCell id="e_rf" value="&lt;b&gt;13.56 MHz RF Coupling&lt;/b&gt;&lt;br/&gt;ISO/IEC 14443A Subcarrier" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#94a3b8;strokeWidth=2;fontColor=#e2e8f0;fontSize=10;labelBackgroundColor=#0f172a;dashed=1;dashPattern=6 4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="nfc_tag" target="mfrc522">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 2. SPI Bus: MFRC522 ↔ ESP32 (Straight Horizontal) -->
+        <mxCell id="e_spi" value="&lt;b&gt;SPI Bus (4 MHz)&lt;/b&gt;&lt;br/&gt;SCK=18 | MISO=19 | MOSI=23 | CS=5 | RST=27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#818cf8;strokeWidth=3;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.5;entryX=0;entryY=0.464;" edge="1" parent="1" source="mfrc522" target="esp32_mcu">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 3. Wi-Fi SoftAP Link: ESP32 ↔ Web Browser (Straight Horizontal) -->
+        <mxCell id="e_wifi" value="&lt;b&gt;802.11 Virtual Wi-Fi&lt;/b&gt;&lt;br/&gt;HTTP Port 80 (SoftAP: 192.168.4.1)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=2.5;fontColor=#67e8f9;fontSize=10;labelBackgroundColor=#0f172a;dashed=1;dashPattern=6 4;exitX=0;exitY=0.836;entryX=1;entryY=0.5;" edge="1" parent="1" source="esp32_mcu" target="web_client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 4. I2C Bus: ESP32 → SSD1306 OLED (Straight Horizontal Parallel Route) -->
+        <mxCell id="e_i2c" value="&lt;b&gt;I2C Bus (400 kHz)&lt;/b&gt;&lt;br/&gt;SDA = GPIO 21 | SCL = GPIO 22 (Addr: 0x3C)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=3;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.218;entryX=0;entryY=0.5;" edge="1" parent="1" source="esp32_mcu" target="oled">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 5. PWM Buzzer Route: ESP32 → Piezo Buzzer (Straight Horizontal Parallel Route) -->
+        <mxCell id="e_buzzer" value="&lt;b&gt;PWM Audio Control&lt;/b&gt;&lt;br/&gt;GPIO 26 (tone() 500 Hz / 1 kHz)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=3;fontColor=#fde68a;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.527;entryX=0;entryY=0.5;" edge="1" parent="1" source="esp32_mcu" target="buzzer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 6. Digital LED Route: ESP32 → Status LED (Straight Horizontal Parallel Route) -->
+        <mxCell id="e_led" value="&lt;b&gt;Digital Output&lt;/b&gt;&lt;br/&gt;GPIO 2 (Onboard Status LED)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=3;fontColor=#fde68a;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.836;entryX=0;entryY=0.5;" edge="1" parent="1" source="esp32_mcu" target="led">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

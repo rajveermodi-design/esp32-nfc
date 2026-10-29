@@ -798,16 +798,25 @@ def render_external_drawio_to_svg(drawio_path, svg_path):
         if n['val']:
             f_col = st.get('fontColor', '#f8fafc')
             f_size = st.get('fontSize', '11')
-            align = st.get('align', 'center')
+            is_swimlane = 'swimlane' in st
+            align = 'left' if is_swimlane else st.get('align', 'center')
             valign = st.get('verticalAlign', 'middle')
+            start_size = float(st.get('startSize', '36')) if is_swimlane else 0
             
             valign_css = "display: flex; flex-direction: column; justify-content: center;"
-            if valign == 'top':
+            if is_swimlane:
+                valign_css = "display: flex; flex-direction: column; justify-content: center; padding-left: 16px; font-weight: bold; letter-spacing: 0.5px;"
+                box_h = start_size
+            elif valign == 'top':
                 valign_css = "display: flex; flex-direction: column; justify-content: flex-start; padding-top: 6px;"
+                box_h = h
             elif valign == 'bottom':
                 valign_css = "display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 6px;"
+                box_h = h
+            else:
+                box_h = h
 
-            svg.append(f'    <foreignObject x="{x}" y="{y}" width="{w}" height="{h}">')
+            svg.append(f'    <foreignObject x="{x}" y="{y}" width="{w}" height="{box_h}">')
             svg.append(f'      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:{f_col}; font-size:{f_size}px; text-align:{align}; {valign_css} font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;">')
             svg.append(f'        {n["val"]}')
             svg.append('      </div>')
@@ -867,6 +876,7 @@ def main():
     # 3. Render Standalone SVGs for the other 3 diagrams
     external_diagrams = [
         "system_block_diagram",
+        "wokwi_system_block_diagram",
         "fsm_system_behaviour",
         "task_schedule_timeline"
     ]
@@ -879,9 +889,13 @@ def main():
     # 4. Export Master Multi-Page .drawio file (Contains all 7 tabs!)
     master_xml = ['<mxfile host="app.diagrams.net" modified="2026-10-29T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">']
     
-    # Tab 1: System Block Diagram (Fig 1)
+    # Tab 1: System Block Diagram (Fig 1 Hardware)
     sbd_diag = extract_diagram_xml(os.path.join(out_dir, "system_block_diagram.drawio"))
     if sbd_diag: master_xml.append(sbd_diag)
+
+    # Tab 1b: Wokwi Virtual Setup Block Diagram
+    wokwi_diag = extract_diagram_xml(os.path.join(out_dir, "wokwi_system_block_diagram.drawio"))
+    if wokwi_diag: master_xml.append(wokwi_diag)
 
     # Tab 2: Critical Function CDFG (Fig 2)
     master_xml.append(d3.to_drawio_xml_diagram())
