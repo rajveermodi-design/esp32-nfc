@@ -1,0 +1,303 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 1200" width="1700" height="1200" style="background-color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#818cf8" /></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#10b981" /></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#ef4444" /></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#f59e0b" /></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" /></marker>
+    <marker id="arrow-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#facc15" /></marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>
+  </defs>
+  <path d="M 130.0 145.0 L 260.0 145.0 L 260.0 145.0 L 390.0 145.0" fill="none" stroke="#ef4444" stroke-width="3"  marker-end="url(#arrow-red)" />
+  <foreignObject x="150.0" y="130.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #ef4444; border-radius:4px; padding:2px 6px; font-size:9px; color:#ef4444; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      5V
+    </div>
+  </foreignObject>
+  <path d="M 390.0 145.0 L 520.0 145.0 L 520.0 145.0 L 650.0 145.0" fill="none" stroke="#fb923c" stroke-width="3"  marker-end="url(#arrow)" />
+  <foreignObject x="410.0" y="130.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #fb923c; border-radius:4px; padding:2px 6px; font-size:9px; color:#fb923c; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      3.3V
+    </div>
+  </foreignObject>
+  <path d="M 350.0 432.5 L 295.0 432.5 L 295.0 430.0 L 240.0 430.0" fill="none" stroke="#818cf8" stroke-width="2.5"  marker-end="url(#arrow)" />
+  <foreignObject x="185.0" y="416.25" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #818cf8; border-radius:4px; padding:2px 6px; font-size:9px; color:#818cf8; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>SPI Bus (4 MHz)</b><br/>SCK / MISO / MOSI / CS
+    </div>
+  </foreignObject>
+  <path d="M 780.0 432.5 L 955.0 432.5 L 955.0 362.5 L 1130.0 362.5" fill="none" stroke="#10b981" stroke-width="2.5"  marker-end="url(#arrow-green)" />
+  <foreignObject x="845.0" y="382.5" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #10b981; border-radius:4px; padding:2px 6px; font-size:9px; color:#10b981; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>I2C Bus (400 kHz)</b><br/>SDA=GPIO21 / SCL=GPIO22
+    </div>
+  </foreignObject>
+  <path d="M 1010.0 432.5 L 1070.0 432.5 L 1070.0 482.5 L 1130.0 482.5" fill="none" stroke="#f59e0b" stroke-width="2.5"  marker-end="url(#arrow-amber)" />
+  <foreignObject x="960.0" y="442.5" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #f59e0b; border-radius:4px; padding:2px 6px; font-size:9px; color:#f59e0b; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>GPIO26 (PWM)</b>
+    </div>
+  </foreignObject>
+  <path d="M 1010.0 452.0 L 1070.0 452.0 L 1070.0 602.5 L 1130.0 602.5" fill="none" stroke="#f59e0b" stroke-width="2.5"  marker-end="url(#arrow-amber)" />
+  <foreignObject x="960.0" y="512.25" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #f59e0b; border-radius:4px; padding:2px 6px; font-size:9px; color:#f59e0b; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>GPIO2 (Digital Out)</b>
+    </div>
+  </foreignObject>
+  <path d="M 810.0 452.0 L 475.0 452.0 L 475.0 430.0 L 140.0 430.0" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow-amber)" />
+  <foreignObject x="365.0" y="426.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #f59e0b; border-radius:4px; padding:2px 6px; font-size:9px; color:#f59e0b; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>GPIO27 (RST)</b>
+    </div>
+  </foreignObject>
+  <path d="M 140.0 480.0 L 140.0 480.0 L 140.0 550.0 L 140.0 550.0" fill="none" stroke="#a1a1aa" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow)" />
+  <foreignObject x="30.0" y="500.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #a1a1aa; border-radius:4px; padding:2px 6px; font-size:9px; color:#a1a1aa; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>13.56 MHz RF Field</b><br/>ISO 14443A Subcarrier
+    </div>
+  </foreignObject>
+  <path d="M 350.0 527.5 L 245.0 527.5 L 245.0 700.0 L 140.0 700.0" fill="none" stroke="#06b6d4" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow)" />
+  <foreignObject x="135.0" y="598.75" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #06b6d4; border-radius:4px; padding:2px 6px; font-size:9px; color:#06b6d4; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>Wi-Fi SoftAP (802.11)</b><br/>HTTP / TCP Port 80
+    </div>
+  </foreignObject>
+  <path d="M 587.0 170.0 L 363.5 170.0 L 363.5 380.0 L 140.0 380.0" fill="none" stroke="#fb923c" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow)" />
+  <foreignObject x="253.5" y="260.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #fb923c; border-radius:4px; padding:2px 6px; font-size:9px; color:#fb923c; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      3.3V
+    </div>
+  </foreignObject>
+  <path d="M 713.0 170.0 L 971.5 170.0 L 971.5 320.0 L 1230.0 320.0" fill="none" stroke="#fb923c" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow)" />
+  <foreignObject x="861.5" y="230.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #fb923c; border-radius:4px; padding:2px 6px; font-size:9px; color:#fb923c; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      3.3V
+    </div>
+  </foreignObject>
+  <path d="M 650.0 170.0 L 665.0 170.0 L 665.0 230.0 L 680.0 230.0" fill="none" stroke="#fb923c" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow)" />
+  <foreignObject x="555.0" y="185.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #fb923c; border-radius:4px; padding:2px 6px; font-size:9px; color:#fb923c; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      3.3V
+    </div>
+  </foreignObject>
+  <path d="M 630.0 370.0 L 540.0 370.0 L 540.0 400.0 L 450.0 400.0" fill="none" stroke="#475569" stroke-width="1"  marker-end="url(#arrow)" />
+  <path d="M 680.0 370.0 L 680.0 370.0 L 680.0 400.0 L 680.0 400.0" fill="none" stroke="#475569" stroke-width="1"  marker-end="url(#arrow)" />
+  <path d="M 730.0 370.0 L 820.0 370.0 L 820.0 400.0 L 910.0 400.0" fill="none" stroke="#475569" stroke-width="1"  marker-end="url(#arrow)" />
+  <path d="M 450.0 370.0 L 450.0 370.0 L 450.0 495.0 L 450.0 495.0" fill="none" stroke="#475569" stroke-width="1"  marker-end="url(#arrow)" />
+  <g id="title">
+    <foreignObject x="40.0" y="20.0" width="800.0" height="50.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#f8fafc; font-size:14px; text-align:left; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>FIGURE 1: SYSTEM BLOCK DIAGRAM</b><br/><span style='font-size:10px;opacity:0.85;'>ESP32 13.56 MHz RFID/NFC Security Analysis Terminal — Hardware & Software Architecture</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="leg_spi">
+    <rect x="1050.0" y="20.0" width="130.0" height="25.0" rx="8" fill="#312e81" stroke="#818cf8" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="1050.0" y="20.0" width="130.0" height="25.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#e0e7ff; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>SPI Bus (4 MHz)</b>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="leg_i2c">
+    <rect x="1190.0" y="20.0" width="130.0" height="25.0" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="1190.0" y="20.0" width="130.0" height="25.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#ecfdf5; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>I2C Bus (400 kHz)</b>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="leg_gpio">
+    <rect x="1330.0" y="20.0" width="130.0" height="25.0" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="1330.0" y="20.0" width="130.0" height="25.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef3c7; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>GPIO (Digital/PWM)</b>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="leg_pwr5">
+    <rect x="1470.0" y="20.0" width="110.0" height="25.0" rx="8" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="1470.0" y="20.0" width="110.0" height="25.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef2f2; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>5V Power Rail</b>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="leg_pwr3">
+    <rect x="1470.0" y="50.0" width="110.0" height="25.0" rx="8" fill="#7f1d1d" stroke="#fb923c" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="1470.0" y="50.0" width="110.0" height="25.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef2f2; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>3.3V Power Rail</b>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="pwr_usb">
+    <rect x="40.0" y="120.0" width="180.0" height="50.0" rx="8" fill="#7f1d1d" stroke="#ef4444" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="40.0" y="120.0" width="180.0" height="50.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef2f2; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>USB 5V VBUS</b><br/><span style='font-size:9px;opacity:0.85;'>External Power Source</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="pwr_ldo">
+    <rect x="300.0" y="120.0" width="180.0" height="50.0" rx="8" fill="#7f1d1d" stroke="#fb923c" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="300.0" y="120.0" width="180.0" height="50.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef2f2; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>AMS1117-3.3</b><br/><span style='font-size:9px;opacity:0.85;'>LDO Voltage Regulator<br/>5V → 3.3V</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="pwr_rail">
+    <rect x="560.0" y="120.0" width="180.0" height="50.0" rx="8" fill="#7f1d1d" stroke="#fb923c" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="560.0" y="120.0" width="180.0" height="50.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef2f2; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>3.3V Logic Rail</b><br/><span style='font-size:9px;opacity:0.85;'>All GPIO / Peripheral VCC</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="esp32_outer">
+    <rect x="320.0" y="230.0" width="720.0" height="420.0" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="3"  filter="url(#shadow)" />
+  </g>
+  <g id="esp32_title">
+    <foreignObject x="400.0" y="240.0" width="560.0" height="30.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#38bdf8; font-size:13px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>ESP32-WROOM-32 (Xtensa LX6 Dual-Core @ 240 MHz)</b>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="core0">
+    <rect x="350.0" y="290.0" width="200.0" height="80.0" rx="8" fill="#312e81" stroke="#818cf8" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="350.0" y="290.0" width="200.0" height="80.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#e0e7ff; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>PRO_CPU (Core 0)</b><br/><span style='font-size:9px;opacity:0.85;'>Wi-Fi / TCP Stack<br/>ESPAsyncWebServer<br/>HTTP Request Handlers</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="core1">
+    <rect x="580.0" y="290.0" width="200.0" height="80.0" rx="8" fill="#312e81" stroke="#818cf8" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="580.0" y="290.0" width="200.0" height="80.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#e0e7ff; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>APP_CPU (Core 1)</b><br/><span style='font-size:9px;opacity:0.85;'>Main loop() Execution<br/>RF Polling & Auth Task<br/>OLED Update & Flash I/O</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="spi_ctrl">
+    <rect x="350.0" y="400.0" width="200.0" height="65.0" rx="8" fill="#1e3a5f" stroke="#818cf8" stroke-width="1.5"  filter="url(#shadow)" />
+    <foreignObject x="350.0" y="400.0" width="200.0" height="65.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#c7d2fe; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>SPI Controller (HSPI)</b><br/><span style='font-size:9px;opacity:0.85;'>SCK=GPIO18 | MISO=GPIO19<br/>MOSI=GPIO23 | CS=GPIO5</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="i2c_ctrl">
+    <rect x="580.0" y="400.0" width="200.0" height="65.0" rx="8" fill="#1e3a5f" stroke="#10b981" stroke-width="1.5"  filter="url(#shadow)" />
+    <foreignObject x="580.0" y="400.0" width="200.0" height="65.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#a7f3d0; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>I2C Controller (Wire)</b><br/><span style='font-size:9px;opacity:0.85;'>SDA=GPIO21 | SCL=GPIO22<br/>400 kHz Fast Mode</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="gpio_matrix">
+    <rect x="810.0" y="400.0" width="200.0" height="65.0" rx="8" fill="#1e3a5f" stroke="#f59e0b" stroke-width="1.5"  filter="url(#shadow)" />
+    <foreignObject x="810.0" y="400.0" width="200.0" height="65.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fde68a; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>GPIO Matrix</b><br/><span style='font-size:9px;opacity:0.85;'>RST=GPIO27 | BUZZER=GPIO26<br/>LED=GPIO2 | IRQ=GPIO4</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="wifi_radio">
+    <rect x="350.0" y="495.0" width="200.0" height="65.0" rx="8" fill="#1e3a5f" stroke="#06b6d4" stroke-width="1.5"  filter="url(#shadow)" />
+    <foreignObject x="350.0" y="495.0" width="200.0" height="65.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#a5f3fc; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>Wi-Fi Radio (802.11 b/g/n)</b><br/><span style='font-size:9px;opacity:0.85;'>SoftAP Mode: SSID=&quot;ESP32-NFC-Lab&quot;<br/>IP: 192.168.4.1 | Port 80</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="flash_mem">
+    <rect x="580.0" y="495.0" width="430.0" height="30.0" rx="8" fill="#1e3a5f" stroke="#a78bfa" stroke-width="1.5"  filter="url(#shadow)" />
+    <foreignObject x="580.0" y="495.0" width="430.0" height="30.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#ddd6fe; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>Internal Flash (4 MB)</b>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="flash_fw">
+    <rect x="585.0" y="535.0" width="200.0" height="45.0" rx="8" fill="#312e81" stroke="#a78bfa" stroke-width="1"  filter="url(#shadow)" />
+    <foreignObject x="585.0" y="535.0" width="200.0" height="45.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#ddd6fe; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>Firmware Partition</b><br/><span style='font-size:9px;opacity:0.85;'>Arduino Sketch Binary</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="flash_lfs">
+    <rect x="800.0" y="535.0" width="205.0" height="55.0" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="1.5"  filter="url(#shadow)" />
+    <foreignObject x="800.0" y="535.0" width="205.0" height="55.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#ecfdf5; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>LittleFS Partition</b><br/><span style='font-size:9px;opacity:0.85;'>/scans.jsonl | /index.html<br/>Non-Volatile (Survives Reset)</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="freertos">
+    <foreignObject x="400.0" y="600.0" width="500.0" height="20.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#94a3b8; font-size:9px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <span style='font-size:9px;opacity:0.7;'>FreeRTOS Kernel (Implicit — Arduino Core on ESP32)</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="nfc_reader">
+    <rect x="40.0" y="380.0" width="200.0" height="100.0" rx="8" fill="#1e293b" stroke="#818cf8" stroke-width="2.5"  filter="url(#shadow)" />
+    <foreignObject x="40.0" y="380.0" width="200.0" height="100.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#e0e7ff; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>RC522 / PN532</b><br/><span style='font-size:9px;opacity:0.85;'>13.56 MHz NFC Transceiver<br/>ISO/IEC 14443A<br/>MIFARE Classic & NTAG21x<br/>VCC: 3.3V</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="oled">
+    <rect x="1130.0" y="320.0" width="200.0" height="85.0" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2.5"  filter="url(#shadow)" />
+    <foreignObject x="1130.0" y="320.0" width="200.0" height="85.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#ecfdf5; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>SSD1306 OLED Display</b><br/><span style='font-size:9px;opacity:0.85;'>128×64 Monochrome<br/>I2C Address: 0x3C<br/>VCC: 3.3V</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="buzzer">
+    <rect x="1130.0" y="440.0" width="200.0" height="85.0" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2.5"  filter="url(#shadow)" />
+    <foreignObject x="1130.0" y="440.0" width="200.0" height="85.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef3c7; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>Piezo Buzzer</b><br/><span style='font-size:9px;opacity:0.85;'>GPIO26 (PWM Output)<br/>500 Hz (Fault) / 1 kHz (Success)<br/>VCC: 3.3V</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="led">
+    <rect x="1130.0" y="560.0" width="200.0" height="85.0" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2.5"  filter="url(#shadow)" />
+    <foreignObject x="1130.0" y="560.0" width="200.0" height="85.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef3c7; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>Status LED</b><br/><span style='font-size:9px;opacity:0.85;'>GPIO2 (Onboard Blue LED)<br/>Solid=Ready | Blink=Fault<br/>VCC: 3.3V</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="nfc_tag">
+    <rect x="40.0" y="550.0" width="200.0" height="85.0" rx="8" fill="#3f3f46" stroke="#a1a1aa" stroke-width="2" stroke-dasharray="6,4" filter="url(#shadow)" />
+    <foreignObject x="40.0" y="550.0" width="200.0" height="85.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fafafa; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>13.56 MHz NFC Tag</b><br/><span style='font-size:9px;opacity:0.85;'>MIFARE Classic 1K (4B UID)<br/>NTAG21x (7B UID)<br/>Passive — RF Powered</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="web_client">
+    <rect x="40.0" y="700.0" width="200.0" height="65.0" rx="8" fill="#3f3f46" stroke="#a1a1aa" stroke-width="2" stroke-dasharray="6,4" filter="url(#shadow)" />
+    <foreignObject x="40.0" y="700.0" width="200.0" height="65.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fafafa; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>Web Browser Client</b><br/><span style='font-size:9px;opacity:0.85;'>HTTP GET /api/logs<br/>Dashboard UI (index.html)</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="sw_callout">
+    <rect x="40.0" y="810.0" width="500.0" height="60.0" rx="8" fill="none" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="6,4" filter="url(#shadow)" />
+    <foreignObject x="40.0" y="810.0" width="500.0" height="60.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#67e8f9; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>Async Web Server Subsystem (Core 0)</b><br/><span style='font-size:9px;opacity:0.85;'>ESPAsyncWebServer (Port 80)<br/>Routes: GET / → index.html | GET /api/logs → JSON Array | POST /api/reboot<br/>Reads LittleFS /scans.jsonl asynchronously (non-blocking to RF poll on Core 1)</span>
+      </div>
+    </foreignObject>
+  </g>
+</svg>

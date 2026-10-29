@@ -2,6 +2,7 @@
   <defs>
     <marker id="arrow-data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#10b981" /></marker>
     <marker id="arrow-control" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#818cf8" /></marker>
+    <marker id="arrow-critical" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#facc15" /></marker>
     <marker id="arrow-error" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#ef4444" /></marker>
     <marker id="arrow-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" /></marker>
     <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>
@@ -31,107 +32,107 @@
     <rect x="1270" y="100" width="250" height="28" rx="8" fill="#1e3a5f" fill-opacity="0.25" />
     <text x="1284" y="119" fill="#94a3b8" font-size="12" font-weight="bold">STAGE 4: HARDWARE SINKS &amp; WEB OUTPUT</text>
   </g>
-  <path d="M 270 167.5 C 310.0 167.5, 310.0 212.5, 350 212.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 167.5 C 310.0 167.5, 310.0 212.5, 350 212.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(310.0, 190.0)">
     <rect x="-4" y="-10" width="40" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">t0 µs</text>
   </g>
-  <path d="M 270 257.5 C 310.0 257.5, 310.0 212.5, 350 212.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 257.5 C 310.0 257.5, 310.0 212.5, 350 212.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(310.0, 235.0)">
     <rect x="-4" y="-10" width="40" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">t1 µs</text>
   </g>
-  <path d="M 270 357.5 C 310.0 357.5, 310.0 362.5, 350 362.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 357.5 C 310.0 357.5, 310.0 362.5, 350 362.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(310.0, 360.0)">
     <rect x="-4" y="-10" width="64" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">Raw Bytes</text>
   </g>
-  <path d="M 270 357.5 C 310.0 357.5, 310.0 522.5, 350 522.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 357.5 C 310.0 357.5, 310.0 522.5, 350 522.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(310.0, 440.0)">
     <rect x="-4" y="-10" width="58" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">UID Size</text>
   </g>
-  <path d="M 270 467.5 C 310.0 467.5, 310.0 522.5, 350 522.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 467.5 C 310.0 467.5, 310.0 522.5, 350 522.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(310.0, 495.0)">
     <rect x="-4" y="-10" width="58" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">SAK Byte</text>
   </g>
-  <path d="M 580 212.5 C 620.0 212.5, 620.0 262.5, 660 262.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 580 212.5 C 620.0 212.5, 620.0 262.5, 660 262.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(620.0, 237.5)">
     <rect x="-4" y="-10" width="82" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">Delta_t (µs)</text>
   </g>
-  <path d="M 580 362.5 C 620.0 362.5, 620.0 262.5, 660 262.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 580 362.5 C 620.0 362.5, 620.0 262.5, 660 262.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(620.0, 312.5)">
     <rect x="-4" y="-10" width="70" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">UID String</text>
   </g>
-  <path d="M 270 667.5 C 465.0 667.5, 465.0 262.5, 660 262.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 667.5 C 465.0 667.5, 465.0 262.5, 660 262.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(465.0, 465.0)">
     <rect x="-4" y="-10" width="76" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">Auth Status</text>
   </g>
-  <path d="M 270 767.5 C 465.0 767.5, 465.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 767.5 C 465.0 767.5, 465.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(465.0, 662.5)">
     <rect x="-4" y="-10" width="64" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">timestamp</text>
   </g>
-  <path d="M 580 522.5 C 620.0 522.5, 620.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 580 522.5 C 620.0 522.5, 620.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(620.0, 540.0)">
     <rect x="-4" y="-10" width="88" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">family string</text>
   </g>
-  <path d="M 580 362.5 C 620.0 362.5, 620.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 580 362.5 C 620.0 362.5, 620.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(620.0, 460.0)">
     <rect x="-4" y="-10" width="70" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">uid string</text>
   </g>
-  <path d="M 270 567.5 C 465.0 567.5, 465.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 567.5 C 465.0 567.5, 465.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(465.0, 562.5)">
     <rect x="-4" y="-10" width="76" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">atqa string</text>
   </g>
-  <path d="M 270 467.5 C 465.0 467.5, 465.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 467.5 C 465.0 467.5, 465.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(465.0, 512.5)">
     <rect x="-4" y="-10" width="70" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">sak string</text>
   </g>
-  <path d="M 580 212.5 C 620.0 212.5, 620.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 580 212.5 C 620.0 212.5, 620.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(620.0, 385.0)">
     <rect x="-4" y="-10" width="82" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">read_time_us</text>
   </g>
-  <path d="M 270 667.5 C 465.0 667.5, 465.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 270 667.5 C 465.0 667.5, 465.0 557.5, 660 557.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(465.0, 612.5)">
     <rect x="-4" y="-10" width="88" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">status string</text>
   </g>
-  <path d="M 900 262.5 C 940.0 262.5, 940.0 262.5, 980 262.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 900 262.5 C 940.0 262.5, 940.0 262.5, 980 262.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(940.0, 262.5)">
     <rect x="-4" y="-10" width="136" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">1024-Byte Framebuffer</text>
   </g>
-  <path d="M 1210 262.5 C 1250.0 262.5, 1250.0 262.5, 1290 262.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 1210 262.5 C 1250.0 262.5, 1250.0 262.5, 1290 262.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(1250.0, 262.5)">
     <rect x="-4" y="-10" width="106" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">I2C SDA/SCL Wire</text>
   </g>
-  <path d="M 900 557.5 C 940.0 557.5, 940.0 512.5, 980 512.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 900 557.5 C 940.0 557.5, 940.0 512.5, 980 512.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(940.0, 535.0)">
     <rect x="-4" y="-10" width="76" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">JSON Object</text>
   </g>
-  <path d="M 1095.0 545 L 1095.0 640" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 1095.0 545 L 1095.0 640" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(1095.0, 592.5)">
     <rect x="-4" y="-10" width="112" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">ASCII Line Buffer</text>
   </g>
-  <path d="M 1210 672.5 C 1250.0 672.5, 1250.0 592.5, 1290 592.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 1210 672.5 C 1250.0 672.5, 1250.0 592.5, 1290 592.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(1250.0, 632.5)">
     <rect x="-4" y="-10" width="112" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">Flash Page Commit</text>
   </g>
-  <path d="M 1395.0 625 L 1395.0 720" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 1395.0 625 L 1395.0 720" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(1395.0, 672.5)">
     <rect x="-4" y="-10" width="112" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">Async HTTP Socket</text>

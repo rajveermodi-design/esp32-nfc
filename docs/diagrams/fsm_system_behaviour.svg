@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 1200" width="1700" height="1200" style="background-color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#818cf8" /></marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#10b981" /></marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#ef4444" /></marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#f59e0b" /></marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" /></marker>
+    <marker id="arrow-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#facc15" /></marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>
+  </defs>
+  <path d="M 750.0 210.0 L 750.0 210.0 L 750.0 340.0 L 750.0 340.0" fill="none" stroke="#38bdf8" stroke-width="2"  marker-end="url(#arrow-blue)" />
+  <foreignObject x="640.0" y="260.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #38bdf8; border-radius:4px; padding:2px 6px; font-size:9px; color:#38bdf8; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>boot_complete</b><br/>[SPI ∧ Wire ∧ LittleFS ∧ WiFi == OK]<br/>/ display(&quot;System Online&quot;)
+    </div>
+  </foreignObject>
+  <path d="M 860.0 177.0 L 1085.0 177.0 L 1085.0 680.0 L 1310.0 680.0" fill="none" stroke="#ef4444" stroke-width="2"  marker-end="url(#arrow-red)" />
+  <foreignObject x="975.0" y="413.5" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #ef4444; border-radius:4px; padding:2px 6px; font-size:9px; color:#ef4444; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>init_fail</b><br/>[any peripheral returns false]<br/>/ Serial.println(&quot;FATAL&quot;)
+    </div>
+  </foreignObject>
+  <path d="M 620.0 438.0 L 467.5 438.0 L 467.5 560.0 L 315.0 560.0" fill="none" stroke="#38bdf8" stroke-width="2"  marker-end="url(#arrow-blue)" />
+  <foreignObject x="357.5" y="484.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #38bdf8; border-radius:4px; padding:2px 6px; font-size:9px; color:#38bdf8; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>tag_detected</b><br/>[PICC_IsNewCardPresent() == true]<br/>/ startTime = micros()
+    </div>
+  </foreignObject>
+  <path d="M 750.0 410.0 L 750.0 410.0 L 750.0 410.0 L 750.0 410.0" fill="none" stroke="#06b6d4" stroke-width="1.5"  marker-end="url(#arrow)" />
+  <foreignObject x="640.0" y="395.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #06b6d4; border-radius:4px; padding:2px 6px; font-size:9px; color:#06b6d4; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>http_request</b><br/>[AsyncWebServer callback]<br/>/ serve /api/logs JSON
+    </div>
+  </foreignObject>
+  <path d="M 315.0 690.0 L 315.0 690.0 L 315.0 800.0 L 315.0 800.0" fill="none" stroke="#38bdf8" stroke-width="2"  marker-end="url(#arrow-blue)" />
+  <foreignObject x="205.0" y="730.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #38bdf8; border-radius:4px; padding:2px 6px; font-size:9px; color:#38bdf8; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>serial_read</b><br/>[PICC_ReadCardSerial() == true]<br/>/ Extract UID; classify family
+    </div>
+  </foreignObject>
+  <path d="M 430.0 625.0 L 750.0 625.0 L 750.0 725.0 L 1070.0 725.0" fill="none" stroke="#ef4444" stroke-width="2"  marker-end="url(#arrow-red)" />
+  <foreignObject x="640.0" y="660.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #ef4444; border-radius:4px; padding:2px 6px; font-size:9px; color:#ef4444; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>read_fail</b><br/>[PICC_ReadCardSerial() == false]<br/>/ —
+    </div>
+  </foreignObject>
+  <path d="M 315.0 930.0 L 477.5 930.0 L 477.5 995.0 L 640.0 995.0" fill="none" stroke="#f59e0b" stroke-width="2"  marker-end="url(#arrow-amber)" />
+  <foreignObject x="367.5" y="947.5" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #f59e0b; border-radius:4px; padding:2px 6px; font-size:9px; color:#f59e0b; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>auth_success</b><br/>[PCD_Authenticate() == STATUS_OK]<br/>/ Read block; compute Δt
+    </div>
+  </foreignObject>
+  <path d="M 430.0 865.0 L 750.0 865.0 L 750.0 755.0 L 1070.0 755.0" fill="none" stroke="#ef4444" stroke-width="2"  marker-end="url(#arrow-red)" />
+  <foreignObject x="640.0" y="795.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #ef4444; border-radius:4px; padding:2px 6px; font-size:9px; color:#ef4444; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>auth_fail</b><br/>[PCD_Authenticate() != STATUS_OK]<br/>/ authStatus = &quot;AUTH_FAILED&quot;
+    </div>
+  </foreignObject>
+  <path d="M 430.0 904.0 L 750.0 904.0 L 750.0 785.0 L 1070.0 785.0" fill="none" stroke="#ef4444" stroke-width="1.5"  marker-end="url(#arrow-red)" />
+  <foreignObject x="640.0" y="829.5" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #ef4444; border-radius:4px; padding:2px 6px; font-size:9px; color:#ef4444; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>timeout</b><br/>[RF response &gt; 35,000 µs]<br/>/ Abort crypto session
+    </div>
+  </foreignObject>
+  <path d="M 430.0 839.0 L 750.0 839.0 L 750.0 702.5 L 1070.0 702.5" fill="none" stroke="#ef4444" stroke-width="1.5"  marker-end="url(#arrow-red)" />
+  <foreignObject x="640.0" y="755.75" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #ef4444; border-radius:4px; padding:2px 6px; font-size:9px; color:#ef4444; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>crc_error</b><br/>[CRC-A mismatch on payload]<br/>/ —
+    </div>
+  </foreignObject>
+  <path d="M 1190.0 680.0 L 1035.0 680.0 L 1035.0 410.0 L 880.0 410.0" fill="none" stroke="#10b981" stroke-width="2.5"  marker-end="url(#arrow-green)" />
+  <foreignObject x="925.0" y="530.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #10b981; border-radius:4px; padding:2px 6px; font-size:9px; color:#10b981; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>fault_handled</b><br/>[always]<br/>/ PICC_HaltA(); PCD_StopCrypto1();<br/>  appendScanRecord(..., &quot;FAILED&quot;)
+    </div>
+  </foreignObject>
+  <path d="M 870.0 920.0 L 836.0 920.0 L 836.0 480.0 L 802.0 480.0" fill="none" stroke="#10b981" stroke-width="2.5"  marker-end="url(#arrow-green)" />
+  <foreignObject x="726.0" y="685.0" width="220" height="40" style="overflow: visible;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid #10b981; border-radius:4px; padding:2px 6px; font-size:9px; color:#10b981; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">
+      <b>log_complete</b><br/>[file.flush() returns]<br/>/ PICC_HaltA(); PCD_StopCrypto1(); delay(1500)
+    </div>
+  </foreignObject>
+  <g id="title">
+    <foreignObject x="40.0" y="15.0" width="1200.0" height="55.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#f8fafc; font-size:13px; text-align:left; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>FIGURE 3: SYSTEM-BEHAVIOUR FINITE STATE MACHINE (Moore Machine)</b><br/><span style='font-size:10px;opacity:0.85;'>Classification: Moore — Outputs determined solely by current state, not input events. Justification: Each state has deterministic physical outputs (RF field, display content, buzzer voltage, LED state) regardless of entry path, simplifying formal verification and safety analysis.</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="leg_safe">
+    <rect x="1300.0" y="15.0" width="170.0" height="25.0" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="1300.0" y="15.0" width="170.0" height="25.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#ecfdf5; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>★ Safe State (S1_IDLE)</b>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="leg_fault">
+    <rect x="1300.0" y="45.0" width="170.0" height="25.0" rx="8" fill="#7f1d1d" stroke="#f87171" stroke-width="2"  filter="url(#shadow)" />
+    <foreignObject x="1300.0" y="45.0" width="170.0" height="25.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef2f2; font-size:10px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>⚠ Fault State (S4_FAULT)</b>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="s0">
+    <rect x="640.0" y="100.0" width="220.0" height="110.0" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"  filter="url(#shadow)" />
+    <foreignObject x="640.0" y="100.0" width="220.0" height="110.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#f8fafc; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>S0_INIT</b><br/><span style='font-size:9px;opacity:0.85;'>System Boot & Peripheral Init</span><hr size='1'/><span style='font-size:8px;opacity:0.75;'>OLED: &quot;Initializing...&quot;<br/>RF: OFF | Buzzer: 0V<br/>Wi-Fi: AP Starting | LED: Blink</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="s1">
+    <rect x="620.0" y="340.0" width="260.0" height="140.0" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="3"  filter="url(#shadow)" />
+    <foreignObject x="620.0" y="340.0" width="260.0" height="140.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#ecfdf5; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>★ S1_IDLE (SAFE STATE)</b><br/><span style='font-size:9px;opacity:0.85;'>Waiting for Tag — RF Polling</span><hr size='1'/><span style='font-size:8px;opacity:0.75;'>OLED: &quot;Waiting for tag...&quot;<br/>RF: Carrier ON (13.56 MHz polling)<br/>Buzzer: 0V | LED: Solid ON<br/>Crypto1: STOPPED | Files: CLOSED</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="s2">
+    <rect x="200.0" y="560.0" width="230.0" height="130.0" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2.5"  filter="url(#shadow)" />
+    <foreignObject x="200.0" y="560.0" width="230.0" height="130.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#f8fafc; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>S2_READ_UID</b><br/><span style='font-size:9px;opacity:0.85;'>UID Extraction & Classification</span><hr size='1'/><span style='font-size:8px;opacity:0.75;'>OLED: Updating...<br/>RF: Anti-collision active<br/>Buzzer: 0V | LED: ON<br/>Timer: startTime = micros()</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="s3">
+    <rect x="200.0" y="800.0" width="230.0" height="130.0" rx="8" fill="#312e81" stroke="#818cf8" stroke-width="2.5"  filter="url(#shadow)" />
+    <foreignObject x="200.0" y="800.0" width="230.0" height="130.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#e0e7ff; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>S3_AUTH</b><br/><span style='font-size:9px;opacity:0.85;'>Cryptographic Sector Authentication</span><hr size='1'/><span style='font-size:8px;opacity:0.75;'>OLED: &quot;Authenticating...&quot;<br/>RF: Crypto-1 session active<br/>Buzzer: 0V | LED: ON<br/>Deadline: 35,000 µs</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="s4">
+    <rect x="1070.0" y="680.0" width="240.0" height="150.0" rx="8" fill="#7f1d1d" stroke="#f87171" stroke-width="3"  filter="url(#shadow)" />
+    <foreignObject x="1070.0" y="680.0" width="240.0" height="150.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef2f2; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>⚠ S4_FAULT</b><br/><span style='font-size:9px;opacity:0.85;'>Error / Rejection Trap</span><hr size='1'/><span style='font-size:8px;opacity:0.75;'>OLED: Error message displayed<br/>RF: Carrier OFF (PICC_HaltA)<br/>Buzzer: 500 Hz × 200 ms<br/>LED: Fast Blink<br/>PCD_StopCrypto1() executed</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="s5">
+    <rect x="640.0" y="920.0" width="230.0" height="150.0" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="2.5"  filter="url(#shadow)" />
+    <foreignObject x="640.0" y="920.0" width="230.0" height="150.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#fef3c7; font-size:11px; text-align:center; display: flex; flex-direction: column; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>S5_LOG</b><br/><span style='font-size:9px;opacity:0.85;'>Persist & Display Result</span><hr size='1'/><span style='font-size:8px;opacity:0.75;'>OLED: Scan result (UID, time, auth)<br/>RF: PICC_HaltA issued<br/>Buzzer: 1 kHz × 100 ms (success)<br/>LED: Solid ON<br/>LittleFS: file.flush() committed</span>
+      </div>
+    </foreignObject>
+  </g>
+  <g id="stm_note">
+    <foreignObject x="40.0" y="1100.0" width="700.0" height="30.0">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:#94a3b8; font-size:9px; text-align:left; display: flex; flex-direction: column; justify-content: flex-start; padding-top: 6px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <b>State Transition Completeness:</b> Every state has at least one outgoing transition. S4_FAULT always recovers to S1_IDLE (safe state). Self-loop on S1_IDLE handles async HTTP events without state change. No undefined or dangling transitions exist.
+      </div>
+    </foreignObject>
+  </g>
+</svg>

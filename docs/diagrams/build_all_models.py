@@ -7,6 +7,8 @@ Author: Antigravity Assistant & Rajveer Modi
 
 import os
 import html
+import re
+import xml.etree.ElementTree as ET
 
 def escape_xml(text):
     return html.escape(str(text), quote=True)
@@ -43,8 +45,12 @@ class DiagramBuilder:
             style = "rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;"
         elif style_type == "process":
             style = "rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;"
+        elif style_type == "operational":
+            style = "ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;"
         elif style_type == "critical":
             style = "rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;"
+        elif style_type == "critical_op":
+            style = "ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;"
         elif style_type == "decision":
             style = "rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;"
         elif style_type == "error":
@@ -53,6 +59,8 @@ class DiagramBuilder:
             style = "ellipse;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#2dd4bf;strokeWidth=2;fontColor=#f0fdfa;fontStyle=1;fontSize=12;"
         elif style_type == "storage":
             style = "shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;"
+        elif style_type == "annotation":
+            style = "rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#f59e0b;strokeWidth=1.5;fontColor=#fde68a;fontStyle=0;fontSize=10;dashed=1;dashPattern=6 4;"
         elif style_type == "header":
             style = "text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;"
         elif style_type == "legend":
@@ -75,6 +83,8 @@ class DiagramBuilder:
             style = "edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;"
         elif edge_type == "control":
             style = "edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;"
+        elif edge_type == "critical":
+            style = "edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#facc15;strokeWidth=3.5;fontColor=#fef08a;fontSize=10;labelBackgroundColor=#0f172a;"
         elif edge_type == "error":
             style = "edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=4 3;strokeColor=#ef4444;strokeWidth=2;fontColor=#fca5a5;fontSize=10;labelBackgroundColor=#0f172a;"
         elif edge_type == "loopback":
@@ -135,6 +145,7 @@ class DiagramBuilder:
         svg.append('  <defs>')
         svg.append('    <marker id="arrow-data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#10b981" /></marker>')
         svg.append('    <marker id="arrow-control" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#818cf8" /></marker>')
+        svg.append('    <marker id="arrow-critical" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#facc15" /></marker>')
         svg.append('    <marker id="arrow-error" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#ef4444" /></marker>')
         svg.append('    <marker id="arrow-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" /></marker>')
         svg.append('    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>')
@@ -184,28 +195,39 @@ class DiagramBuilder:
                 dash = ""
                 marker = "url(#arrow-data)"
                 text_col = "#6ee7b7"
+                stroke_w = "2.2"
             elif e["type"] == "control":
                 stroke = "#818cf8"
                 dash = 'stroke-dasharray="6,4"'
                 marker = "url(#arrow-control)"
                 text_col = "#c7d2fe"
+                stroke_w = "2"
+            elif e["type"] == "critical":
+                stroke = "#facc15"
+                dash = 'stroke-dasharray="6,4"'
+                marker = "url(#arrow-critical)"
+                text_col = "#fef08a"
+                stroke_w = "3.5"
             elif e["type"] == "error":
                 stroke = "#ef4444"
                 dash = 'stroke-dasharray="4,3"'
                 marker = "url(#arrow-error)"
                 text_col = "#fca5a5"
+                stroke_w = "2"
             elif e["type"] == "loopback":
                 stroke = "#38bdf8"
                 dash = 'stroke-dasharray="3,3"'
                 marker = "url(#arrow-loop)"
                 text_col = "#7dd3fc"
+                stroke_w = "2"
             else:
                 stroke = "#64748b"
                 dash = ""
                 marker = ""
                 text_col = "#94a3b8"
+                stroke_w = "1.5"
 
-            svg.append(f'  <path d="{path_d}" fill="none" stroke="{stroke}" stroke-width="2" {dash} marker-end="{marker}" />')
+            svg.append(f'  <path d="{path_d}" fill="none" stroke="{stroke}" stroke-width="{stroke_w}" {dash} marker-end="{marker}" />')
             if e["label"]:
                 svg.append(f'  <g transform="translate({mid_x}, {mid_y})">')
                 svg.append(f'    <rect x="-4" y="-10" width="{len(e["label"])*6 + 10}" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="{stroke}" stroke-width="0.7"/>')
@@ -227,10 +249,12 @@ class DiagramBuilder:
 
             if t == "input":
                 fill, stroke, text_col = "#064e3b", "#10b981", "#ecfdf5"
-            elif t == "process":
+            elif t in ("process", "operational"):
                 fill, stroke, text_col = "#1e293b", "#38bdf8", "#f8fafc"
-            elif t == "critical":
+            elif t in ("critical", "critical_op"):
                 fill, stroke, text_col = "#1e293b", "#f59e0b", "#fef3c7"
+            elif t == "annotation":
+                fill, stroke, text_col = "none", "#f59e0b", "#fde68a"
             elif t == "decision":
                 fill, stroke, text_col = "#312e81", "#818cf8", "#e0e7ff"
             elif t == "error":
@@ -248,8 +272,11 @@ class DiagramBuilder:
             if t == "decision":
                 pts = f"{x+w/2},{y} {x+w},{y+h/2} {x+w/2},{y+h} {x},{y+h/2}"
                 svg.append(f'    <polygon points="{pts}" fill="{fill}" stroke="{stroke}" stroke-width="2" />')
-            elif t in ("terminal", "error"):
-                svg.append(f'    <ellipse cx="{x+w/2}" cy="{y+h/2}" rx="{w/2}" ry="{h/2}" fill="{fill}" stroke="{stroke}" stroke-width="2" />')
+            elif t in ("terminal", "error", "operational", "critical_op"):
+                sw = "2.5" if t == "critical_op" else "2"
+                svg.append(f'    <ellipse cx="{x+w/2}" cy="{y+h/2}" rx="{w/2}" ry="{h/2}" fill="{fill}" stroke="{stroke}" stroke-width="{sw}" />')
+            elif t == "annotation":
+                svg.append(f'    <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" fill="none" stroke="{stroke}" stroke-width="1.5" stroke-dasharray="6,4" />')
             elif t == "storage":
                 svg.append(f'    <rect x="{x}" y="{y+6}" width="{w}" height="{h-6}" rx="6" fill="{fill}" stroke="{stroke}" stroke-width="2" />')
                 svg.append(f'    <ellipse cx="{x+w/2}" cy="{y+6}" rx="{w/2}" ry="6" fill="{fill}" stroke="{stroke}" stroke-width="2" />')
@@ -430,46 +457,55 @@ def create_cdfg_critical_function():
     d.add_node("leg_data", "Data Flow Edge", 1120, 25, 130, 25, "input")
     d.add_node("leg_err", "Error / Rejection Trap", 1260, 25, 140, 25, "error")
 
+    # Basic Block Container Groups
+    d.add_group("bb0", "BB0: Operand Preparation {D1}", 520, 155, 360, 95)
+    d.add_group("bb1", "BB1: Bus Verification & Command Transmission {C1, D2}", 520, 255, 360, 195)
+    d.add_group("bb2", "BB2: RF Handshake & Reader Challenge {C2, D3, D4}", 520, 455, 360, 290)
+    d.add_group("bb3", "BB3: Mutual Authentication & Block Read {C3, D5}", 520, 755, 360, 195)
+    d.add_group("bb4", "BB4: Integrity Check & Buffer Commit {C4, D6}", 520, 955, 360, 180)
+    d.add_group("bb_err", "BB_ERR: Fault & Timeout Traps {ERR1–ERR4}", 230, 250, 240, 795, fill="#1c0f14", stroke="#7f1d1d", font="#fca5a5")
+    d.add_group("bb_exit", "BB_EXIT: PCD Teardown & Return {CLEANUP, RETURN}", 950, 580, 300, 290)
+
     # Vertical Layout for Control Decisions & Execution
-    # Start
+    # Start (Terminal)
     d.add_node("c_entry", "START: authenticate_and_read_block()", 560, 90, 280, 50, "terminal", sublabel="Trigger: Valid PICC Serial Detected")
 
-    # D1: Load Parameters
-    d.add_node("d_load", "D1: Load Key A & UID Operands", 560, 180, 280, 55, "process", sublabel="KeyA = 0xFF*6 (6B), UID = rfid.uid (4B)")
+    # D1: Load Parameters (Operational - Ellipse)
+    d.add_node("d_load", "D1: Load Key A & UID Operands", 560, 180, 280, 55, "operational", sublabel="KeyA = 0xFF*6 (6B), UID = rfid.uid (4B) | 2 µs")
     
-    # C1: Check SPI Ready
-    d.add_node("c_spi_check", "C1: SPI Bus Ready?", 610, 270, 180, 70, "decision", sublabel="Check PCD_Ready")
+    # C1: Check SPI Ready (Decision - Rhombus)
+    d.add_node("c_spi_check", "C1: SPI Bus Ready?", 610, 270, 180, 70, "decision", sublabel="Check PCD_Ready (4 µs)")
     d.add_node("err_spi", "ERR: SPI Bus Timeout", 260, 280, 180, 50, "error", sublabel="Set STATUS_SPI_ERR")
 
-    # D2: Tx Auth Command
-    d.add_node("d_tx_auth", "D2: Transmit MF_AUTH Command", 560, 380, 280, 55, "process", sublabel="0x60 || Block 0x04 || CRC-A (16 µs)")
+    # D2: Tx Auth Command (Operational - Ellipse)
+    d.add_node("d_tx_auth", "D2: Transmit MF_AUTH Command", 560, 380, 280, 55, "operational", sublabel="0x60 || Block 0x04 || CRC-A | 16 µs")
 
-    # C2: Ack Received
-    d.add_node("c_ack", "C2: Tag Handshake Ack?", 610, 470, 180, 70, "decision", sublabel="RF Response in < 1.5 ms")
+    # C2: Ack Received (Decision - Rhombus)
+    d.add_node("c_ack", "C2: Tag Handshake Ack?", 610, 470, 180, 70, "decision", sublabel="RF Response in < 1.5 ms (1,480 µs)")
     d.add_node("err_timeout", "ERR: RF Timeout", 260, 480, 180, 50, "error", sublabel="Set STATUS_TIMEOUT")
 
-    # D3: Receive Nonce & Crypto1
-    d.add_node("d_crypto", "D3: LFSR Init & Reader Encrypt", 560, 580, 280, 60, "critical", sublabel="Rx Nt -> State0 = f(Key,UID,Nt) -> Enc ar (42 µs)")
+    # D3: Receive Nonce & Crypto1 (Critical Operational - Ellipse)
+    d.add_node("d_crypto", "D3: LFSR Init & Reader Encrypt", 560, 580, 280, 60, "critical_op", sublabel="Rx Nt -> State0 = f(Key,UID,Nt) -> Enc ar | 42 µs")
 
-    # D4: Transmit Reader Challenge Response
-    d.add_node("d_tx_resp", "D4: Transmit 64-bit Challenge Response", 560, 680, 280, 55, "critical", sublabel="Send ar = Nr ^ k1..32 over RF (5,200 µs)")
+    # D4: Transmit Reader Challenge Response (Critical Operational - Ellipse)
+    d.add_node("d_tx_resp", "D4: Transmit 64-bit Challenge Response", 560, 680, 280, 55, "critical_op", sublabel="Send ar = Nr ^ k1..32 over RF | 5,200 µs")
 
-    # C3: Mutual Authentication Check
-    d.add_node("c_mutual", "C3: Mutual Auth OK?", 610, 770, 180, 70, "decision", sublabel="at == succ(Nt) verified")
+    # C3: Mutual Authentication Check (Decision - Rhombus)
+    d.add_node("c_mutual", "C3: Mutual Auth OK?", 610, 770, 180, 70, "decision", sublabel="at == succ(Nt) verified (6,800 µs)")
     d.add_node("err_auth", "ERR: Auth Rejection", 260, 780, 180, 50, "error", sublabel="Spoof / Key Mismatch Detected")
 
-    # D5: Issue Read Command
-    d.add_node("d_tx_read", "D5: Transmit Read Block 4 Cmd", 560, 880, 280, 55, "process", sublabel="0x30 || 0x04 || CRC-A ^ k65..96 (18 µs)")
+    # D5: Issue Read Command (Operational - Ellipse)
+    d.add_node("d_tx_read", "D5: Transmit Read Block 4 Cmd", 560, 880, 280, 55, "operational", sublabel="0x30 || 0x04 || CRC-A ^ k65..96 | 18 µs")
 
-    # C4: Block CRC Check
-    d.add_node("c_crc", "C4: Payload CRC-16 Valid?", 610, 970, 180, 70, "decision", sublabel="Verify ISO 14443-3 CRC")
+    # C4: Block CRC Check (Decision - Rhombus, CRC-A)
+    d.add_node("c_crc", "C4: Payload CRC-A Valid?", 610, 970, 180, 70, "decision", sublabel="Verify ISO 14443-3 CRC-A (22 µs)")
     d.add_node("err_crc", "ERR: CRC Mismatch", 260, 980, 180, 50, "error", sublabel="Payload Corrupted")
 
-    # D6: Commit Buffer
-    d.add_node("d_commit", "D6: Commit 16-Byte Block to Buffer", 560, 1070, 280, 50, "process", sublabel="status = STATUS_OK | AUTH_SUCCESS")
+    # D6: Commit Buffer (Operational - Ellipse)
+    d.add_node("d_commit", "D6: Commit 16-Byte Block to Buffer", 560, 1070, 280, 50, "operational", sublabel="status = STATUS_OK | AUTH_SUCCESS | 5 µs")
 
-    # Cleanup & Exit Lane
-    d.add_node("d_cleanup", "CLEANUP: PCD & PICC Teardown", 980, 620, 240, 60, "process", sublabel="rfid.PCD_StopCrypto1();\nrfid.PICC_HaltA();")
+    # Cleanup & Exit Lane (Operational - Ellipse)
+    d.add_node("d_cleanup", "CLEANUP: PCD & PICC Teardown", 980, 620, 240, 60, "operational", sublabel="rfid.PCD_StopCrypto1(); rfid.PICC_HaltA(); | 180 µs")
     d.add_node("c_exit", "RETURN: authenticate_and_read_block()", 980, 800, 240, 50, "terminal", sublabel="Exit with Status & Measured Delta_t")
 
     # Side Data Nodes to illustrate Data Flow in CDFG
@@ -477,31 +513,35 @@ def create_cdfg_critical_function():
     d.add_node("data_nt_buf", "DATA: Tag Nonce Nt [32-bit]", 980, 480, 220, 50, "input", sublabel="Captured over RF Demod")
     d.add_node("data_block_out", "DATA: Decrypted Block [16B]", 980, 1070, 220, 50, "storage", sublabel="Plaintext Memory Array")
 
-    # Control Edges (Dashed Purple)
-    d.add_edge("c_entry", "d_load", "Begin Exec", "control")
-    d.add_edge("d_load", "c_spi_check", "Check Bus", "control")
-    d.add_edge("c_spi_check", "d_tx_auth", "Yes (Bus Free)", "control")
+    # Annotations: RF Bus Idle Overhead & Critical Path Key
+    d.add_node("rf_overhead", "RF Bus Idle Overhead: 14,719 µs", 40, 600, 200, 120, "annotation",
+               sublabel="Includes RF frame timing gaps, antenna settling,\nSPI clock overhead & ISO 14443 guard times.\nIncluded in WCET (28,500 µs). Visible nodes = 13,781 µs.")
+    d.add_node("crit_path_note", "━━ Critical Path (Yellow Highlight)", 40, 740, 200, 100, "annotation",
+               sublabel="START→D1→C1(Y)→D2→C2(Y)→D3→D4→C3(Y)→D5→C4(Y)→D6→CLEANUP→RETURN\nTotal: 28,500 µs | Deadline: 35,000 µs | Slack: 6,500 µs (18.6%)")
+
+    # Critical Path Edges (Gold Highlighted)
+    d.add_edge("c_entry", "d_load", "Begin Exec", "critical")
+    d.add_edge("d_load", "c_spi_check", "Check Bus", "critical")
+    d.add_edge("c_spi_check", "d_tx_auth", "Yes (Bus Free)", "critical")
+    d.add_edge("d_tx_auth", "c_ack", "Wait RF Ack", "critical")
+    d.add_edge("c_ack", "d_crypto", "Yes (Acked)", "critical")
+    d.add_edge("d_crypto", "d_tx_resp", "Enc Ready", "critical")
+    d.add_edge("d_tx_resp", "c_mutual", "Wait Tag Token", "critical")
+    d.add_edge("c_mutual", "d_tx_read", "Yes (Auth OK)", "critical")
+    d.add_edge("d_tx_read", "c_crc", "Rx 16B Payload", "critical")
+    d.add_edge("c_crc", "d_commit", "Yes (CRC Valid)", "critical")
+    d.add_edge("d_commit", "d_cleanup", "Success Exit", "critical")
+    d.add_edge("d_cleanup", "c_exit", "Return Result", "critical")
+
+    # Error / Branch Control Edges (Red Dashed)
     d.add_edge("c_spi_check", "err_spi", "No (Bus Busy)", "error")
     d.add_edge("err_spi", "d_cleanup", "Abort", "error")
-
-    d.add_edge("d_tx_auth", "c_ack", "Wait RF Ack", "control")
-    d.add_edge("c_ack", "d_crypto", "Yes (Acked)", "control")
     d.add_edge("c_ack", "err_timeout", "Timeout (>1.5ms)", "error")
     d.add_edge("err_timeout", "d_cleanup", "Abort", "error")
-
-    d.add_edge("d_crypto", "d_tx_resp", "Enc Ready", "control")
-    d.add_edge("d_tx_resp", "c_mutual", "Wait Tag Token", "control")
-    d.add_edge("c_mutual", "d_tx_read", "Yes (Auth OK)", "control")
     d.add_edge("c_mutual", "err_auth", "No (Key Rejection)", "error")
     d.add_edge("err_auth", "d_cleanup", "Abort", "error")
-
-    d.add_edge("d_tx_read", "c_crc", "Rx 16B Payload", "control")
-    d.add_edge("c_crc", "d_commit", "Yes (CRC Valid)", "control")
     d.add_edge("c_crc", "err_crc", "No (Checksum Err)", "error")
     d.add_edge("err_crc", "d_cleanup", "Abort", "error")
-
-    d.add_edge("d_commit", "d_cleanup", "Success Exit", "control")
-    d.add_edge("d_cleanup", "c_exit", "Return Result", "control")
 
     # Data Edges (Solid Green)
     d.add_edge("data_key_storage", "d_load", "Key A [48-bit]", "data")
@@ -608,11 +648,194 @@ def create_cdfg_system_main_loop():
     return d
 
 
+import xml.etree.ElementTree as ET
+
+def render_external_drawio_to_svg(drawio_path, svg_path):
+    """Converts a Draw.io XML file to a clean, styled SVG."""
+    tree = ET.parse(drawio_path)
+    root = tree.getroot()
+    graph_model = root.find('.//mxGraphModel')
+    page_w = int(graph_model.attrib.get('pageWidth', '1600')) if graph_model is not None else 1600
+    page_h = int(graph_model.attrib.get('pageHeight', '1100')) if graph_model is not None else 1100
+    bg = graph_model.attrib.get('background', '#0f172a') if graph_model is not None else '#0f172a'
+
+    nodes = []
+    edges = []
+    cell_dict = {}
+
+    for cell in root.findall('.//mxCell'):
+        cid = cell.attrib.get('id')
+        if cid in ('0', '1'):
+            continue
+        val = cell.attrib.get('value', '')
+        style_str = cell.attrib.get('style', '')
+        style = {}
+        for part in style_str.split(';'):
+            if '=' in part:
+                k, v = part.split('=', 1)
+                style[k.strip()] = v.strip()
+            elif part.strip():
+                style[part.strip()] = True
+
+        geo = cell.find('mxGeometry')
+        is_edge = cell.attrib.get('edge') == '1'
+        info = {
+            'id': cid, 'val': val, 'style': style, 'style_str': style_str,
+            'is_edge': is_edge, 'source': cell.attrib.get('source'),
+            'target': cell.attrib.get('target'), 'geo': geo
+        }
+        cell_dict[cid] = info
+        if is_edge:
+            edges.append(info)
+        else:
+            nodes.append(info)
+
+    min_x, min_y, max_x, max_y = 99999, 99999, 0, 0
+    for n in nodes:
+        geo = n['geo']
+        if geo is not None and 'x' in geo.attrib and 'y' in geo.attrib:
+            x = float(geo.attrib['x'])
+            y = float(geo.attrib['y'])
+            w = float(geo.attrib.get('width', '100'))
+            h = float(geo.attrib.get('height', '50'))
+            min_x = min(min_x, x)
+            min_y = min(min_y, y)
+            max_x = max(max_x, x + w)
+            max_y = max(max_y, y + h)
+
+    vw = max(int(max_x + 50), page_w, 1600)
+    vh = max(int(max_y + 50), page_h, 1000)
+
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {vw} {vh}" width="{vw}" height="{vh}" style="background-color: {bg}; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif;">')
+    svg.append('  <defs>')
+    svg.append('    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#818cf8" /></marker>')
+    svg.append('    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#10b981" /></marker>')
+    svg.append('    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#ef4444" /></marker>')
+    svg.append('    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#f59e0b" /></marker>')
+    svg.append('    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" /></marker>')
+    svg.append('    <marker id="arrow-gold" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#facc15" /></marker>')
+    svg.append('    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>')
+    svg.append('  </defs>')
+
+    for e in edges:
+        src = cell_dict.get(e['source'])
+        tgt = cell_dict.get(e['target'])
+        if not src or not tgt or src['geo'] is None or tgt['geo'] is None:
+            continue
+        sx = float(src['geo'].attrib['x']) + float(src['geo'].attrib.get('width', '100'))/2
+        sy = float(src['geo'].attrib['y']) + float(src['geo'].attrib.get('height', '50'))/2
+        tx = float(tgt['geo'].attrib['x']) + float(tgt['geo'].attrib.get('width', '100'))/2
+        ty = float(tgt['geo'].attrib['y']) + float(tgt['geo'].attrib.get('height', '50'))/2
+
+        if 'exitX' in e['style'] and 'exitY' in e['style']:
+            ex = float(e['style']['exitX'])
+            ey = float(e['style']['exitY'])
+            sx = float(src['geo'].attrib['x']) + float(src['geo'].attrib.get('width', '100')) * ex
+            sy = float(src['geo'].attrib['y']) + float(src['geo'].attrib.get('height', '50')) * ey
+
+        if 'entryX' in e['style'] and 'entryY' in e['style']:
+            enx = float(e['style']['entryX'])
+            eny = float(e['style']['entryY'])
+            tx = float(tgt['geo'].attrib['x']) + float(tgt['geo'].attrib.get('width', '100')) * enx
+            ty = float(tgt['geo'].attrib['y']) + float(tgt['geo'].attrib.get('height', '50')) * eny
+
+        stroke = e['style'].get('strokeColor', '#818cf8')
+        stroke_w = e['style'].get('strokeWidth', '2')
+        dash = 'stroke-dasharray="6,4"' if 'dashed' in e['style'] else ''
+        
+        marker_id = 'arrow'
+        if stroke == '#10b981': marker_id = 'arrow-green'
+        elif stroke in ('#ef4444', '#f87171'): marker_id = 'arrow-red'
+        elif stroke == '#f59e0b': marker_id = 'arrow-amber'
+        elif stroke == '#38bdf8': marker_id = 'arrow-blue'
+        elif stroke == '#facc15': marker_id = 'arrow-gold'
+
+        mid_x = (sx + tx) / 2
+        path_d = f"M {sx} {sy} L {mid_x} {sy} L {mid_x} {ty} L {tx} {ty}"
+        svg.append(f'  <path d="{path_d}" fill="none" stroke="{stroke}" stroke-width="{stroke_w}" {dash} marker-end="url(#{marker_id})" />')
+
+        if e['val']:
+            lbl_x = mid_x
+            lbl_y = (sy + ty) / 2
+            svg.append(f'  <foreignObject x="{lbl_x - 110}" y="{lbl_y - 15}" width="220" height="40" style="overflow: visible;">')
+            svg.append(f'    <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0f172a; border:0.8px solid {stroke}; border-radius:4px; padding:2px 6px; font-size:9px; color:{stroke}; text-align:center; display:inline-block; max-width:210px; font-family: monospace;">')
+            svg.append(f'      {e["val"]}')
+            svg.append('    </div>')
+            svg.append('  </foreignObject>')
+
+    for n in nodes:
+        geo = n['geo']
+        if geo is None or 'x' not in geo.attrib or 'y' not in geo.attrib:
+            continue
+        x = float(geo.attrib['x'])
+        y = float(geo.attrib['y'])
+        w = float(geo.attrib.get('width', '100'))
+        h = float(geo.attrib.get('height', '50'))
+        st = n['style']
+
+        fill = st.get('fillColor', 'none')
+        stroke = st.get('strokeColor', 'none')
+        stroke_w = st.get('strokeWidth', '1')
+        dash = 'stroke-dasharray="6,4"' if 'dashed' in st else ''
+
+        is_ellipse = 'ellipse' in st
+        is_rhombus = 'rhombus' in st
+        is_line = st.get('shape') == 'line'
+        rx = '8' if 'rounded' in st else '0'
+
+        svg.append(f'  <g id="{n["id"]}">')
+        if is_line:
+            svg.append(f'    <line x1="{x}" y1="{y}" x2="{x+w}" y2="{y}" stroke="{stroke}" stroke-width="{stroke_w}" />')
+        elif is_rhombus:
+            pts = f"{x+w/2},{y} {x+w},{y+h/2} {x+w/2},{y+h} {x},{y+h/2}"
+            svg.append(f'    <polygon points="{pts}" fill="{fill}" stroke="{stroke}" stroke-width="{stroke_w}" {dash} />')
+        elif is_ellipse:
+            svg.append(f'    <ellipse cx="{x+w/2}" cy="{y+h/2}" rx="{w/2}" ry="{h/2}" fill="{fill}" stroke="{stroke}" stroke-width="{stroke_w}" {dash} />')
+        elif fill != 'none' or stroke != 'none':
+            svg.append(f'    <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" fill="{fill}" stroke="{stroke}" stroke-width="{stroke_w}" {dash} filter="url(#shadow)" />')
+
+        if n['val']:
+            f_col = st.get('fontColor', '#f8fafc')
+            f_size = st.get('fontSize', '11')
+            align = st.get('align', 'center')
+            valign = st.get('verticalAlign', 'middle')
+            
+            valign_css = "display: flex; flex-direction: column; justify-content: center;"
+            if valign == 'top':
+                valign_css = "display: flex; flex-direction: column; justify-content: flex-start; padding-top: 6px;"
+            elif valign == 'bottom':
+                valign_css = "display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 6px;"
+
+            svg.append(f'    <foreignObject x="{x}" y="{y}" width="{w}" height="{h}">')
+            svg.append(f'      <div xmlns="http://www.w3.org/1999/xhtml" style="width:100%; height:100%; box-sizing:border-box; color:{f_col}; font-size:{f_size}px; text-align:{align}; {valign_css} font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;">')
+            svg.append(f'        {n["val"]}')
+            svg.append('      </div>')
+            svg.append('    </foreignObject>')
+
+        svg.append('  </g>')
+
+    svg.append('</svg>')
+    with open(svg_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(svg))
+    print(f"Generated SVG:     {svg_path}")
+
+
+def extract_diagram_xml(filepath):
+    """Extracts the <diagram ...>...</diagram> element string from a .drawio file."""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+    match = re.search(r'(<diagram[\s\S]*?</diagram>)', content)
+    if match:
+        return match.group(1)
+    return ""
+
+
 def main():
     out_dir = "/Users/rajveermodi/Documents/GitHub/esp32-nfc/docs/diagrams"
     os.makedirs(out_dir, exist_ok=True)
     
-    # 1. Build all diagrams
+    # 1. Build programmatic diagrams
     d1 = create_dfg_crypto_auth()
     d2 = create_dfg_telemetry()
     d3 = create_cdfg_critical_function()
@@ -625,10 +848,9 @@ def main():
         ("cdfg_system_main_loop", d4)
     ]
 
-    # 2. Export Standalone .drawio and .svg
+    # 2. Export Standalone .drawio and .svg for programmatic models
     for filename, diag in diagrams:
-        # Standalone Draw.io XML
-        xml_content = f'''<mxfile host="app.diagrams.net" modified="2026-10-20T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+        xml_content = f'''<mxfile host="app.diagrams.net" modified="2026-10-29T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
 {diag.to_drawio_xml_diagram()}
 </mxfile>'''
         drawio_path = os.path.join(out_dir, f"{filename}.drawio")
@@ -636,23 +858,58 @@ def main():
             f.write(xml_content)
         print(f"Generated Draw.io: {drawio_path}")
 
-        # Standalone SVG
         svg_content = diag.to_svg()
         svg_path = os.path.join(out_dir, f"{filename}.svg")
         with open(svg_path, "w", encoding="utf-8") as f:
             f.write(svg_content)
         print(f"Generated SVG:     {svg_path}")
 
-    # 3. Export Master Multi-Page .drawio file (Contains all 4 in tabs!)
-    master_xml = ['<mxfile host="app.diagrams.net" modified="2026-10-20T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">']
-    for _, diag in diagrams:
-        master_xml.append(diag.to_drawio_xml_diagram())
+    # 3. Render Standalone SVGs for the other 3 diagrams
+    external_diagrams = [
+        "system_block_diagram",
+        "fsm_system_behaviour",
+        "task_schedule_timeline"
+    ]
+    for ext_name in external_diagrams:
+        dpath = os.path.join(out_dir, f"{ext_name}.drawio")
+        spath = os.path.join(out_dir, f"{ext_name}.svg")
+        if os.path.exists(dpath):
+            render_external_drawio_to_svg(dpath, spath)
+
+    # 4. Export Master Multi-Page .drawio file (Contains all 7 tabs!)
+    master_xml = ['<mxfile host="app.diagrams.net" modified="2026-10-29T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">']
+    
+    # Tab 1: System Block Diagram (Fig 1)
+    sbd_diag = extract_diagram_xml(os.path.join(out_dir, "system_block_diagram.drawio"))
+    if sbd_diag: master_xml.append(sbd_diag)
+
+    # Tab 2: Critical Function CDFG (Fig 2)
+    master_xml.append(d3.to_drawio_xml_diagram())
+
+    # Tab 3: System Main Loop CDFG
+    master_xml.append(d4.to_drawio_xml_diagram())
+
+    # Tab 4: Critical Path DFG
+    master_xml.append(d1.to_drawio_xml_diagram())
+
+    # Tab 5: System Telemetry DFG
+    master_xml.append(d2.to_drawio_xml_diagram())
+
+    # Tab 6: System-Behaviour FSM (Fig 3)
+    fsm_diag = extract_diagram_xml(os.path.join(out_dir, "fsm_system_behaviour.drawio"))
+    if fsm_diag: master_xml.append(fsm_diag)
+
+    # Tab 7: Task Schedule & Schedulability Proof (Fig 4)
+    tsk_diag = extract_diagram_xml(os.path.join(out_dir, "task_schedule_timeline.drawio"))
+    if tsk_diag: master_xml.append(tsk_diag)
+
     master_xml.append('</mxfile>')
     
     master_drawio_path = os.path.join(out_dir, "esp32_nfc_complete_models.drawio")
     with open(master_drawio_path, "w", encoding="utf-8") as f:
         f.write("\n".join(master_xml))
-    print(f"\nSUCCESS: Master Multi-Page Draw.io generated at:\n  {master_drawio_path}")
+    print(f"\nSUCCESS: Master Multi-Page Draw.io (7 tabs) generated at:\n  {master_drawio_path}")
+
 
 if __name__ == "__main__":
     main()

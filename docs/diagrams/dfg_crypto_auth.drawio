@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2026-10-20T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+<mxfile host="app.diagrams.net" modified="2026-10-29T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
   <diagram id="dfg-crypto-auth" name="1. DFG - Crypto Auth &amp; Block Read (Critical Path)">
     <mxGraphModel dx="1422" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1560" pageHeight="920" background="#0f172a" math="0" shadow="0">
       <root>

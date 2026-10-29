@@ -2,6 +2,7 @@
   <defs>
     <marker id="arrow-data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#10b981" /></marker>
     <marker id="arrow-control" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#818cf8" /></marker>
+    <marker id="arrow-critical" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#facc15" /></marker>
     <marker id="arrow-error" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#ef4444" /></marker>
     <marker id="arrow-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" /></marker>
     <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/></filter>
@@ -121,17 +122,17 @@
     <rect x="-4" y="-10" width="100" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#38bdf8" stroke-width="0.7"/>
     <text x="2" y="2" fill="#7dd3fc" font-size="9" font-family="monospace">Next Scan Cycle</text>
   </g>
-  <path d="M 820 1082.5 C 1010.0 1082.5, 1010.0 780.0, 1200 780.0" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 820 1082.5 C 1010.0 1082.5, 1010.0 780.0, 1200 780.0" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(1010.0, 931.25)">
     <rect x="-4" y="-10" width="106" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">Log JSON Payload</text>
   </g>
-  <path d="M 1200 780.0 L 1160 780.0 L 1160 677.5 L 1220 677.5" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 1200 780.0 L 1160 780.0 L 1160 677.5 L 1220 677.5" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(1160, 728.75)">
     <rect x="-4" y="-10" width="124" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">Physical Page Write</text>
   </g>
-  <path d="M 820 1082.5 C 1010.0 1082.5, 1010.0 880.0, 1200 880.0" fill="none" stroke="#10b981" stroke-width="2"  marker-end="url(#arrow-data)" />
+  <path d="M 820 1082.5 C 1010.0 1082.5, 1010.0 880.0, 1200 880.0" fill="none" stroke="#10b981" stroke-width="2.2"  marker-end="url(#arrow-data)" />
   <g transform="translate(1010.0, 981.25)">
     <rect x="-4" y="-10" width="124" height="16" rx="4" fill="#0f172a" fill-opacity="0.9" stroke="#10b981" stroke-width="0.7"/>
     <text x="2" y="2" fill="#6ee7b7" font-size="9" font-family="monospace">UID &amp; Latency Delta</text>
