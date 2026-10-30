@@ -1,166 +1,107 @@
-<mxfile host="app.diagrams.net" modified="2026-10-29T17:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
-  <diagram id="cdfg-system" name="4. CDFG - System Level (Dual-Mode NFC Engine)">
-    <mxGraphModel dx="1422" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1280" background="#0f172a" math="0" shadow="0">
+<mxfile host="app.diagrams.net" modified="2026-10-30T00:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+  <diagram id="cdfg-system" name="CDFG - System Level (Dual-Mode NFC Engine)">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1360" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="hdr" value="&lt;b&gt;CONTROL DATA FLOW GRAPH (CDFG) — System-Level Dual-Mode NFC Analysis Engine&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;ESP32 Dual-Mode Engine: Level 1 UID Unauthenticated vs Level 2 Cryptographic Sector | LittleFS Flash Persistence &amp; OLED UI&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;" vertex="1" parent="1">
-          <mxGeometry x="40" y="25" width="850" height="50" as="geometry" />
+        <mxCell id="hdr" value="&lt;b&gt;CONTROL DATA FLOW GRAPH (CDFG) — System-Level Dual-Mode NFC Analysis Engine&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:10px;color:#475569;&#x27;&gt;ESP32 Dual-Mode Engine: Level 1 UID Unauthenticated vs Level 2 Cryptographic Sector | LittleFS Flash Persistence &amp;amp; OLED UI&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="50" y="25" width="850" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="leg_ctrl" value="&lt;b&gt;Control Flow Edge&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="980" y="25" width="130" height="25" as="geometry" />
+        <mxCell id="leg_ctrl" value="Control Flow (Dashed)" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="980" y="25" width="160" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="leg_data" value="&lt;b&gt;Data Flow Edge&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="25" width="130" height="25" as="geometry" />
+        <mxCell id="leg_data" value="Data Flow (Solid)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1155" y="25" width="135" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="leg_loop" value="&lt;b&gt;Periodic Loopback&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1260" y="25" width="140" height="25" as="geometry" />
+        <mxCell id="leg_loop" value="Loopback (Dotted)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1305" y="25" width="135" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="sys_power" value="&lt;b&gt;POWER ON / RESET&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;ESP32 Boot &amp; Dual-Core Start&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#2dd4bf;strokeWidth=2;fontColor=#f0fdfa;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="sys_power" value="&lt;b&gt;POWER ON / RESET&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;ESP32 Boot &amp;amp; Dual-Core Start&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="560" y="90" width="260" height="45" as="geometry" />
         </mxCell>
-        <mxCell id="sys_init" value="&lt;b&gt;INIT: Peripherals &amp; Stacks&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;SPI.begin(18,19,23,5) | Wire.begin(21,22)
-LittleFS.begin() | WiFi.softAP()&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="sys_init" value="&lt;b&gt;INIT: Peripherals &amp;amp; Stacks&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;SPI.begin(18,19,23,5) | Wire.begin(21,22)&lt;br/&gt;LittleFS.begin() | WiFi.softAP()&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="560" y="165" width="260" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="c_poll_card" value="&lt;b&gt;C1: PICC_IsNewCardPresent()?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;13.56 MHz RF Field Polling&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="c_poll_card" value="&lt;b&gt;C1: PICC_IsNewCardPresent()?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;13.56 MHz RF Field Polling&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="590" y="265" width="200" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="c_read_serial" value="&lt;b&gt;C2: PICC_ReadCardSerial()?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Anti-Collision Cascade Loop&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="c_read_serial" value="&lt;b&gt;C2: PICC_ReadCardSerial()?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;Anti-Collision Cascade Loop&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="590" y="375" width="200" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="d_t0_start" value="&lt;b&gt;D1: Start Latency Timer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;startTime = micros() (ESP32 HW Timer)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="d_t0_start" value="&lt;b&gt;D1: Start Latency Timer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;startTime = micros() (ESP32 HW Timer)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="560" y="485" width="260" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="d_format_uid" value="&lt;b&gt;D2: Extract &amp; Format UID String&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;uidByte[0..size] -&gt; uidStr (HEX)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="d_format_uid" value="&lt;b&gt;D2: Extract &amp;amp; Format UID String&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;uidByte[0..size] -&amp;gt; uidStr (HEX)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="560" y="570" width="260" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="c_mode_branch" value="&lt;b&gt;C3: Verification Architecture?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Level 1 vs Level 2 Evaluation&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="c_mode_branch" value="&lt;b&gt;C3: Verification Architecture?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;Level 1 vs Level 2 Evaluation&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="590" y="665" width="200" height="75" as="geometry" />
         </mxCell>
-        <mxCell id="d_level1_audit" value="&lt;b&gt;LEVEL 1: UID-Only Audit&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;T_exec ~2.8 ms | Vulnerable to Clones
-Direct Database / Whitelist Check&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="d_level1_audit" value="&lt;b&gt;LEVEL 1: UID-Only Audit&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;T_exec ~2.8 ms | Vulnerable to Clones&lt;br/&gt;Direct Database / Whitelist Check&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="220" y="770" width="240" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="d_level1_warn" value="&lt;b&gt;VULNERABILITY DETECTED&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Zero cryptographic challenge (Trivial Replay)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#f87171;strokeWidth=2;fontColor=#fef2f2;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+        <mxCell id="d_level1_warn" value="&lt;b&gt;VULNERABILITY DETECTED&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#334155;&#x27;&gt;Zero cryptographic challenge (Trivial Replay)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="220" y="865" width="240" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="d_level2_exec" value="&lt;b&gt;LEVEL 2: Sector 1 Block 4 Auth&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;authenticate_and_read_block()
-T_exec ~30.2 ms | 3-Pass Mutual Auth&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="d_level2_exec" value="&lt;b&gt;LEVEL 2: Sector 1 Block 4 Auth&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;authenticate_and_read_block()&lt;br/&gt;T_exec ~30.2 ms | 3-Pass Mutual Auth&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="720" y="770" width="260" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="c_auth_ok" value="&lt;b&gt;C4: PCD_Authenticate == OK?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Crypto-1 Key A Accepted?&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="c_auth_ok" value="&lt;b&gt;C4: PCD_Authenticate == OK?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;Crypto-1 Key A Accepted?&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="750" y="865" width="200" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="d_auth_pass" value="&lt;b&gt;AUTH_SUCCESS (Access Granted)&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Secure Sector Validation&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#2dd4bf;strokeWidth=2;fontColor=#f0fdfa;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="d_auth_pass" value="&lt;b&gt;AUTH_SUCCESS (Access Granted)&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;Secure Sector Validation&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="600" y="970" width="220" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="d_auth_fail" value="&lt;b&gt;AUTH_FAILED (Access Denied)&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Key Rejection / Tamper Detected&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#f87171;strokeWidth=2;fontColor=#fef2f2;fontStyle=1;fontSize=10;" vertex="1" parent="1">
+        <mxCell id="d_auth_fail" value="&lt;b&gt;AUTH_FAILED (Access Denied)&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#334155;&#x27;&gt;Key Rejection / Tamper Detected&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="880" y="970" width="220" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="d_bench_calc" value="&lt;b&gt;D3: Stop Benchmark Timer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;readTimeUs = micros() - startTime
-Tag Family Classified (SAK/ATQA)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="d_bench_calc" value="&lt;b&gt;D3: Stop Benchmark Timer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;readTimeUs = micros() - startTime&lt;br/&gt;Tag Family Classified (SAK/ATQA)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="560" y="1055" width="260" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="d_flash_commit" value="&lt;b&gt;D4: LittleFS Flash Append&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;appendScanRecord() -&gt; /scans.jsonl
-Persists across hardware reboot&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1200" y="750" width="240" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="d_oled_update" value="&lt;b&gt;D5: Refresh SSD1306 OLED&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Render UID, readTimeUs, authStatus
-I2C Transfer (4,200 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1200" y="850" width="240" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="d_web_serve" value="&lt;b&gt;D6: Async Web Dashboard&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Serve /api/logs &amp; index.html
-Non-blocking AsyncTCP Thread&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1200" y="950" width="240" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="d_halt" value="&lt;b&gt;D7: RF Transponder Teardown&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;rfid.PICC_HaltA(); rfid.PCD_StopCrypto1();&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="560" y="1145" width="260" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="d_delay" value="&lt;b&gt;D8: Loop Interval Delay&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;delay(1500) | Low Power Quiescence&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="560" y="1225" width="260" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="store_flash_mem" value="&lt;b&gt;PHYSICAL SPI FLASH&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;/scans.jsonl Partition&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="store_flash_mem" value="&lt;b&gt;PHYSICAL SPI FLASH&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;/scans.jsonl Partition&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#F1F5F9;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
           <mxGeometry x="1220" y="650" width="200" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="e101" value="Boot" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="sys_power" target="sys_init">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="d_flash_commit" value="&lt;b&gt;D4: LittleFS Flash Append&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;appendScanRecord() -&amp;gt; /scans.jsonl&lt;br/&gt;Persists across hardware reboot&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="750" width="240" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="e102" value="Enter loop()" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="sys_init" target="c_poll_card">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="d_oled_update" value="&lt;b&gt;D5: Refresh SSD1306 OLED&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;Render UID, readTimeUs, authStatus&lt;br/&gt;I2C Transfer (4,200 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="850" width="240" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="e103" value="No (Idle Polling)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=3 3;strokeColor=#38bdf8;strokeWidth=2;fontColor=#7dd3fc;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.2;entryDx=0;entryDy=0;" edge="1" parent="1" source="c_poll_card" target="c_poll_card">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="d_web_serve" value="&lt;b&gt;D6: Async Web Dashboard&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;Serve /api/logs &amp;amp; index.html&lt;br/&gt;Non-blocking AsyncTCP Thread&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="950" width="240" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="e104" value="Yes (Card in Field)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_poll_card" target="c_read_serial">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="d_halt" value="&lt;b&gt;D7: RF Transponder Teardown&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;rfid.PICC_HaltA(); rfid.PCD_StopCrypto1();&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1145" width="260" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="e105" value="No (Collision/Drop)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=3 3;strokeColor=#38bdf8;strokeWidth=2;fontColor=#7dd3fc;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_read_serial" target="c_poll_card">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="d_delay" value="&lt;b&gt;D8: Loop Interval Delay&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;color:#475569;&#x27;&gt;delay(1500) | Low Power Quiescence&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1225" width="260" height="45" as="geometry" />
         </mxCell>
-        <mxCell id="e106" value="Yes (Serial Acquired)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_read_serial" target="d_t0_start">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e107" value="Timer Running" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_t0_start" target="d_format_uid">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e108" value="UID Parsed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_format_uid" target="c_mode_branch">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e109" value="Level 1: Fast UID" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_mode_branch" target="d_level1_audit">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e110" value="Level 2: Cryptographic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_mode_branch" target="d_level2_exec">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e111" value="Audit Evaluation" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_level1_audit" target="d_level1_warn">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e112" value="Record ~2.8ms" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_level1_warn" target="d_bench_calc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e113" value="Handshake Returned" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_level2_exec" target="c_auth_ok">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e114" value="Yes (Key A Valid)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_auth_ok" target="d_auth_pass">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e115" value="No (Auth Error)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=4 3;strokeColor=#ef4444;strokeWidth=2;fontColor=#fca5a5;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_auth_ok" target="d_auth_fail">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e116" value="Record ~30.2ms" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_auth_pass" target="d_bench_calc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e117" value="Record Failure" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_auth_fail" target="d_bench_calc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e118" value="Dispatch Record" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_bench_calc" target="d_flash_commit">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e119" value="Flash Written" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_flash_commit" target="d_oled_update">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e120" value="UI Refreshed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_oled_update" target="d_web_serve">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e121" value="Events Flushed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_web_serve" target="d_halt">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e122" value="RF Off" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_halt" target="d_delay">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e123" value="Next Scan Cycle" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=3 3;strokeColor=#38bdf8;strokeWidth=2;fontColor=#7dd3fc;fontSize=10;labelBackgroundColor=#0f172a;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d_delay" target="c_poll_card">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e124" value="Log JSON Payload" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_bench_calc" target="d_flash_commit">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e125" value="Physical Page Write" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_flash_commit" target="store_flash_mem">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e126" value="UID &amp; Latency Delta" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_bench_calc" target="d_oled_update">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
+        <mxCell id="e101" value="Boot" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="sys_power" target="sys_init" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e102" value="Enter loop()" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="sys_init" target="c_poll_card" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e103" value="No (Idle Polling)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=3 3;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.2;entryDx=0;entryDy=0;" source="c_poll_card" target="c_poll_card" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e104" value="Yes (Card in Field)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="c_poll_card" target="c_read_serial" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e105" value="No (Collision/Drop)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=3 3;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="c_read_serial" target="c_poll_card" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e106" value="Yes (Serial Acquired)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="c_read_serial" target="d_t0_start" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e107" value="Timer Running" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_t0_start" target="d_format_uid" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e108" value="UID Parsed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_format_uid" target="c_mode_branch" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e109" value="Level 1: Fast UID" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="c_mode_branch" target="d_level1_audit" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e110" value="Level 2: Cryptographic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="c_mode_branch" target="d_level2_exec" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e111" value="Audit Evaluation" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_level1_audit" target="d_level1_warn" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e112" value="Record ~2.8ms" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_level1_warn" target="d_bench_calc" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e113" value="Handshake Returned" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_level2_exec" target="c_auth_ok" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e114" value="Yes (Key A Valid)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="c_auth_ok" target="d_auth_pass" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e115" value="No (Auth Error)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="c_auth_ok" target="d_auth_fail" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e116" value="Record ~30.2ms" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_auth_pass" target="d_bench_calc" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e117" value="Record Failure" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_auth_fail" target="d_bench_calc" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="990" y="1030"/><mxPoint x="690" y="1030"/></Array></mxGeometry></mxCell>
+        <mxCell id="e118" value="Dispatch Record" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_bench_calc" target="d_flash_commit" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e119" value="Flash Written" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_flash_commit" target="d_oled_update" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e120" value="UI Refreshed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_oled_update" target="d_web_serve" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e121" value="Events Flushed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_web_serve" target="d_halt" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e122" value="RF Off" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=5 4;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_halt" target="d_delay" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e123" value="Next Scan Cycle" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=3 3;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" source="d_delay" target="c_poll_card" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e124" value="Log JSON Payload" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=2;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_bench_calc" target="d_flash_commit" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e125" value="Physical Page Write" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=2;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_flash_commit" target="store_flash_mem" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e126" value="UID &amp; Latency Delta" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;strokeWidth=2;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" source="d_bench_calc" target="d_oled_update" edge="1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>

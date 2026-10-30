@@ -177,13 +177,16 @@ For hardware-free development, CI automated testing, and virtual academic demons
 - **Extension Config**: [`wokwi.toml`](wokwi.toml)
 - **Standalone Simulation Bundle**: [`simulation/wokwi/`](simulation/wokwi/) ([`sketch.ino`](simulation/wokwi/sketch.ino), [`libraries.txt`](simulation/wokwi/libraries.txt), [`README.md`](simulation/wokwi/README.md))
 - **Block Diagram**: [`docs/diagrams/wokwi_system_block_diagram.svg`](docs/diagrams/wokwi_system_block_diagram.svg)
+- **Comprehensive Tutorial Guide**: 📖 **[`docs/WOKWI_TUTORIAL.md`](docs/WOKWI_TUTORIAL.md)** (Full step-by-step walkthrough, card roster matrix, REST APIs, and troubleshooting)
 
 ### Quickstart (1-Click in Browser)
 1. Open [wokwi.com/new/esp32](https://wokwi.com/projects/new/esp32).
 2. Copy & paste [`diagram.json`](diagram.json) into the `diagram.json` tab.
 3. Copy & paste [`simulation/wokwi/sketch.ino`](simulation/wokwi/sketch.ino) into the `sketch.ino` tab.
 4. Copy & paste [`simulation/wokwi/libraries.txt`](simulation/wokwi/libraries.txt) into `libraries.txt`.
-5. Press **Play** to start the simulation, then click the blue **MFRC522** module to swipe virtual RFID tags!
+5. (Optional): Add [`partitions.csv`](partitions.csv) to enable 1.5MB LittleFS persistent log storage.
+6. Press **Play** to start the simulation, then click the blue **MFRC522** module to swipe virtual RFID tags!
+   * *For the complete tutorial, card testing matrix, and REST endpoint guide, see [`docs/WOKWI_TUTORIAL.md`](docs/WOKWI_TUTORIAL.md).*
 
 ---
 

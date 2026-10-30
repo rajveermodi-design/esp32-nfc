@@ -8,18 +8,17 @@ __pycache__/
 *.pyo
 
 # ==============================================================================
-# Wokwi Virtual Simulation Environment & Configurations
+# Local Build Artifacts & Binaries
 # ==============================================================================
-simulation/
-/diagram.json
-/wokwi.toml
-/libraries.txt
-/partitions.csv
+.pio/
+*.bin
+*.elf
 
 # ==============================================================================
-# Standalone Vector Graphics (.svg)
+# Standalone Vector Graphics & Export Renders (.svg, .png)
 # ==============================================================================
 *.svg
+*.png
 
 # ==============================================================================
 # OS & Editor Artifacts

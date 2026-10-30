@@ -1,1010 +1,497 @@
-<mxfile host="app.diagrams.net" modified="2026-10-30T00:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
-<diagram id="sys-block" name="System Block Diagram">
-    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1200" background="#0f172a" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-
-        <!-- Title -->
-        <mxCell id="title" value="&lt;b&gt;FIGURE 1: SYSTEM BLOCK DIAGRAM&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;opacity:0.85;'&gt;ESP32 13.56 MHz RFID/NFC Security Analysis Terminal — Hardware &amp; Software Architecture&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="40" y="20" width="800" height="50" as="geometry" />
-        </mxCell>
-
-        <!-- Legend -->
-        <mxCell id="leg_spi" value="&lt;b&gt;SPI Bus (4 MHz)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="1050" y="20" width="130" height="25" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_i2c" value="&lt;b&gt;I2C Bus (400 kHz)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="1190" y="20" width="130" height="25" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_gpio" value="&lt;b&gt;GPIO (Digital/PWM)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="1330" y="20" width="130" height="25" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_pwr5" value="&lt;b&gt;5V Power Rail&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#ef4444;strokeWidth=2;fontColor=#fef2f2;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="1470" y="20" width="110" height="25" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_pwr3" value="&lt;b&gt;3.3V Power Rail&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#fb923c;strokeWidth=2;fontColor=#fef2f2;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="1470" y="50" width="110" height="25" as="geometry" />
-        </mxCell>
-
-        <!-- ======== POWER SUPPLY SECTION ======== -->
-        <mxCell id="pwr_usb" value="&lt;b&gt;USB 5V VBUS&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;External Power Source&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#ef4444;strokeWidth=2;fontColor=#fef2f2;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="40" y="120" width="180" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="pwr_ldo" value="&lt;b&gt;AMS1117-3.3&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;LDO Voltage Regulator&lt;br/&gt;5V → 3.3V&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#fb923c;strokeWidth=2;fontColor=#fef2f2;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="300" y="120" width="180" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="pwr_rail" value="&lt;b&gt;3.3V Logic Rail&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;All GPIO / Peripheral VCC&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#fb923c;strokeWidth=2;fontColor=#fef2f2;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="560" y="120" width="180" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="e_pwr1" value="5V" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=3;fontColor=#fca5a5;fontSize=11;labelBackgroundColor=#0f172a;fontStyle=1;" edge="1" parent="1" source="pwr_usb" target="pwr_ldo">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_pwr2" value="3.3V" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#fb923c;strokeWidth=3;fontColor=#fdba74;fontSize=11;labelBackgroundColor=#0f172a;fontStyle=1;" edge="1" parent="1" source="pwr_ldo" target="pwr_rail">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- ======== ESP32 MCU (Main Block) ======== -->
-        <mxCell id="esp32_outer" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=3;fontColor=#f8fafc;" vertex="1" parent="1">
-          <mxGeometry x="320" y="230" width="720" height="420" as="geometry" />
-        </mxCell>
-        <mxCell id="esp32_title" value="&lt;b&gt;ESP32-WROOM-32 (Xtensa LX6 Dual-Core @ 240 MHz)&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#38bdf8;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="400" y="240" width="560" height="30" as="geometry" />
-        </mxCell>
-
-        <!-- Core 0 (PRO_CPU) -->
-        <mxCell id="core0" value="&lt;b&gt;PRO_CPU (Core 0)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;Wi-Fi / TCP Stack&lt;br/&gt;ESPAsyncWebServer&lt;br/&gt;HTTP Request Handlers&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="350" y="290" width="200" height="80" as="geometry" />
-        </mxCell>
-
-        <!-- Core 1 (APP_CPU) -->
-        <mxCell id="core1" value="&lt;b&gt;APP_CPU (Core 1)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;Main loop() Execution&lt;br/&gt;RF Polling &amp; Auth Task&lt;br/&gt;OLED Update &amp; Flash I/O&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="580" y="290" width="200" height="80" as="geometry" />
-        </mxCell>
-
-        <!-- SPI Controller -->
-        <mxCell id="spi_ctrl" value="&lt;b&gt;SPI Controller (HSPI)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;SCK=GPIO18 | MISO=GPIO19&lt;br/&gt;MOSI=GPIO23 | CS=GPIO5&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a5f;strokeColor=#818cf8;strokeWidth=1.5;fontColor=#c7d2fe;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="350" y="400" width="200" height="65" as="geometry" />
-        </mxCell>
-
-        <!-- I2C Controller -->
-        <mxCell id="i2c_ctrl" value="&lt;b&gt;I2C Controller (Wire)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;SDA=GPIO21 | SCL=GPIO22&lt;br/&gt;400 kHz Fast Mode&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a5f;strokeColor=#10b981;strokeWidth=1.5;fontColor=#a7f3d0;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="580" y="400" width="200" height="65" as="geometry" />
-        </mxCell>
-
-        <!-- GPIO Matrix -->
-        <mxCell id="gpio_matrix" value="&lt;b&gt;GPIO Matrix&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;RST=GPIO27 | BUZZER=GPIO26&lt;br/&gt;LED=GPIO2 | IRQ=GPIO4&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a5f;strokeColor=#f59e0b;strokeWidth=1.5;fontColor=#fde68a;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="810" y="400" width="200" height="65" as="geometry" />
-        </mxCell>
-
-        <!-- Wi-Fi Radio -->
-        <mxCell id="wifi_radio" value="&lt;b&gt;Wi-Fi Radio (802.11 b/g/n)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;SoftAP Mode: SSID=&amp;quot;ESP32-NFC-Lab&amp;quot;&lt;br/&gt;IP: 192.168.4.1 | Port 80&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a5f;strokeColor=#06b6d4;strokeWidth=1.5;fontColor=#a5f3fc;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="350" y="495" width="200" height="65" as="geometry" />
-        </mxCell>
-
-        <!-- Flash Memory -->
-        <mxCell id="flash_mem" value="&lt;b&gt;Internal Flash (4 MB)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a5f;strokeColor=#a78bfa;strokeWidth=1.5;fontColor=#ddd6fe;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="580" y="495" width="430" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="flash_fw" value="&lt;b&gt;Firmware Partition&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;Arduino Sketch Binary&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#a78bfa;strokeWidth=1;fontColor=#ddd6fe;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="585" y="535" width="200" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="flash_lfs" value="&lt;b&gt;LittleFS Partition&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;/scans.jsonl | /index.html&lt;br/&gt;Non-Volatile (Survives Reset)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=1.5;fontColor=#ecfdf5;fontStyle=0;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="800" y="535" width="205" height="55" as="geometry" />
-        </mxCell>
-
-        <!-- FreeRTOS Label -->
-        <mxCell id="freertos" value="&lt;span style='font-size:9px;opacity:0.7;'&gt;FreeRTOS Kernel (Implicit — Arduino Core on ESP32)&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#94a3b8;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="400" y="600" width="500" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- ======== EXTERNAL PERIPHERALS ======== -->
-
-        <!-- RC522 / PN532 NFC Reader -->
-        <mxCell id="nfc_reader" value="&lt;b&gt;RC522 / PN532&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;13.56 MHz NFC Transceiver&lt;br/&gt;ISO/IEC 14443A&lt;br/&gt;MIFARE Classic &amp; NTAG21x&lt;br/&gt;VCC: 3.3V&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#818cf8;strokeWidth=2.5;fontColor=#e0e7ff;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="40" y="380" width="200" height="100" as="geometry" />
-        </mxCell>
-
-        <!-- SSD1306 OLED -->
-        <mxCell id="oled" value="&lt;b&gt;SSD1306 OLED Display&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;128×64 Monochrome&lt;br/&gt;I2C Address: 0x3C&lt;br/&gt;VCC: 3.3V&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#10b981;strokeWidth=2.5;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1130" y="320" width="200" height="85" as="geometry" />
-        </mxCell>
-
-        <!-- Piezo Buzzer -->
-        <mxCell id="buzzer" value="&lt;b&gt;Piezo Buzzer&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;GPIO26 (PWM Output)&lt;br/&gt;500 Hz (Fault) / 1 kHz (Success)&lt;br/&gt;VCC: 3.3V&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1130" y="440" width="200" height="85" as="geometry" />
-        </mxCell>
-
-        <!-- Status LED -->
-        <mxCell id="led" value="&lt;b&gt;Status LED&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;GPIO2 (Onboard Blue LED)&lt;br/&gt;Solid=Ready | Blink=Fault&lt;br/&gt;VCC: 3.3V&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1130" y="560" width="200" height="85" as="geometry" />
-        </mxCell>
-
-        <!-- NFC Tag (External Entity) -->
-        <mxCell id="nfc_tag" value="&lt;b&gt;13.56 MHz NFC Tag&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;MIFARE Classic 1K (4B UID)&lt;br/&gt;NTAG21x (7B UID)&lt;br/&gt;Passive — RF Powered&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3f3f46;strokeColor=#a1a1aa;strokeWidth=2;fontColor=#fafafa;fontStyle=0;fontSize=11;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
-          <mxGeometry x="40" y="550" width="200" height="85" as="geometry" />
-        </mxCell>
-
-        <!-- Web Client -->
-        <mxCell id="web_client" value="&lt;b&gt;Web Browser Client&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;HTTP GET /api/logs&lt;br/&gt;Dashboard UI (index.html)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3f3f46;strokeColor=#a1a1aa;strokeWidth=2;fontColor=#fafafa;fontStyle=0;fontSize=11;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
-          <mxGeometry x="40" y="700" width="200" height="65" as="geometry" />
-        </mxCell>
-
-        <!-- ======== BUS CONNECTIONS ======== -->
-
-        <!-- SPI Bus: ESP32 → RC522/PN532 -->
-        <mxCell id="e_spi" value="&lt;b&gt;SPI Bus (4 MHz)&lt;/b&gt;&lt;br/&gt;SCK / MISO / MOSI / CS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#818cf8;strokeWidth=2.5;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;entryX=1;entryY=0.5;exitX=0;exitY=0.5;" edge="1" parent="1" source="spi_ctrl" target="nfc_reader">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- I2C Bus: ESP32 → OLED -->
-        <mxCell id="e_i2c" value="&lt;b&gt;I2C Bus (400 kHz)&lt;/b&gt;&lt;br/&gt;SDA=GPIO21 / SCL=GPIO22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.5;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="i2c_ctrl" target="oled">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- GPIO: ESP32 → Buzzer -->
-        <mxCell id="e_gpio_buzz" value="&lt;b&gt;GPIO26 (PWM)&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fde68a;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="gpio_matrix" target="buzzer">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- GPIO: ESP32 → LED -->
-        <mxCell id="e_gpio_led" value="&lt;b&gt;GPIO2 (Digital Out)&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fde68a;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.8;entryX=0;entryY=0.5;" edge="1" parent="1" source="gpio_matrix" target="led">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- GPIO: ESP32 → RST on RC522 -->
-        <mxCell id="e_gpio_rst" value="&lt;b&gt;GPIO27 (RST)&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=1.5;fontColor=#fde68a;fontSize=9;labelBackgroundColor=#0f172a;dashed=1;dashPattern=4 3;exitX=0;exitY=0.8;" edge="1" parent="1" source="gpio_matrix" target="nfc_reader">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- RF Link: Reader ↔ Tag -->
-        <mxCell id="e_rf" value="&lt;b&gt;13.56 MHz RF Field&lt;/b&gt;&lt;br/&gt;ISO 14443A Subcarrier" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#a1a1aa;strokeWidth=2;fontColor=#d4d4d8;fontSize=10;labelBackgroundColor=#0f172a;dashed=1;dashPattern=8 4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="nfc_reader" target="nfc_tag">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- Wi-Fi Link: ESP32 → Client -->
-        <mxCell id="e_wifi" value="&lt;b&gt;Wi-Fi SoftAP (802.11)&lt;/b&gt;&lt;br/&gt;HTTP / TCP Port 80" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=2;fontColor=#67e8f9;fontSize=10;labelBackgroundColor=#0f172a;dashed=1;dashPattern=8 4;exitX=0;exitY=0.5;entryX=0.5;entryY=0;" edge="1" parent="1" source="wifi_radio" target="web_client">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- Power distribution to peripherals -->
-        <mxCell id="e_pwr_nfc" value="3.3V" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#fb923c;strokeWidth=1.5;fontColor=#fdba74;fontSize=9;labelBackgroundColor=#0f172a;dashed=1;dashPattern=3 2;exitX=0.15;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="pwr_rail" target="nfc_reader">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_pwr_oled" value="3.3V" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#fb923c;strokeWidth=1.5;fontColor=#fdba74;fontSize=9;labelBackgroundColor=#0f172a;dashed=1;dashPattern=3 2;exitX=0.85;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="pwr_rail" target="oled">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_pwr_esp" value="3.3V" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#fb923c;strokeWidth=1.5;fontColor=#fdba74;fontSize=9;labelBackgroundColor=#0f172a;dashed=1;dashPattern=3 2;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="pwr_rail" target="esp32_outer">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- Internal connections: Core 1 → SPI/I2C/GPIO -->
-        <mxCell id="e_c1_spi" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1;exitX=0.25;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="core1" target="spi_ctrl">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_c1_i2c" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="core1" target="i2c_ctrl">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_c1_gpio" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1;exitX=0.75;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="core1" target="gpio_matrix">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_c0_wifi" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="core0" target="wifi_radio">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- Software Subsystem Callout -->
-        <mxCell id="sw_callout" value="&lt;b&gt;Async Web Server Subsystem (Core 0)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:9px;opacity:0.85;'&gt;ESPAsyncWebServer (Port 80)&lt;br/&gt;Routes: GET / → index.html | GET /api/logs → JSON Array | POST /api/reboot&lt;br/&gt;Reads LittleFS /scans.jsonl asynchronously (non-blocking to RF poll on Core 1)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#06b6d4;strokeWidth=1.5;fontColor=#67e8f9;fontStyle=0;fontSize=10;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
-          <mxGeometry x="40" y="810" width="500" height="60" as="geometry" />
-        </mxCell>
-
-      </root>
-    </mxGraphModel>
-  </diagram>
-<diagram id="wokwi-sys-block" name="Wokwi Virtual System Block Diagram">
-    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="850" background="#0f172a" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-
-        <!-- ======== WOKWI SIMULATION ENVIRONMENT (OUTER CONTAINER) ======== -->
-        <mxCell id="wokwi_env" value="WOKWI SIMULATION ENVIRONMENT (VIRTUAL SYSTEM)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#080f21;strokeColor=#334155;strokeWidth=2;dashed=1;dashPattern=8 6;fontColor=#94a3b8;startSize=36;fontSize=13;fontStyle=1;rounded=1;" vertex="1" parent="1">
-          <mxGeometry x="30" y="30" width="1440" height="780" as="geometry" />
-        </mxCell>
-
-        <!-- Diagram Header Title -->
-        <mxCell id="title" value="&lt;b&gt;SIMPLIFIED SYSTEM BLOCK DIAGRAM (WOKWI ENVIRONMENT)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#94a3b8;'&gt;Virtual Prototyping Setup: ESP32 + MFRC522 + SSD1306 + Buzzer + LED + SoftAP Web Dashboard&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="60" y="75" width="680" height="40" as="geometry" />
-        </mxCell>
-
-        <!-- Legend / Bus Color Guide -->
-        <mxCell id="leg_spi" value="&lt;b&gt;SPI Bus (4 MHz)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="800" y="80" width="140" height="28" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_i2c" value="&lt;b&gt;I2C Bus (400 kHz)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="960" y="80" width="140" height="28" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_gpio" value="&lt;b&gt;GPIO (PWM / Digital)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="80" width="150" height="28" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_rf" value="&lt;b&gt;Virtual RF / Wi-Fi&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0e3a47;strokeColor=#06b6d4;strokeWidth=2;fontColor=#cffafe;fontSize=10;dashed=1;dashPattern=4 3;" vertex="1" parent="1">
-          <mxGeometry x="1290" y="80" width="150" height="28" as="geometry" />
-        </mxCell>
-
-        <!-- ======== LEFT COLUMN: INPUTS & EXTERNAL ENTITIES ======== -->
-
-        <!-- 13.56 MHz NFC Tag -->
-        <mxCell id="nfc_tag" value="&lt;b&gt;13.56 MHz RFID/NFC Tag&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#cbd5e1;'&gt;MIFARE Classic 1K / NTAG21x&lt;br/&gt;Virtual Card Interactive In Wokwi&lt;br/&gt;(Passive RF Powered)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#94a3b8;strokeWidth=2;fontColor=#f8fafc;fontSize=12;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
-          <mxGeometry x="70" y="180" width="240" height="100" as="geometry" />
-        </mxCell>
-
-        <!-- MFRC522 RFID Transceiver -->
-        <mxCell id="mfrc522" value="&lt;b&gt;MFRC522 RFID Transceiver&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#a5b4fc;font-weight:bold;'&gt;wokwi-mfrc522&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;13.56 MHz Carrier Demodulation&lt;br/&gt;FIFO Buffer &amp; ISO 14443A Framing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#818cf8;strokeWidth=2.5;fontColor=#f8fafc;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="70" y="360" width="240" height="110" as="geometry" />
-        </mxCell>
-
-        <!-- Web Browser Client -->
-        <mxCell id="web_client" value="&lt;b&gt;Web Browser Client&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#67e8f9;font-weight:bold;'&gt;Virtual Host Browser&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;Telemetry Dashboard (index.html)&lt;br/&gt;REST Endpoint: GET /api/logs&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#06b6d4;strokeWidth=2;fontColor=#f8fafc;fontSize=12;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
-          <mxGeometry x="70" y="570" width="240" height="100" as="geometry" />
-        </mxCell>
-
-        <!-- ======== CENTER COLUMN: ESP32 MCU (SINGLE NON-PARTITIONED BLOCK) ======== -->
-
-        <mxCell id="esp32_mcu" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=3;fontColor=#f8fafc;" vertex="1" parent="1">
-          <mxGeometry x="440" y="160" width="500" height="550" as="geometry" />
-        </mxCell>
-
-        <!-- MCU Header -->
-        <mxCell id="esp32_title" value="&lt;b&gt;ESP32-WROOM-32 Microcontroller&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#38bdf8;'&gt;Virtual Simulation Target (Wokwi Engine)&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#f8fafc;fontSize=14;" vertex="1" parent="1">
-          <mxGeometry x="460" y="175" width="460" height="40" as="geometry" />
-        </mxCell>
-
-        <!-- Core Block 1: System Firmware -->
-        <mxCell id="mcu_fw" value="&lt;b&gt;System Firmware Execution&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#93c5fd;'&gt;• ISO 14443A Tag Parser &amp; Anti-Collision Cascade&lt;br/&gt;• Crypto-1 Authentication &amp; Sector 1 Memory Read&lt;br/&gt;• GPIO Peripheral Controller &amp; SSD1306 Display Engine&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#38bdf8;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=14;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="470" y="235" width="440" height="90" as="geometry" />
-        </mxCell>
-
-        <!-- Core Block 2: Async Web Server & TCP Stack -->
-        <mxCell id="mcu_web" value="&lt;b&gt;Asynchronous Web Server &amp; TCP Stack&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#67e8f9;'&gt;• ESPAsyncWebServer on Port 80 (AsyncTCP Core)&lt;br/&gt;• Static Assets Server &amp; Live REST API (/api/logs)&lt;br/&gt;• Non-Blocking HTTP Request Dispatching&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#06b6d4;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=14;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="470" y="355" width="440" height="90" as="geometry" />
-        </mxCell>
-
-        <!-- Core Block 3: Wi-Fi Radio Subsystem -->
-        <mxCell id="mcu_wifi" value="&lt;b&gt;Wi-Fi Subsystem (SoftAP Mode)&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#67e8f9;'&gt;• Network SSID: &amp;quot;ESP32-NFC-Lab&amp;quot; (Password: admin123)&lt;br/&gt;• Gateway IP: 192.168.4.1 (Simulated Access Point)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#06b6d4;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=14;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="470" y="475" width="440" height="80" as="geometry" />
-        </mxCell>
-
-        <!-- Core Block 4: Internal Flash Memory (LittleFS) -->
-        <mxCell id="mcu_flash" value="&lt;b&gt;Internal Flash Memory (4 MB) — LittleFS&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#6ee7b7;'&gt;• Non-Volatile Persistence: /scans.jsonl (Scan Audit Logs)&lt;br/&gt;• Web Assets: /index.html (Stored in Virtual NOR Flash)&lt;br/&gt;• Immediate file.flush() on Every Successful RFID Read&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#10b981;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=14;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="470" y="585" width="440" height="95" as="geometry" />
-        </mxCell>
-
-        <!-- ======== RIGHT COLUMN: OUTPUT PERIPHERALS ======== -->
-
-        <!-- SSD1306 OLED Display -->
-        <mxCell id="oled" value="&lt;b&gt;SSD1306 OLED Display&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#34d399;font-weight:bold;'&gt;wokwi-ssd1306&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;128×64 Pixel Monochrome Display&lt;br/&gt;Real-Time UID &amp; Latency Visualizer&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#10b981;strokeWidth=2.5;fontColor=#ecfdf5;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="230" width="270" height="100" as="geometry" />
-        </mxCell>
-
-        <!-- Piezo Buzzer -->
-        <mxCell id="buzzer" value="&lt;b&gt;Piezo Buzzer&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#fbbf24;font-weight:bold;'&gt;wokwi-buzzer&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;Acoustic Frequency Feedback&lt;br/&gt;1 kHz Success Beep / 500 Hz Fault Tone&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="400" width="270" height="100" as="geometry" />
-        </mxCell>
-
-        <!-- Status LED -->
-        <mxCell id="led" value="&lt;b&gt;Status Indicator LED&lt;/b&gt;&lt;br/&gt;&lt;span style='font-size:11px;color:#fbbf24;font-weight:bold;'&gt;wokwi-led&lt;/span&gt;&lt;br/&gt;&lt;span style='font-size:10px;color:#94a3b8;'&gt;Digital Onboard Indicator (Blue)&lt;br/&gt;Solid = System Ready | Fast Blink = Fault&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="570" width="270" height="100" as="geometry" />
-        </mxCell>
-
-        <!-- ======== BUS & SIGNAL CONNECTIONS (CLEAN, STRAIGHT, PARALLEL) ======== -->
-
-        <!-- 1. RF Field: Tag ↔ MFRC522 (Straight Vertical) -->
-        <mxCell id="e_rf" value="&lt;b&gt;13.56 MHz RF Coupling&lt;/b&gt;&lt;br/&gt;ISO/IEC 14443A Subcarrier" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#94a3b8;strokeWidth=2;fontColor=#e2e8f0;fontSize=10;labelBackgroundColor=#0f172a;dashed=1;dashPattern=6 4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="nfc_tag" target="mfrc522">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- 2. SPI Bus: MFRC522 ↔ ESP32 (Straight Horizontal) -->
-        <mxCell id="e_spi" value="&lt;b&gt;SPI Bus (4 MHz)&lt;/b&gt;&lt;br/&gt;SCK=18 | MISO=19 | MOSI=23 | CS=5 | RST=27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#818cf8;strokeWidth=3;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.5;entryX=0;entryY=0.464;" edge="1" parent="1" source="mfrc522" target="esp32_mcu">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- 3. Wi-Fi SoftAP Link: ESP32 ↔ Web Browser (Straight Horizontal) -->
-        <mxCell id="e_wifi" value="&lt;b&gt;802.11 Virtual Wi-Fi&lt;/b&gt;&lt;br/&gt;HTTP Port 80 (SoftAP: 192.168.4.1)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=2.5;fontColor=#67e8f9;fontSize=10;labelBackgroundColor=#0f172a;dashed=1;dashPattern=6 4;exitX=0;exitY=0.836;entryX=1;entryY=0.5;" edge="1" parent="1" source="esp32_mcu" target="web_client">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- 4. I2C Bus: ESP32 → SSD1306 OLED (Straight Horizontal Parallel Route) -->
-        <mxCell id="e_i2c" value="&lt;b&gt;I2C Bus (400 kHz)&lt;/b&gt;&lt;br/&gt;SDA = GPIO 21 | SCL = GPIO 22 (Addr: 0x3C)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=3;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.218;entryX=0;entryY=0.5;" edge="1" parent="1" source="esp32_mcu" target="oled">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- 5. PWM Buzzer Route: ESP32 → Piezo Buzzer (Straight Horizontal Parallel Route) -->
-        <mxCell id="e_buzzer" value="&lt;b&gt;PWM Audio Control&lt;/b&gt;&lt;br/&gt;GPIO 26 (tone() 500 Hz / 1 kHz)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=3;fontColor=#fde68a;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.527;entryX=0;entryY=0.5;" edge="1" parent="1" source="esp32_mcu" target="buzzer">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-        <!-- 6. Digital LED Route: ESP32 → Status LED (Straight Horizontal Parallel Route) -->
-        <mxCell id="e_led" value="&lt;b&gt;Digital Output&lt;/b&gt;&lt;br/&gt;GPIO 2 (Onboard Status LED)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f59e0b;strokeWidth=3;fontColor=#fde68a;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.836;entryX=0;entryY=0.5;" edge="1" parent="1" source="esp32_mcu" target="led">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="cdfg-critical-func" name="2. CDFG - Critical Function (authenticate_and_read_block)">
-    <mxGraphModel dx="1600" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1720" pageHeight="1400" background="#0f172a" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="hdr_card" value="&lt;b&gt;FIGURE 2: CONTROL DATA FLOW GRAPH (CDFG)&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#94a3b8;&quot;&gt;Critical Path: authenticate_and_read_block() | Total Latency: 28,500 µs | Deadline: 35,000 µs | Slack: +6,500 µs&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;align=left;spacingLeft=15;" vertex="1" parent="1">
-          <mxGeometry x="50" y="30" width="1120" height="84" as="geometry" />
-        </mxCell>
-        <mxCell id="legend_card" value="&lt;b&gt;CDFG NOTATION &amp;amp; SPECIFICATION LEGEND&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#38bdf8;&quot;&gt;● Operation (Circle)&lt;/span&gt; | &lt;span style=&quot;font-size:10px;color:#818cf8;&quot;&gt;◆ Decision (Diamond)&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#10b981;&quot;&gt;━ Data Edge (Solid)&lt;/span&gt; | &lt;span style=&quot;font-size:10px;color:#818cf8;&quot;&gt;┈ Control Edge (Dashed)&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#06b6d4;font-weight:bold;&quot;&gt;━━ Critical Path (Highlighted Cyan)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#475569;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=15;" vertex="1" parent="1">
-          <mxGeometry x="1190" y="30" width="480" height="84" as="geometry" />
-        </mxCell>
-        <mxCell id="bb0" value="BB0: Initialisation &amp;amp; Param Load" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b1329;strokeColor=#38bdf8;fontColor=#38bdf8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
-          <mxGeometry x="470" y="195" width="600" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="bb1" value="BB1: Authentication Request" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b1329;strokeColor=#38bdf8;fontColor=#38bdf8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
-          <mxGeometry x="470" y="350" width="600" height="195" as="geometry" />
-        </mxCell>
-        <mxCell id="bb2" value="BB2: Cryptographic Handshake" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b1329;strokeColor=#38bdf8;fontColor=#38bdf8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
-          <mxGeometry x="470" y="600" width="600" height="195" as="geometry" />
-        </mxCell>
-        <mxCell id="bb3" value="BB3: Encrypted Block Extraction" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b1329;strokeColor=#38bdf8;fontColor=#38bdf8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
-          <mxGeometry x="470" y="850" width="600" height="275" as="geometry" />
-        </mxCell>
-        <mxCell id="bb4" value="BB4: Non-Volatile Persistence" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b1329;strokeColor=#38bdf8;fontColor=#38bdf8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
-          <mxGeometry x="470" y="1175" width="600" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="bb_fault" value="BB_FAULT: Error Recovery Block" style="swimlane;whiteSpace=wrap;html=1;fillColor=#1c0f14;strokeColor=#ef4444;fontColor=#fca5a5;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.8;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
-          <mxGeometry x="1190" y="450" width="480" height="370" as="geometry" />
-        </mxCell>
-        <mxCell id="n_start" value="&lt;b&gt;START: authenticate_and_read_block()&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;&quot;&gt;Trigger: Valid Card UID Detected&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#2dd4bf;strokeWidth=2;fontColor=#f0fdfa;" vertex="1" parent="1">
-          <mxGeometry x="630" y="130" width="280" height="38" as="geometry" />
-        </mxCell>
-        <mxCell id="n1" value="&lt;b&gt;N1: Load Key A &amp;amp; Target Block&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#38bdf8;&quot;&gt;Cost: 1 µs (240 cycles)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#06b6d4;strokeWidth=2.5;fontColor=#f8fafc;" vertex="1" parent="bb0">
-          <mxGeometry x="130" y="32" width="340" height="54" as="geometry" />
-        </mxCell>
-        <mxCell id="n2" value="&lt;b&gt;N2: Send MF_AUTH (0x60)&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#38bdf8;&quot;&gt;Cost: 500 µs (120k cycles)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#06b6d4;strokeWidth=2.5;fontColor=#f8fafc;" vertex="1" parent="bb1">
-          <mxGeometry x="130" y="34" width="340" height="54" as="geometry" />
-        </mxCell>
-        <mxCell id="d1" value="&lt;b&gt;D1: FIFO Ready?&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#c7d2fe;&quot;&gt;Cost: 10 µs (2.4k cycles)&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2.2;fontColor=#e0e7ff;" vertex="1" parent="bb1">
-          <mxGeometry x="190" y="120" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="n3" value="&lt;b&gt;N3: Transmit 6-Byte Key A&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#38bdf8;&quot;&gt;Cost: 6,000 µs (1.44M cycles)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#06b6d4;strokeWidth=2.5;fontColor=#f8fafc;" vertex="1" parent="bb2">
-          <mxGeometry x="130" y="34" width="340" height="54" as="geometry" />
-        </mxCell>
-        <mxCell id="d2" value="&lt;b&gt;D2: Crypto-1 Match?&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#c7d2fe;&quot;&gt;Cost: 300 µs (72k cycles)&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2.2;fontColor=#e0e7ff;" vertex="1" parent="bb2">
-          <mxGeometry x="190" y="120" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="n4" value="&lt;b&gt;N4: Send READ Cmd (0x30)&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#38bdf8;&quot;&gt;Cost: 1,000 µs (240k cycles)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#06b6d4;strokeWidth=2.5;fontColor=#f8fafc;" vertex="1" parent="bb3">
-          <mxGeometry x="130" y="34" width="340" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="n5" value="&lt;b&gt;N5: Read 16B Block via FIFO&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#38bdf8;&quot;&gt;Cost: 12,000 µs (2.88M cycles)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#06b6d4;strokeWidth=2.5;fontColor=#f8fafc;" vertex="1" parent="bb3">
-          <mxGeometry x="130" y="118" width="340" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="d3" value="&lt;b&gt;D3: Payload CRC-16 Valid?&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#c7d2fe;&quot;&gt;Cost: 100 µs (24k cycles)&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2.2;fontColor=#e0e7ff;" vertex="1" parent="bb3">
-          <mxGeometry x="190" y="202" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="n6" value="&lt;b&gt;N6: JSON Format &amp;amp; LittleFS Commit&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#38bdf8;&quot;&gt;Cost: 8,589 µs (2.06M cycles)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#06b6d4;strokeWidth=2.5;fontColor=#f8fafc;" vertex="1" parent="bb4">
-          <mxGeometry x="120" y="32" width="360" height="54" as="geometry" />
-        </mxCell>
-        <mxCell id="f1" value="&lt;b&gt;F1: StopCrypto1 &amp;amp; Flag Error&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;color:#fca5a5;&quot;&gt;Cost: 200 µs (48k cycles)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#3f1218;strokeColor=#ef4444;strokeWidth=2.2;fontColor=#fef2f2;" vertex="1" parent="bb_fault">
-          <mxGeometry x="40" y="100" width="400" height="64" as="geometry" />
-        </mxCell>
-        <mxCell id="n_success" value="&lt;b&gt;SUCCESS: Block Extracted &amp;amp; Committed&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;&quot;&gt;Return STATUS_OK | WCET: 28,500 µs | Slack: +6,500 µs&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#2dd4bf;strokeWidth=2.2;fontColor=#f0fdfa;" vertex="1" parent="1">
-          <mxGeometry x="620" y="1300" width="300" height="42" as="geometry" />
-        </mxCell>
-        <mxCell id="n_fault_exit" value="&lt;b&gt;FAULT EXIT: Halt PICC &amp;amp; Return Error&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9px;&quot;&gt;Return STATUS_ERROR | Log Failure&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#f87171;strokeWidth=2;fontColor=#fef2f2;" vertex="1" parent="bb_fault">
-          <mxGeometry x="90" y="295" width="300" height="42" as="geometry" />
-        </mxCell>
-        <mxCell id="e_start_n1" value="Trigger" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3.5;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="n_start" target="n1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_n1_n2" value="Data: KeyA &amp;amp; Block 0x04" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3.5;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_n2_d1" value="0x60 Frame" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3.5;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="n2" target="d1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_d1_n3" value="Branch Yes: FIFO Ready" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3;dashed=1;dashPattern=6 3;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d1" target="n3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_d1_f1" value="Branch No: FIFO Stalled" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2;dashed=1;dashPattern=4 3;fontColor=#fca5a5;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d1" target="f1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_n3_d2" value="Exchange Challenge" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3.5;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="n3" target="d2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_d2_n4" value="Branch Yes: Crypto-1 OK" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3;dashed=1;dashPattern=6 3;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d2" target="n4"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_d2_f1" value="Branch No: Auth Rejected" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2;dashed=1;dashPattern=4 3;fontColor=#fca5a5;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d2" target="f1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_n4_n5" value="0x30 Read Opcode" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3.5;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="n4" target="n5"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_n5_d3" value="16B Payload Buffer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3.5;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="n5" target="d3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_d3_n6" value="Branch Yes: CRC Valid" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3;dashed=1;dashPattern=6 3;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d3" target="n6"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_d3_f1" value="Branch No: CRC Corrupt" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2;dashed=1;dashPattern=4 3;fontColor=#fca5a5;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d3" target="f1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_n6_succ" value="Commit Success" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#06b6d4;strokeWidth=3.5;fontColor=#22d3ee;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="n6" target="n_success"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_f1_exit" value="Error Abort" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2;dashed=1;dashPattern=4 3;fontColor=#fca5a5;fontSize=9;labelBackgroundColor=#0f172a;" edge="1" parent="bb_fault" source="f1" target="n_fault_exit"><mxGeometry relative="1" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="cdfg-system" name="4. CDFG - System Level (Dual-Mode NFC Engine)">
-    <mxGraphModel dx="1422" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1280" background="#0f172a" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="hdr" value="&lt;b&gt;CONTROL DATA FLOW GRAPH (CDFG) — System-Level Dual-Mode NFC Analysis Engine&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;ESP32 Dual-Mode Engine: Level 1 UID Unauthenticated vs Level 2 Cryptographic Sector | LittleFS Flash Persistence &amp; OLED UI&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;" vertex="1" parent="1">
-          <mxGeometry x="40" y="25" width="850" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_ctrl" value="&lt;b&gt;Control Flow Edge&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="980" y="25" width="130" height="25" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_data" value="&lt;b&gt;Data Flow Edge&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="25" width="130" height="25" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_loop" value="&lt;b&gt;Periodic Loopback&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1260" y="25" width="140" height="25" as="geometry" />
-        </mxCell>
-        <mxCell id="sys_power" value="&lt;b&gt;POWER ON / RESET&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;ESP32 Boot &amp; Dual-Core Start&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#2dd4bf;strokeWidth=2;fontColor=#f0fdfa;fontStyle=1;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="560" y="90" width="260" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="sys_init" value="&lt;b&gt;INIT: Peripherals &amp; Stacks&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;SPI.begin(18,19,23,5) | Wire.begin(21,22)
-LittleFS.begin() | WiFi.softAP()&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="560" y="165" width="260" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="c_poll_card" value="&lt;b&gt;C1: PICC_IsNewCardPresent()?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;13.56 MHz RF Field Polling&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="590" y="265" width="200" height="70" as="geometry" />
-        </mxCell>
-        <mxCell id="c_read_serial" value="&lt;b&gt;C2: PICC_ReadCardSerial()?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Anti-Collision Cascade Loop&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="590" y="375" width="200" height="70" as="geometry" />
-        </mxCell>
-        <mxCell id="d_t0_start" value="&lt;b&gt;D1: Start Latency Timer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;startTime = micros() (ESP32 HW Timer)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="560" y="485" width="260" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="d_format_uid" value="&lt;b&gt;D2: Extract &amp; Format UID String&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;uidByte[0..size] -&gt; uidStr (HEX)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="560" y="570" width="260" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="c_mode_branch" value="&lt;b&gt;C3: Verification Architecture?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Level 1 vs Level 2 Evaluation&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="590" y="665" width="200" height="75" as="geometry" />
-        </mxCell>
-        <mxCell id="d_level1_audit" value="&lt;b&gt;LEVEL 1: UID-Only Audit&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;T_exec ~2.8 ms | Vulnerable to Clones
-Direct Database / Whitelist Check&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="220" y="770" width="240" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="d_level1_warn" value="&lt;b&gt;VULNERABILITY DETECTED&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Zero cryptographic challenge (Trivial Replay)&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#f87171;strokeWidth=2;fontColor=#fef2f2;fontStyle=1;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="220" y="865" width="240" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="d_level2_exec" value="&lt;b&gt;LEVEL 2: Sector 1 Block 4 Auth&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;authenticate_and_read_block()
-T_exec ~30.2 ms | 3-Pass Mutual Auth&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="720" y="770" width="260" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="c_auth_ok" value="&lt;b&gt;C4: PCD_Authenticate == OK?&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Crypto-1 Key A Accepted?&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#312e81;strokeColor=#818cf8;strokeWidth=2;fontColor=#e0e7ff;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="750" y="865" width="200" height="70" as="geometry" />
-        </mxCell>
-        <mxCell id="d_auth_pass" value="&lt;b&gt;AUTH_SUCCESS (Access Granted)&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Secure Sector Validation&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#2dd4bf;strokeWidth=2;fontColor=#f0fdfa;fontStyle=1;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="600" y="970" width="220" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="d_auth_fail" value="&lt;b&gt;AUTH_FAILED (Access Denied)&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Key Rejection / Tamper Detected&lt;/span&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#f87171;strokeWidth=2;fontColor=#fef2f2;fontStyle=1;fontSize=10;" vertex="1" parent="1">
-          <mxGeometry x="880" y="970" width="220" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="d_bench_calc" value="&lt;b&gt;D3: Stop Benchmark Timer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;readTimeUs = micros() - startTime
-Tag Family Classified (SAK/ATQA)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="560" y="1055" width="260" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="d_flash_commit" value="&lt;b&gt;D4: LittleFS Flash Append&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;appendScanRecord() -&gt; /scans.jsonl
-Persists across hardware reboot&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1200" y="750" width="240" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="d_oled_update" value="&lt;b&gt;D5: Refresh SSD1306 OLED&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Render UID, readTimeUs, authStatus
-I2C Transfer (4,200 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1200" y="850" width="240" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="d_web_serve" value="&lt;b&gt;D6: Async Web Dashboard&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Serve /api/logs &amp; index.html
-Non-blocking AsyncTCP Thread&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1200" y="950" width="240" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="d_halt" value="&lt;b&gt;D7: RF Transponder Teardown&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;rfid.PICC_HaltA(); rfid.PCD_StopCrypto1();&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="560" y="1145" width="260" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="d_delay" value="&lt;b&gt;D8: Loop Interval Delay&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;delay(1500) | Low Power Quiescence&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="560" y="1225" width="260" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="store_flash_mem" value="&lt;b&gt;PHYSICAL SPI FLASH&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;/scans.jsonl Partition&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1220" y="650" width="200" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="e101" value="Boot" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="sys_power" target="sys_init">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e102" value="Enter loop()" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="sys_init" target="c_poll_card">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e103" value="No (Idle Polling)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=3 3;strokeColor=#38bdf8;strokeWidth=2;fontColor=#7dd3fc;fontSize=10;labelBackgroundColor=#0f172a;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.2;entryDx=0;entryDy=0;" edge="1" parent="1" source="c_poll_card" target="c_poll_card">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e104" value="Yes (Card in Field)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_poll_card" target="c_read_serial">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e105" value="No (Collision/Drop)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=3 3;strokeColor=#38bdf8;strokeWidth=2;fontColor=#7dd3fc;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_read_serial" target="c_poll_card">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e106" value="Yes (Serial Acquired)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_read_serial" target="d_t0_start">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e107" value="Timer Running" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_t0_start" target="d_format_uid">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e108" value="UID Parsed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_format_uid" target="c_mode_branch">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e109" value="Level 1: Fast UID" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_mode_branch" target="d_level1_audit">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e110" value="Level 2: Cryptographic" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_mode_branch" target="d_level2_exec">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e111" value="Audit Evaluation" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_level1_audit" target="d_level1_warn">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e112" value="Record ~2.8ms" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_level1_warn" target="d_bench_calc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e113" value="Handshake Returned" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_level2_exec" target="c_auth_ok">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e114" value="Yes (Key A Valid)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_auth_ok" target="d_auth_pass">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e115" value="No (Auth Error)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=4 3;strokeColor=#ef4444;strokeWidth=2;fontColor=#fca5a5;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="c_auth_ok" target="d_auth_fail">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e116" value="Record ~30.2ms" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_auth_pass" target="d_bench_calc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e117" value="Record Failure" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_auth_fail" target="d_bench_calc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e118" value="Dispatch Record" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_bench_calc" target="d_flash_commit">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e119" value="Flash Written" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_flash_commit" target="d_oled_update">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e120" value="UI Refreshed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_oled_update" target="d_web_serve">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e121" value="Events Flushed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_web_serve" target="d_halt">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e122" value="RF Off" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=6 4;strokeColor=#818cf8;strokeWidth=2;fontColor=#c7d2fe;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_halt" target="d_delay">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e123" value="Next Scan Cycle" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=3 3;strokeColor=#38bdf8;strokeWidth=2;fontColor=#7dd3fc;fontSize=10;labelBackgroundColor=#0f172a;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="d_delay" target="c_poll_card">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e124" value="Log JSON Payload" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_bench_calc" target="d_flash_commit">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e125" value="Physical Page Write" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_flash_commit" target="store_flash_mem">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e126" value="UID &amp; Latency Delta" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="d_bench_calc" target="d_oled_update">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="dfg-crypto-auth" name="1. DFG - Crypto Auth &amp; Block Read (Critical Path)">
-    <mxGraphModel dx="1422" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1560" pageHeight="920" background="#0f172a" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="stg_in" value="STAGE 0: INPUT OPERANDS &amp; HARDWARE REGISTERS" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="40" y="100" width="240" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="stg_1" value="STAGE 1: PCD ENCODING &amp; DEMODULATION" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="320" y="100" width="260" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="stg_2" value="STAGE 2: CRYPTO-1 CORE &amp; NONCE ENGINE" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="620" y="100" width="280" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="stg_3" value="STAGE 3: MUTUAL AUTH &amp; COMMAND ENCRYPTION" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="940" y="100" width="280" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="stg_4" value="STAGE 4: PAYLOAD STREAM DECRYPT &amp; FLUSH" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="1260" y="100" width="260" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="hdr" value="&lt;b&gt;DATA FLOW GRAPH (DFG) — Critical-Path Cryptographic Authentication &amp; Block Read&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Function: authenticate_and_read_block() | Critical Path Latency: 28,500 µs | Deadline: 35,000 µs&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;" vertex="1" parent="1">
-          <mxGeometry x="40" y="30" width="800" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_in" value="&lt;b&gt;Data Source / Input [Reg]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="980" y="30" width="160" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_op" value="&lt;b&gt;Computation Node [Op]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1160" y="30" width="160" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_out" value="&lt;b&gt;Data Sink [Memory/Bus]&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1340" y="30" width="160" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="in_key" value="&lt;b&gt;Key A Register [48-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0xFF 0xFF 0xFF 0xFF 0xFF 0xFF&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="150" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="in_block" value="&lt;b&gt;Block Address [8-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x04 (Sector 1, Block 0)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="280" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="in_uid" value="&lt;b&gt;Card UID Register [32-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;rfid.uid.uidByte[0..3]&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="410" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="in_cmd" value="&lt;b&gt;Auth Opcode [8-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x60 (PICC_CMD_MF_AUTH_KEY_A)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="540" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="in_rf" value="&lt;b&gt;RF Carrier Field [13.56 MHz]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;ISO/IEC 14443A Load Modulation&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="670" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="op_pack_auth" value="&lt;b&gt;OP1: PCD Auth Frame Pack&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;CMD || Block || CRC-A (16 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="340" y="350" width="220" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_rf_demod" value="&lt;b&gt;OP2: RF Demod &amp; Sync&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Capture 32-bit Nonce Nt (5,200 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="340" y="670" width="220" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_prng_reader" value="&lt;b&gt;OP3: Hardware PRNG&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Generate 32-bit Nr (4 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="650" y="170" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="op_lfsr_init" value="&lt;b&gt;OP4: Crypto-1 LFSR Init&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;State0 = f(KeyA, UID, Nt) (28 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="650" y="370" width="220" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_keystream" value="&lt;b&gt;OP5: Non-Linear Keystream&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;fk(State) -&gt; ki bits (62 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="650" y="570" width="220" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_enc_reader" value="&lt;b&gt;OP6: Reader Challenge Enc&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;ar = Nr ^ k1..32 + parity (14 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="970" y="220" width="220" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_tag_auth" value="&lt;b&gt;OP7: Tag Response Verifier&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;at = Ciph ^ k33..64 == succ(Nt) (6,800 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="970" y="420" width="220" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_enc_read_cmd" value="&lt;b&gt;OP8: Encrypt Read Block Cmd&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x30 || 0x04 || CRC-A ^ k65..96 (18 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="970" y="620" width="220" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_stream_dec" value="&lt;b&gt;OP9: 16-Byte Payload Decrypt&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Plain[0..15] = Ciph ^ k97..224 (42 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1280" y="320" width="220" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_crc_calc" value="&lt;b&gt;OP10: CRC-16 Engine&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Verify ISO 14443-3 CRC-A (22 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1280" y="470" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="out_plain_buf" value="&lt;b&gt;OUT1: Block Data Buffer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;16-Byte Plaintext Memory Block&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1280" y="600" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="out_status" value="&lt;b&gt;OUT2: Auth Status Register&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;STATUS_OK | AUTH_SUCCESS&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1280" y="720" width="220" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="e101" value="8-bit Opcode" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_cmd" target="op_pack_auth">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e102" value="8-bit Addr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_block" target="op_pack_auth">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e103" value="13.56 MHz Subcarrier" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_rf" target="op_rf_demod">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e104" value="32-bit Nt Nonce" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_rf_demod" target="op_lfsr_init">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e105" value="48-bit Key A" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_key" target="op_lfsr_init">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e106" value="32-bit UID" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_uid" target="op_lfsr_init">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e107" value="48-bit LFSR State" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_lfsr_init" target="op_keystream">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e108" value="32-bit Nr Nonce" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_prng_reader" target="op_enc_reader">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e109" value="k1..32 Keystream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_keystream" target="op_enc_reader">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e110" value="k33..64 Keystream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_keystream" target="op_tag_auth">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e111" value="64-bit Challenge ar" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_enc_reader" target="op_tag_auth">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e112" value="8-bit Block Addr" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="in_block" target="op_enc_read_cmd">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e113" value="k65..96 Keystream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_keystream" target="op_enc_read_cmd">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e114" value="Ciphertext Block" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_tag_auth" target="op_stream_dec">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e115" value="k97..224 Keystream" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_keystream" target="op_stream_dec">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e116" value="16-Byte Plaintext" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_stream_dec" target="op_crc_calc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e117" value="16-Byte Buffer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_stream_dec" target="out_plain_buf">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e118" value="Checksum Valid" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_crc_calc" target="out_status">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="dfg-telemetry" name="2. DFG - System Telemetry &amp; Benchmark Pipeline">
-    <mxGraphModel dx="1422" dy="798" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1560" pageHeight="920" background="#0f172a" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="stg_src" value="STAGE 0: SENSOR &amp; HARDWARE TELEMETRY SOURCES" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="40" y="100" width="250" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="stg_parse" value="STAGE 1: ARITHMETIC &amp; HEX SERIALIZATION" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="330" y="100" width="270" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="stg_struct" value="STAGE 2: DOM PACKING &amp; FRAMEBUFFER BLIT" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="640" y="100" width="280" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="stg_stream" value="STAGE 3: BUS PACKAGING &amp; FLASH BUFFERING" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="960" y="100" width="270" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="stg_sink" value="STAGE 4: HARDWARE SINKS &amp; WEB OUTPUT" style="swimlane;whiteSpace=wrap;html=1;fillColor=#0b172a;strokeColor=#1e3a5f;fontColor=#94a3b8;startSize=26;fontSize=12;fontStyle=1;rounded=1;strokeWidth=1.5;" vertex="1" parent="1">
-          <mxGeometry x="1270" y="100" width="250" height="780" as="geometry" />
-        </mxCell>
-        <mxCell id="hdr" value="&lt;b&gt;DATA FLOW GRAPH (DFG) — System Telemetry, Latency Benchmark &amp; Flash Logging Pipeline&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Data Pipeline: Sensor Timers &amp; Registers -&gt; Hex/JSON Formatting -&gt; SSD1306 Framebuffer &amp; LittleFS Flash&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#f8fafc;" vertex="1" parent="1">
-          <mxGeometry x="40" y="30" width="850" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_in" value="&lt;b&gt;Telemetry Source [HW]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="980" y="30" width="160" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_op" value="&lt;b&gt;Formatting / Serializer&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1160" y="30" width="160" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="leg_out" value="&lt;b&gt;Flash / Display Sink&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1340" y="30" width="160" height="35" as="geometry" />
-        </mxCell>
-        <mxCell id="src_t0" value="&lt;b&gt;Timer t0 Register [32-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;micros() at RF start&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="140" width="210" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="src_t1" value="&lt;b&gt;Timer t1 Register [32-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;micros() at RF finish&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="230" width="210" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="src_uid" value="&lt;b&gt;Raw UID Bytes [4..7 Bytes]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;rfid.uid.uidByte[]&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="330" width="210" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="src_sak" value="&lt;b&gt;SAK Byte [8-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x08 (MIFARE) / 0x00 (Ultralight)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="440" width="210" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="src_atqa" value="&lt;b&gt;ATQA Word [16-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;0x0004 (ISO 14443-3)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="540" width="210" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="src_auth" value="&lt;b&gt;Auth Status Flag&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;AUTH_SUCCESS / AUTH_FAILED&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="640" width="210" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="src_uptime" value="&lt;b&gt;System Uptime [32-bit]&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;millis() since boot&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="60" y="740" width="210" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="op_sub_time" value="&lt;b&gt;OP1: Delta-t Latency Subtractor&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Delta_t = t1 - t0 (1.2 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="350" y="180" width="230" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_hex_fmt" value="&lt;b&gt;OP2: UID Hex-ASCII Serializer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;uidByte[] -&gt; &quot;AA:BB:CC:DD&quot; (14.5 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="350" y="330" width="230" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_classify" value="&lt;b&gt;OP3: Tag Family Classifier&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;size==7 ? NTAG : MIFARE (0.8 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="350" y="490" width="230" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_oled_blit" value="&lt;b&gt;OP4: SSD1306 Glyph Rasterizer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;Convert text to 128x64 bitmask (2.1 ms)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="660" y="230" width="240" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_json_doc" value="&lt;b&gt;OP5: ArduinoJson DOM Builder&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;StaticJsonDocument&lt;256&gt; (18.2 µs)
-timestamp, uid, read_time_us, status&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="660" y="520" width="240" height="75" as="geometry" />
-        </mxCell>
-        <mxCell id="op_i2c_bus" value="&lt;b&gt;OP6: I2C Fast-Mode Transmit&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;400 kHz Wire Buffer Tx (2,050 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="980" y="230" width="230" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_jsonl_ser" value="&lt;b&gt;OP7: JSONL Line Serializer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;serializeJson(doc, file) (32.4 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="980" y="480" width="230" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="op_flash_flush" value="&lt;b&gt;OP8: LittleFS Page Cache Flush&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;SPI Physical Flash Commit (3,800 µs)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;strokeWidth=2.5;fontColor=#fef3c7;fontStyle=0;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="980" y="640" width="230" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="sink_oled" value="&lt;b&gt;SINK 1: OLED Display Screen&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;128x64 Monochrome Pixel Grid&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1290" y="230" width="210" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="sink_flash" value="&lt;b&gt;SINK 2: LittleFS Physical Flash&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;/scans.jsonl Partition (Non-Volatile)&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1290" y="560" width="210" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="sink_web" value="&lt;b&gt;SINK 3: Async Web Client Buffer&lt;/b&gt;&lt;br/&gt;&lt;span style=&#x27;font-size:9px;opacity:0.85;&#x27;&gt;/api/logs REST API Stream (WiFi AP)&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#78350f;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fef3c7;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1290" y="720" width="210" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="e101" value="t0 µs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_t0" target="op_sub_time">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e102" value="t1 µs" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_t1" target="op_sub_time">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e103" value="Raw Bytes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_uid" target="op_hex_fmt">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e104" value="UID Size" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_uid" target="op_classify">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e105" value="SAK Byte" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_sak" target="op_classify">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e106" value="Delta_t (µs)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_sub_time" target="op_oled_blit">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e107" value="UID String" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_hex_fmt" target="op_oled_blit">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e108" value="Auth Status" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_auth" target="op_oled_blit">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e109" value="timestamp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_uptime" target="op_json_doc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e110" value="family string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_classify" target="op_json_doc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e111" value="uid string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_hex_fmt" target="op_json_doc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e112" value="atqa string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_atqa" target="op_json_doc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e113" value="sak string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_sak" target="op_json_doc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e114" value="read_time_us" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_sub_time" target="op_json_doc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e115" value="status string" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="src_auth" target="op_json_doc">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e116" value="1024-Byte Framebuffer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_oled_blit" target="op_i2c_bus">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e117" value="I2C SDA/SCL Wire" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_i2c_bus" target="sink_oled">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e118" value="JSON Object" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_json_doc" target="op_jsonl_ser">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e119" value="ASCII Line Buffer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_jsonl_ser" target="op_flash_flush">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e120" value="Flash Page Commit" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="op_flash_flush" target="sink_flash">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e121" value="Async HTTP Socket" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2.2;fontColor=#6ee7b7;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="sink_flash" target="sink_web">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="fsm-moore-model" name="3. FSM - System Moore Model">
-    <mxGraphModel dx="1600" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1720" pageHeight="1280" background="#0f172a" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="hdr_fsm" value="&lt;b&gt;FIGURE 3: SYSTEM-BEHAVIOUR FINITE STATE MACHINE (MOORE MODEL)&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:11px;color:#94a3b8;&quot;&gt;Access Control Terminal Lifecycle: S0_IDLE (Safe State) -&amp;gt; Verification -&amp;gt; Persistence -&amp;gt; Fault Recovery&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2;fontColor=#f8fafc;align=left;spacingLeft=15;" vertex="1" parent="1">
-          <mxGeometry x="40" y="30" width="1150" height="84" as="geometry" />
-        </mxCell>
-        <mxCell id="legend_fsm" value="&lt;b&gt;MOORE FSM NOTATION &amp;amp; SPECIFICATION LEGEND&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#38bdf8;&quot;&gt;● Operational State (Cyan Outline)&lt;/span&gt; | &lt;span style=&quot;font-size:10px;color:#ef4444;&quot;&gt;⚠ Fault State (Red Outline)&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#22c55e;font-weight:bold;&quot;&gt;┈ Safe State Return (Green Dashed)&lt;/span&gt; | &lt;span style=&quot;font-size:10px;color:#38bdf8;&quot;&gt;Event [Guard]&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#475569;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=15;" vertex="1" parent="1">
-          <mxGeometry x="1210" y="30" width="470" height="84" as="geometry" />
-        </mxCell>
-        <mxCell id="s0" value="&lt;b&gt;S0: IDLE ★ (DESIGNATED SAFE STATE)&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #22c55e;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#a7f3d0;font-family:monospace;&quot;&gt;OLED: &#x27;Ready / Waiting&#x27;&lt;br/&gt;Buzzer: 0V | LittleFS: Idle&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#22c55e;strokeWidth=3;fontColor=#f0fdfa;arcSize=10;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="570" y="180" width="400" height="96" as="geometry" />
-        </mxCell>
-        <mxCell id="s1" value="&lt;b&gt;S1: DETECT_TAG&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #38bdf8;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#bae6fd;font-family:monospace;&quot;&gt;OLED: &#x27;Tag Detected&#x27;&lt;br/&gt;Buzzer: 30ms Pulse | Extract UID/SAK&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2.5;fontColor=#f8fafc;arcSize=10;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="570" y="390" width="400" height="96" as="geometry" />
-        </mxCell>
-        <mxCell id="s2" value="&lt;b&gt;S2: AUTH_SECTOR&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #38bdf8;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#bae6fd;font-family:monospace;&quot;&gt;OLED: &#x27;Authenticating...&#x27;&lt;br/&gt;Buzzer: 0V | Run Crypto-1 Engine&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2.5;fontColor=#f8fafc;arcSize=10;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="570" y="600" width="400" height="96" as="geometry" />
-        </mxCell>
-        <mxCell id="s3" value="&lt;b&gt;S3: LOG_PERSIST&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #38bdf8;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#bae6fd;font-family:monospace;&quot;&gt;OLED: &#x27;Access Granted&#x27;&lt;br/&gt;Buzzer: 100ms Chirp | Append LittleFS&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=2.5;fontColor=#f8fafc;arcSize=10;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="570" y="810" width="400" height="96" as="geometry" />
-        </mxCell>
-        <mxCell id="s4" value="&lt;b&gt;S4: FAULT ⚠ (FAULT CONTAINMENT)&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #ef4444;&quot;/&gt;&lt;span style=&quot;font-size:10px;color:#fca5a5;font-family:monospace;&quot;&gt;OLED: &#x27;Auth Failed / Error&#x27;&lt;br/&gt;Buzzer: 2x 300ms Buzz | StopCrypto1()&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3f1218;strokeColor=#ef4444;strokeWidth=2.5;fontColor=#fef2f2;arcSize=10;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1220" y="490" width="460" height="105" as="geometry" />
-        </mxCell>
-        <mxCell id="e1" value="E1: Tag_Detect [Carrier_Present]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2.8;fontColor=#38bdf8;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s0" target="s1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e2" value="E2: Parse_OK [Valid_ISO14443A]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2.8;fontColor=#38bdf8;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s1" target="s2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e3" value="E3: Parse_Fail [CRC_Framing_Error]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2.5;dashed=1;dashPattern=5 4;fontColor=#fca5a5;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s1" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e4" value="E4: Auth_OK [Key_A_Match]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2.8;fontColor=#38bdf8;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s2" target="s3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e5" value="E5: Auth_Fail [Key_Mismatch / Timeout]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ef4444;strokeWidth=2.5;dashed=1;dashPattern=5 4;fontColor=#fca5a5;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s2" target="s4"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e6" value="E6: Commit_Done [Flash_Flushed]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#22c55e;strokeWidth=3;dashed=1;dashPattern=7 4;fontColor=#4ade80;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s3" target="s0"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="460" y="858"/><mxPoint x="460" y="228"/></Array></mxGeometry></mxCell>
-        <mxCell id="e7" value="E7: Timeout_Expire [Elapsed &gt;= 1500ms]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#22c55e;strokeWidth=3;dashed=1;dashPattern=7 4;fontColor=#4ade80;fontSize=10;labelBackgroundColor=#0f172a;" edge="1" parent="1" source="s4" target="s0"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1450" y="140"/><mxPoint x="770" y="140"/></Array></mxGeometry></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="task-schedule-rms" name="4. RMS - Task Schedule Timeline">
-    <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1440" pageHeight="600" background="#0f172a" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="hdr_rms" value="&lt;b&gt;FIGURE 4: RATE-MONOTONIC SCHEDULING (RMS) TIMELINE&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:10px;color:#94a3b8;&quot;&gt;Hyperperiod H = 1000 ms | Total Utilisation U = 0.440 (44.0%) &amp;lt;= U_bound = 0.757 | All Deadlines Met&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#38bdf8;strokeWidth=1.5;fontColor=#f8fafc;align=left;spacingLeft=12;" vertex="1" parent="1">
-          <mxGeometry x="30" y="15" width="820" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="legend_rms" value="&lt;b&gt;TASK PRIORITY &amp;amp; STATUS LEGEND&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:9.5px;color:#38bdf8;&quot;&gt;● τ1 (P1)&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#22c55e;&quot;&gt;● τ2 (P2)&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#eab308;&quot;&gt;● τ3 (P3)&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#a855f7;&quot;&gt;● τ4 (P4)&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#ef4444;&quot;&gt;● Preempted&lt;/span&gt; | &lt;span style=&quot;font-size:9.5px;color:#64748b;&quot;&gt;● Idle&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#475569;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=12;" vertex="1" parent="1">
-          <mxGeometry x="865" y="15" width="545" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="t1_bg_lbl" value="&lt;b&gt;τ1: RFID Polling &amp; Auth&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#38bdf8;font-family:monospace;&quot;&gt;T1=50ms, C1=15ms, P1&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
-          <mxGeometry x="30" y="110" width="230" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="t1_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
-          <mxGeometry x="270" y="110" width="1105" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="t2_bg_lbl" value="&lt;b&gt;τ2: OLED UI Refresh&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#22c55e;font-family:monospace;&quot;&gt;T2=200ms, C2=10ms, P2&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
-          <mxGeometry x="30" y="185" width="230" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="t2_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
-          <mxGeometry x="270" y="185" width="1105" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="t3_bg_lbl" value="&lt;b&gt;τ3: LittleFS Commit&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#eab308;font-family:monospace;&quot;&gt;T3=500ms, C3=25ms, P3&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
-          <mxGeometry x="30" y="260" width="230" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="t3_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
-          <mxGeometry x="270" y="260" width="1105" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="t4_bg_lbl" value="&lt;b&gt;τ4: Async Web Server&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#a855f7;font-family:monospace;&quot;&gt;T4=1000ms, C4=40ms, P4&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
-          <mxGeometry x="30" y="335" width="230" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="t4_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
-          <mxGeometry x="270" y="335" width="1105" height="62" as="geometry" />
-        </mxCell>
-        <mxCell id="tc_bg_lbl" value="&lt;b&gt;CPU Core Execution State&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8.5px;color:#64748b;font-family:monospace;&quot;&gt;Core Pipeline Activity&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1.2;fontColor=#f8fafc;align=left;spacingLeft=10;" vertex="1" parent="1">
-          <mxGeometry x="30" y="410" width="230" height="72" as="geometry" />
-        </mxCell>
-        <mxCell id="tc_bg_lane" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111c2e;strokeColor=#334155;strokeWidth=1.2;" vertex="1" parent="1">
-          <mxGeometry x="270" y="410" width="1105" height="72" as="geometry" />
-        </mxCell>
-        <mxCell id="b_t1_1" value="τ1 [Burst 1]&lt;br/&gt;0-15ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="270" y="118" width="128" height="46" as="geometry" />
-        </mxCell>
-        <mxCell id="b_t1_2" value="τ1 [Burst 2]&lt;br/&gt;50-65ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="695" y="118" width="128" height="46" as="geometry" />
-        </mxCell>
-        <mxCell id="b_t1_3" value="τ1 [Burst 3]&lt;br/&gt;100-115ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="118" width="128" height="46" as="geometry" />
-        </mxCell>
-        <mxCell id="b_t2_1" value="τ2 [Exec]&lt;br/&gt;15-25ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#16a34a;strokeColor=#4ade80;strokeWidth=1.3;fontColor=#052e16;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="398" y="193" width="85" height="46" as="geometry" />
-        </mxCell>
-        <mxCell id="b_t3_1" value="τ3 [Commit]&lt;br/&gt;25-50ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ca8a04;strokeColor=#facc15;strokeWidth=1.3;fontColor=#422006;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="482" y="268" width="212" height="46" as="geometry" />
-        </mxCell>
-        <mxCell id="b_t4_1" value="τ4 [Web Srv - Part 1]&lt;br/&gt;65-100ms (35ms)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9333ea;strokeColor=#c084fc;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="822" y="343" width="298" height="46" as="geometry" />
-        </mxCell>
-        <mxCell id="b_t4_pre" value="PREEMPTED&lt;br/&gt;5ms left" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2b0a10;strokeColor=#ef4444;strokeWidth=1.3;fontColor=#fca5a5;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="343" width="128" height="46" as="geometry" />
-        </mxCell>
-        <mxCell id="b_t4_2" value="τ4&lt;br/&gt;5ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9333ea;strokeColor=#c084fc;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="1248" y="343" width="42" height="46" as="geometry" />
-        </mxCell>
-        <mxCell id="b_tc_1" value="Core: τ1&lt;br/&gt;15ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="270" y="420" width="128" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="b_tc_2" value="Core: τ2&lt;br/&gt;10ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#16a34a;strokeColor=#4ade80;strokeWidth=1.3;fontColor=#052e16;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="398" y="420" width="85" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="b_tc_3" value="Core: τ3&lt;br/&gt;25ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ca8a04;strokeColor=#facc15;strokeWidth=1.3;fontColor=#422006;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="482" y="420" width="212" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="b_tc_4" value="Core: τ1&lt;br/&gt;15ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="695" y="420" width="128" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="b_tc_5" value="Core: τ4&lt;br/&gt;35ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9333ea;strokeColor=#c084fc;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="822" y="420" width="298" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="b_tc_6" value="τ1 [Preempt]&lt;br/&gt;15ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="1120" y="420" width="128" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="b_tc_7" value="τ4&lt;br/&gt;5ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9333ea;strokeColor=#c084fc;strokeWidth=1.3;fontColor=#ffffff;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="1248" y="420" width="42" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="b_tc_idle" value="CPU IDLE / SLEEP&lt;br/&gt;120-130ms (Power-Save)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#64748b;strokeWidth=1.3;fontColor=#94a3b8;fontStyle=1;fontSize=9.5;" vertex="1" parent="1">
-          <mxGeometry x="1290" y="420" width="85" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="callout_p100" value="&lt;b&gt;Preemption: τ1 preempts τ4&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size:8px;&quot;&gt;τ4 suspended (5ms left) → τ1 runs 15ms&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2d0a10;strokeColor=#ef4444;strokeWidth=1.5;fontColor=#fef2f2;fontSize=9;" vertex="1" parent="1">
-          <mxGeometry x="995" y="290" width="250" height="34" as="geometry" />
-        </mxCell>
-        <mxCell id="footer_rms" value="&lt;b&gt;Hyperperiod H = 1000 ms&lt;/b&gt; | Total Utilisation U = 0.440 (44.0%) &amp;lt;= U_bound = 0.757 | &lt;b style=&quot;color:#4ade80;&quot;&gt;All Deadlines Met&lt;/b&gt; | CPU Idle Slack = 56.0%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#334155;strokeWidth=1;fontColor=#94a3b8;fontSize=9.5;align=center;" vertex="1" parent="1">
-          <mxGeometry x="30" y="550" width="1380" height="30" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="65bd71144e">
+    <diagram id="wokwi-sys-block" name="1. System Block Diagram">
+        <mxGraphModel dx="953" dy="675" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1020" pageHeight="600" background="#ffffff" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="wokwi_env" value="Wokwi Simulation Environment (Virtual Setup)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;dashed=1;dashPattern=6 4;fontColor=#000000;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;fontStyle=1;fontSize=12;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="40" width="940" height="490" as="geometry"/>
+                </mxCell>
+                <mxCell id="esp32_mcu" value="&lt;b&gt;ESP32-WROOM-32 MCU&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;align=center;verticalAlign=top;spacingTop=12;fontSize=13;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="75" width="320" height="415" as="geometry"/>
+                </mxCell>
+                <mxCell id="sub_fw" value="&lt;b&gt;System Firmware&lt;/b&gt;&lt;br/&gt;• MFRC522 Driver &amp;amp; Register Control&lt;br/&gt;• Crypto-1 Mutual Authentication&lt;br/&gt;• I2C Display &amp;amp; Peripheral Logic" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;align=center;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="120" width="280" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="sub_web" value="&lt;b&gt;AsyncWebServer &amp;amp; TCP Stack&lt;/b&gt;&lt;br/&gt;• SoftAP: ESP32-NFC-Lab&lt;br/&gt;• Port 80 HTTP Daemon&lt;br/&gt;• REST Endpoint: /api/logs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;align=center;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="225" width="280" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="sub_flash" value="&lt;b&gt;Internal Flash Partition (LittleFS)&lt;/b&gt;&lt;br/&gt;• /scans.jsonl (Audit Log)&lt;br/&gt;• /index.html (Web Dashboard)&lt;br/&gt;(10% Grey Fill Shading)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#000000;strokeWidth=1;fontColor=#000000;align=center;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="330" width="280" height="95" as="geometry"/>
+                </mxCell>
+                <mxCell id="vtag" value="&lt;b&gt;Virtual Tag (MIFARE / NTAG)&lt;/b&gt;&lt;br/&gt;MIFARE Classic 1K / NTAG21x&lt;br/&gt;(13.56 MHz Passive RF)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;dashed=1;dashPattern=4 3;fontColor=#000000;align=center;verticalAlign=middle;fontSize=10.5;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="115" width="190" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="mfrc522" value="&lt;b&gt;MFRC522 RFID Transceiver&lt;/b&gt;&lt;br/&gt;(wokwi-mfrc522)&lt;br/&gt;13.56 MHz ISO 14443A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;align=center;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="225" width="190" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_tag_rc" value="13.56 MHz RF Field" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.2;dashed=1;dashPattern=3 3;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" parent="1" source="vtag" target="mfrc522" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_spi" value="SPI Bus (SCK=18, MISO=19, MOSI=23, CS=5)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" parent="1" source="mfrc522" target="esp32_mcu" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="305" y="262"/>
+                            <mxPoint x="305" y="162"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="web_client" value="&lt;b&gt;Web Client (Browser)&lt;/b&gt;&lt;br/&gt;Mobile / PC Client&lt;br/&gt;(HTTP REST Client)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;align=center;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="360" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_http" value="HTTP / 802.11 AP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;dashed=1;dashPattern=5 3;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" parent="1" source="web_client" target="esp32_mcu" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="305" y="395"/>
+                            <mxPoint x="305" y="267"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="oled" value="&lt;b&gt;SSD1306 OLED Display&lt;/b&gt;&lt;br/&gt;(wokwi-ssd1306)&lt;br/&gt;128×64 Pixel Monochrome" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;align=center;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="125" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_i2c" value="I2C Bus (SDA=21, SCL=22)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" parent="1" source="esp32_mcu" target="oled" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="715" y="160"/>
+                            <mxPoint x="715" y="160"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="buzzer" value="&lt;b&gt;Piezo Buzzer&lt;/b&gt;&lt;br/&gt;Audible Feedback" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;align=center;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="240" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_buzzer" value="GPIO 26 (PWM)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" parent="1" source="esp32_mcu" target="buzzer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="led" value="&lt;b&gt;Status LED&lt;/b&gt;&lt;br/&gt;GPIO 2 Digital Output" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.2;fontColor=#000000;align=center;verticalAlign=middle;fontSize=11;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="350" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_led" value="GPIO 2 (Digital)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" parent="1" source="esp32_mcu" target="led" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cap_fig1" value="&lt;b&gt;Figure 1&lt;/b&gt; — System block diagram: MCU, virtual sensors, actuators, bus interfaces, and LittleFS storage in Wokwi." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=11.5;fontFamily=Helvetica;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="540" width="940" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="cdfg-critical-func" name="2. CDFG - Critical Function">
+        <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="780" background="#ffffff" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="bb0" value="BB0: Initialisation &amp;amp; Parameter Setup" style="swimlane;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1;dashed=1;dashPattern=5 3;fontColor=#000000;startSize=22;fontSize=10.5;fontStyle=1;rounded=0;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="30" width="480" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n1" value="&lt;b&gt;N1: Load Key &amp;amp; Sector&lt;/b&gt;&lt;br/&gt;Cost: 1 µs" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="52" width="200" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="bb1" value="BB1: Authentication Request &amp;amp; FIFO Polling" style="swimlane;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1;dashed=1;dashPattern=5 3;fontColor=#000000;startSize=22;fontSize=10.5;fontStyle=1;rounded=0;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="135" width="480" height="105" as="geometry"/>
+                </mxCell>
+                <mxCell id="n2" value="&lt;b&gt;N2: Send MF_AUTH 0x60&lt;/b&gt;&lt;br/&gt;Cost: 500 µs" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="215" y="165" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="d1" value="&lt;b&gt;D1: FIFO Ready?&lt;/b&gt;&lt;br/&gt;Cost: 10 µs" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="485" y="160" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="bb2" value="BB2: Cryptographic Mutual Authentication" style="swimlane;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1;dashed=1;dashPattern=5 3;fontColor=#000000;startSize=22;fontSize=10.5;fontStyle=1;rounded=0;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="265" width="480" height="105" as="geometry"/>
+                </mxCell>
+                <mxCell id="n3" value="&lt;b&gt;N3: Send 6-Byte Key A&lt;/b&gt;&lt;br/&gt;Cost: 6,000 µs" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="215" y="295" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="d2" value="&lt;b&gt;D2: Mutual Auth OK?&lt;/b&gt;&lt;br/&gt;Cost: 300 µs" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="485" y="290" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="bb3" value="BB3: Encrypted Block Read &amp;amp; CRC Validation" style="swimlane;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1;dashed=1;dashPattern=5 3;fontColor=#000000;startSize=22;fontSize=10.5;fontStyle=1;rounded=0;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="395" width="480" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="n4" value="&lt;b&gt;N4: Send READ 0x30&lt;/b&gt;&lt;br/&gt;Cost: 1,000 µs" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="215" y="425" width="190" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="n5" value="&lt;b&gt;N5: Read 16B Payload&lt;/b&gt;&lt;br/&gt;Cost: 12,000 µs" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="465" y="425" width="190" height="46" as="geometry"/>
+                </mxCell>
+                <mxCell id="d3" value="&lt;b&gt;D3: CRC Valid?&lt;/b&gt;&lt;br/&gt;Cost: 100 µs" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="488" width="160" height="54" as="geometry"/>
+                </mxCell>
+                <mxCell id="bb4" value="BB4: Non-Volatile Flash Persistence" style="swimlane;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1;dashed=1;dashPattern=5 3;fontColor=#000000;startSize=22;fontSize=10.5;fontStyle=1;rounded=0;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="580" width="480" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n6" value="&lt;b&gt;N6: Flash Append LittleFS&lt;/b&gt;&lt;br/&gt;Cost: 8,589 µs" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="310" y="605" width="240" height="44" as="geometry"/>
+                </mxCell>
+                <mxCell id="bb_fault" value="BB_FAULT: Error Recovery Block" style="swimlane;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#94A3B8;strokeWidth=1;dashed=1;dashPattern=5 3;fontColor=#000000;startSize=22;fontSize=10.5;fontStyle=1;rounded=0;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="710" y="190" width="230" height="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1" value="&lt;b&gt;F1: StopCrypto1 &amp;amp; Flag Error&lt;/b&gt;&lt;br/&gt;Cost: 200 µs&lt;br/&gt;(Clear LFSR &amp;amp; Halt PICC)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="725" y="310" width="200" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n1_n2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=3;fontColor=#000000;fontSize=10.5;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="n1" target="n2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n2_d1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=3;fontColor=#000000;fontSize=10.5;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="n2" target="d1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_d1_n3" value="[Yes]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=3;fontColor=#000000;fontSize=10.5;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="d1" target="n3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n3_d2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=3;fontColor=#000000;fontSize=10.5;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="n3" target="d2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_d2_n4" value="[Yes]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=3;fontColor=#000000;fontSize=10.5;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="d2" target="n4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n4_n5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=3;fontColor=#000000;fontSize=10.5;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="n4" target="n5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_n5_d3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=3;fontColor=#000000;fontSize=10.5;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="n5" target="d3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_d3_n6" value="[Yes]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=3;fontColor=#000000;fontSize=10.5;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="d3" target="n6">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_d1_fault" value="[No] Timeout" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.2;dashed=1;dashPattern=4 3;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="d1" target="f1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="825" y="190"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_d2_fault" value="[No] Auth Fail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.2;dashed=1;dashPattern=4 3;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="d2" target="f1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="680" y="320"/>
+                            <mxPoint x="680" y="335"/>
+                            <mxPoint x="725" y="335"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_d3_fault" value="[No] CRC Error" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.2;dashed=1;dashPattern=4 3;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="d3" target="f1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="825" y="515"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="card_legend" value="&lt;b&gt;CDFG Notation:&lt;/b&gt;&lt;br/&gt;○ Operation Node&lt;br/&gt;◇ Decision Node&lt;br/&gt;━━ Critical Path (3px)&lt;br/&gt;┈- Conditional Branch&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Critical Path:&lt;/b&gt;&lt;br/&gt;N1→N2→D1→N3→&lt;br/&gt;D2→N4→N5→D3→N6&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Timing Budget:&lt;/b&gt;&lt;br/&gt;• Latency: 28,500 µs&lt;br/&gt;  (28.5 ms)&lt;br/&gt;• Deadline: 35,000 µs&lt;br/&gt;  (35.0 ms)&lt;br/&gt;• Slack: +6,500 µs&lt;br/&gt;  (+6.5 ms)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=10;align=left;spacingLeft=8;spacingTop=8;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="30" width="140" height="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="cap_fig2" value="&lt;b&gt;Figure 2&lt;/b&gt; — Control Data Flow Graph (CDFG) of authenticate_and_read_block() with basic blocks and critical path." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=11.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="700" width="910" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="fsm-moore-model" name="3. FSM - System Moore Model">
+        <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="600" background="#ffffff" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="s0" value="&lt;b&gt;S0: IDLE (Safe State)&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #000000;&quot;/&gt;OLED: Ready | Buzzer: Off | LittleFS: Closed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2E8F0;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;arcSize=10;align=center;fontSize=11;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="300" y="50" width="340" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="s1" value="&lt;b&gt;S1: DETECT_TAG&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #000000;&quot;/&gt;OLED: Tag Detected | Buzzer: 30ms Pulse" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;arcSize=10;align=center;fontSize=11;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="300" y="165" width="340" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="s2" value="&lt;b&gt;S2: AUTH_SECTOR&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #000000;&quot;/&gt;OLED: Authenticating... | Buzzer: Off" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;arcSize=10;align=center;fontSize=11;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="300" y="280" width="340" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="s3" value="&lt;b&gt;S3: LOG_PERSIST&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #000000;&quot;/&gt;OLED: Access Granted | Buzzer: 100ms Chirp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;arcSize=10;align=center;fontSize=11;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="300" y="395" width="340" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="s4" value="&lt;b&gt;S4: FAULT&lt;/b&gt;&lt;hr style=&quot;margin:4px 0;border:none;border-top:1px solid #000000;&quot;/&gt;OLED: Read/Auth Error | Buzzer: Double Buzz" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;arcSize=10;align=center;fontSize=11;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="710" y="220" width="230" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" value="E1: Tag_Detect [Carrier_Present]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="s0" target="s1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="E2: Parse_OK [Valid_ISO14443A]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="s1" target="s2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" value="E3: Parse_Fail [CRC_Error]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="s1" target="s4">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="770" y="197"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e4" value="E4: Auth_OK [Key_A_Match]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="s2" target="s3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="E5: Auth_Fail [Mismatch / Timeout]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="s2" target="s4">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="770" y="312"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e6" value="E6: Commit_Done [File_Flushed]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="s3" target="s0">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="180" y="427"/>
+                            <mxPoint x="180" y="82"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e7" value="E7: Timeout_Expire [t &gt;= 1500ms]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;labelBackgroundColor=#FFFFFF;fontFamily=Helvetica;" edge="1" parent="1" source="s4" target="s0">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="825" y="25"/>
+                            <mxPoint x="470" y="25"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="card_fsm" value="&lt;b&gt;Moore FSM Model:&lt;/b&gt;&lt;br/&gt;• Outputs = $\lambda(S)$&lt;br/&gt;  Strictly state-dependent.&lt;br/&gt;  Zero GPIO glitches.&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Safe Quiescent:&lt;/b&gt;&lt;br/&gt;• S0: IDLE is safe&lt;br/&gt;  baseline state.&lt;br/&gt;• Dual loops (E6, E7)&lt;br/&gt;  guarantee bounded&lt;br/&gt;  return to S0 without&lt;br/&gt;  microcontroller reset." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=10;align=left;spacingLeft=8;spacingTop=8;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="145" width="125" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="cap_fig3" value="&lt;b&gt;Figure 3&lt;/b&gt; — System Moore Finite State Machine showing guarded operational states, safe state, and fault recovery." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=11.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="520" width="900" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="task-schedule-rms" name="4. RMS - Task Schedule Timeline">
+        <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1040" pageHeight="560" background="#ffffff" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="grid_0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="240" y="70" as="sourcePoint"/>
+                        <mxPoint x="240" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_0" value="0" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="225" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="300" y="70" as="sourcePoint"/>
+                        <mxPoint x="300" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_10" value="10" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="285" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="360" y="70" as="sourcePoint"/>
+                        <mxPoint x="360" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_20" value="20" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="345" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="420" y="70" as="sourcePoint"/>
+                        <mxPoint x="420" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_30" value="30" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="405" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_40" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="480" y="70" as="sourcePoint"/>
+                        <mxPoint x="480" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_40" value="40" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="465" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_50" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="540" y="70" as="sourcePoint"/>
+                        <mxPoint x="540" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_50" value="50" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="525" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_60" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="600" y="70" as="sourcePoint"/>
+                        <mxPoint x="600" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_60" value="60" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="585" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_70" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="660" y="70" as="sourcePoint"/>
+                        <mxPoint x="660" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_70" value="70" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="645" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_80" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="720" y="70" as="sourcePoint"/>
+                        <mxPoint x="720" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_80" value="80" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="705" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_90" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="780" y="70" as="sourcePoint"/>
+                        <mxPoint x="780" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_90" value="90" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="765" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_100" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="840" y="70" as="sourcePoint"/>
+                        <mxPoint x="840" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_100" value="100" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="825" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_110" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="900" y="70" as="sourcePoint"/>
+                        <mxPoint x="900" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_110" value="110" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="885" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="grid_120" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#E2E8F0;strokeWidth=1;dashed=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="960" y="70" as="sourcePoint"/>
+                        <mxPoint x="960" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_120" value="120" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="945" y="52" width="30" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_line_0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;dashed=1;dashPattern=5 3;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="240" y="45" as="sourcePoint"/>
+                        <mxPoint x="240" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arr_line_50" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;dashed=1;dashPattern=5 3;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="540" y="45" as="sourcePoint"/>
+                        <mxPoint x="540" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arr_line_100" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.5;dashed=1;dashPattern=5 3;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="840" y="45" as="sourcePoint"/>
+                        <mxPoint x="840" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arr_tag_0" value="t=0: Arrival τ1-τ4" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="243" y="32" width="100" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_tag_50" value="t=50ms: Arrival τ1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="543" y="32" width="100" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="arr_tag_100" value="t=100ms: Arrival τ1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=9;fontStyle=1;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="843" y="32" width="100" height="15" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_t1" value="&lt;b&gt;τ1: RFID Polling&lt;/b&gt;&lt;br/&gt;T=50ms, C=15ms, P1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;align=left;spacingLeft=10;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="85" width="200" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane_t1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="85" width="720" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_t2" value="&lt;b&gt;τ2: OLED Refresh&lt;/b&gt;&lt;br/&gt;T=200ms, C=10ms, P2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;align=left;spacingLeft=10;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="140" width="200" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane_t2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="140" width="720" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_t3" value="&lt;b&gt;τ3: LittleFS Commit&lt;/b&gt;&lt;br/&gt;T=500ms, C=25ms, P3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;align=left;spacingLeft=10;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="195" width="200" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane_t3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="195" width="720" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_t4" value="&lt;b&gt;τ4: Web Server&lt;/b&gt;&lt;br/&gt;T=1000ms, C=40ms, P4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;align=left;spacingLeft=10;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="250" width="200" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane_t4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="250" width="720" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_tc" value="&lt;b&gt;CPU Core State&lt;/b&gt;&lt;br/&gt;Pipeline Activity" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;align=left;spacingLeft=10;fontSize=10;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="310" width="200" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane_tc" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="310" width="720" height="48" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_t1_1" value="&lt;b&gt;τ1 (15ms)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#475569;strokeColor=#000000;strokeWidth=1;fontColor=#FFFFFF;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="89" width="90" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_t1_2" value="&lt;b&gt;τ1 (15ms)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#475569;strokeColor=#000000;strokeWidth=1;fontColor=#FFFFFF;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="89" width="90" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_t1_3" value="&lt;b&gt;τ1 (15ms)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#475569;strokeColor=#000000;strokeWidth=1;fontColor=#FFFFFF;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="840" y="89" width="90" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_t2_1" value="&lt;b&gt;τ2 (10ms)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#94A3B8;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="144" width="60" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_t3_1" value="&lt;b&gt;τ3: LittleFS Commit (25ms)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="390" y="199" width="150" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_t4_1" value="&lt;b&gt;τ4: Web Server (Part 1, 35ms)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="630" y="254" width="210" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_t4_pre" value="&lt;i&gt;Preempted (5ms left)&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#94A3B8;strokeWidth=1;fontColor=#64748B;fontSize=9.5;fontFamily=Helvetica;dashed=1;dashPattern=3 3;" vertex="1" parent="1">
+                    <mxGeometry x="840" y="254" width="90" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_t4_2" value="&lt;b&gt;τ4 (5ms)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="930" y="254" width="30" height="34" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_tc_1" value="BUSY: τ1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#475569;strokeColor=#000000;strokeWidth=1;fontColor=#FFFFFF;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="314" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_tc_2" value="BUSY: τ2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#94A3B8;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="330" y="314" width="60" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_tc_3" value="BUSY: τ3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CBD5E1;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="390" y="314" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_tc_4" value="BUSY: τ1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#475569;strokeColor=#000000;strokeWidth=1;fontColor=#FFFFFF;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="314" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_tc_5" value="BUSY: τ4 (35ms)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="630" y="314" width="210" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_tc_6" value="BUSY: τ1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#475569;strokeColor=#000000;strokeWidth=1;fontColor=#FFFFFF;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="840" y="314" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="b_tc_7" value="τ4 (5ms)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="930" y="314" width="30" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="callout_box" value="&lt;b&gt;τ1 preempts τ4&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;align=center;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="770" y="222" width="105" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="callout_arrow" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="callout_box">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="840" y="250" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="proof_box" value="&lt;b&gt;Liu &amp;amp; Layland (1973) RMS Schedulability Proof:&lt;/b&gt; Total Utilisation U = Σ (Ci / Ti) = 15/50 + 10/200 + 25/500 + 40/1000 = 0.300 + 0.050 + 0.050 + 0.040 = &lt;b&gt;0.440 &amp;lt;= U_bound = 0.757&lt;/b&gt;&lt;br/&gt;&lt;b&gt;Worst-Case Response Times:&lt;/b&gt; WCRT(τ1)=15ms &amp;lt; 50ms | WCRT(τ2)=25ms &amp;lt; 200ms | WCRT(τ3)=50ms &amp;lt; 500ms | WCRT(τ4)=120ms &amp;lt; 1000ms (All Deadlines Met)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fontSize=9.5;align=center;verticalAlign=middle;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="395" width="930" height="42" as="geometry"/>
+                </mxCell>
+                <mxCell id="cap_fig4" value="&lt;b&gt;Figure 4&lt;/b&gt; — Rate-Monotonic Scheduling (RMS) execution timeline over a 120 ms window showing preemptions and hyperperiod sub-cycles." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#000000;fontSize=11.5;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="30" y="475" width="930" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
 </mxfile>
